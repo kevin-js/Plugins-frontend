@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Profile Information</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/uikit.min.css"/>
+        <link rel="stylesheet" href="style.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <script src="js/uikit.min.js"></script>
+        <script src="js/uikit-icons.min.js"></script>
+        <!-- Font Awesome -->
+        <script src="https://use.fontawesome.com/f766bd3c92.js"></script>
+    </head>
+    <body>
+
+  <!-- Sign Up -->
+  <div class="uk-padding uk-position-relative uk-position-small uk-position-top-center uk-text-center">
+  <h1 id="alumni_name" class="tight">Fern Creek</h1>
+  <h3 class="norwester tight">Alumni Association</h3>
+</div>
+
+  <div class="uk-container uk-container-expand uk-margin-large-left uk-margin-large-right uk-position-relative uk-padding-large white border-slate">
+    <h3 class="uk-text-center norwester">Profile Information</h3><br><br>
+  <div class="uk-grid-divider uk-child-width-expand@s" uk-grid>
+  <!-- Option 1 - Photo-->
+  <div class="uk-width-1-3@m">
+    <h5 class="tight">1. Current Photo</h5>
+    <h6>If you’d like to include a current photo of yourself, select the ‘+ Image’ button below.</h6>
+
+    <div class="uk-position-relative uk-position-bottom-left">
+      <?xml version="1.0" encoding="UTF-8"?>
+      <svg width="142px" height="163px" viewBox="0 0 142 163" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g id="Style-Guide" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+              <g id="single-neutral-profile-picture" transform="translate(1.000000, 0.000000)" stroke="#AFAFB7">
+                  <g id="New_Symbol_1" transform="translate(35.000000, 39.200000)">
+                      <circle id="Oval" cx="34.608" cy="24.521" r="22.75"></circle>
+                      <path d="M70,82.271 C64.6438743,67.5577925 50.6577954,57.7652326 35,57.7652326 C19.3422046,57.7652326 5.3561257,67.5577925 0,82.271" id="Path" stroke-width="0.989"></path>
+                  </g>
+                  <rect id="Rectangle" x="0" y="0.7" width="140" height="161" rx="1"></rect>
+                  <rect id="Rectangle" x="21" y="21.7" width="98" height="119"></rect>
+              </g>
+          </g>
+      </svg>
+    <br><br>
+  <form>
+      <div class="uk-margin">
+          <div uk-form-custom>
+              <input type="file">
+              <button class="uk-button button-lt" type="button" tabindex="-1"><span uk-icon="plus-circle"></span> &nbsp;Image</button>
+          </div>
+      </div>
+  </form>
+  </div>
+  </div>
+
+  <!-- 2. Profile Info Form -->
+    <div class="uk-width-2-3@m">
+      <h5 class="tight">2. Demographics</h5>
+      <h6>Required fields marked with an *. </h6>
+      <form class="uk-grid-small uk-form-stacked" uk-grid>
+
+        <!-- FIRST NAME -->
+        <div class="uk-width-1-2@m">
+            <label class="uk-form-label">*First Name</label>
+            <div class="uk-form-controls uk-inline uk-width-1-1">
+              <span class="uk-form-icon" uk-icon="icon: user"></span>
+                <input class="uk-input border-charcoal2" type="text">
+            </div>
+        </div>
+
+        <!-- LAST NAME -->
+        <div class="uk-width-1-2@m">
+            <label class="uk-form-label">*Last Name</label>
+            <div class="uk-form-controls uk-inline uk-width-1-1">
+              <span class="uk-form-icon" uk-icon="icon: user"></span>
+                <input class="uk-input border-charcoal2" type="text">
+            </div>
+        </div>
+
+        <!-- NICKNAMES -->
+        <div class="uk-width-1-2@m">
+            <label class="uk-form-label">Nickname</label>
+            <div class="uk-form-controls uk-inline uk-width-1-1">
+              <span class="uk-form-icon" uk-icon="icon: user"></span>
+                <input class="uk-input border-charcoal2" type="text">
+            </div>
+        </div>
+
+        <!-- MARITAL STATUS -->
+        <div class="uk-width-1-2@m">
+            <label class="uk-form-label">Marital Status</label>
+            <div class="uk-form-controls uk-inline uk-width-1-1">
+              <select class="uk-select border-charcoal2">
+                <option> - - </option>
+                <option>Single</option>
+                <option>Married</option>
+                <option>Prefer Not To Answer</option>
+              </select>
+            </div>
+        </div>
+
+        <!-- HOME PHONE-->
+        <div class="uk-width-1-2@m">
+            <label class="uk-form-label">Home Phone #</label>
+            <div class="uk-form-controls uk-inline uk-width-1-1">
+              <span class="uk-form-icon" uk-icon="icon: receiver"></span>
+              <input class="uk-input border-charcoal2" placeholder="(###) ###-####" type="text">
+            </div>
+        </div>
+
+        <!-- MOBILE PHONE-->
+        <div class="uk-width-1-2@m">
+            <label class="uk-form-label">Cell Phone #</label>
+            <div class="uk-form-controls uk-inline uk-width-1-1">
+              <span class="uk-form-icon" uk-icon="icon: receiver"></span>
+              <input class="uk-input border-charcoal2" placeholder="(###) ###-####" type="text">
+            </div>
+        </div>
+
+        <!-- HOME ADDRESS LINE 1-->
+        <div class="uk-width-1-2@m">
+          <label class="uk-form-label">*Home Address Line 1</label>
+            <div class="uk-form-controls uk-inline uk-width-1-1">
+              <span class="uk-form-icon" uk-icon="icon: home"></span>
+              <input class="uk-input border-charcoal2" placeholder="123 Main Street" type="text">
+            </div>
+        </div>
+
+        <!-- HOME ADDRESS LINE 2-->
+        <div class="uk-width-1-2@m">
+          <label class="uk-form-label">*Home Address Line 2</label>
+            <div class="uk-form-controls uk-inline uk-width-1-1">
+              <span class="uk-form-icon" uk-icon="icon: home"></span>
+              <input class="uk-input border-charcoal2" placeholder="Apartment B" type="text">
+            </div>
+        </div>
+
+        <!-- CITY -->
+        <div class="uk-width-1-2@m">
+          <label class="uk-form-label">*City</label>
+            <div class="uk-form-controls uk-inline uk-width-1-1">
+              <span class="uk-form-icon" uk-icon="icon: location"></span>
+              <input class="uk-input border-charcoal2" type="text">
+            </div>
+        </div>
+
+        <!-- STATE -->
+        <div class="uk-width-1-4@m">
+          <label class="uk-form-label">*State</label>
+            <div class="uk-form-controls uk-inline uk-width-1-1">
+              <select class="uk-select border-charcoal2">
+                <option> - - </option>
+                <option>	AL	</option>
+                <option>	AK	</option>
+                <option>	AZ	</option>
+                <option>	AR	</option>
+                <option>	CA	</option>
+                <option>	CO	</option>
+                <option>	CT	</option>
+                <option>	DE	</option>
+                <option>	FL	</option>
+                <option>	GA	</option>
+                <option>	HI	</option>
+                <option>	ID	</option>
+                <option>	IL	</option>
+                <option>	IN	</option>
+                <option>	IA	</option>
+                <option>	KS	</option>
+                <option>	KY	</option>
+                <option>	LA	</option>
+                <option>	ME	</option>
+                <option>	MD	</option>
+                <option>	MA	</option>
+                <option>	MI	</option>
+                <option>	MN	</option>
+                <option>	MS	</option>
+                <option>	MO	</option>
+                <option>	MT	</option>
+                <option>	NE	</option>
+                <option>	NV	</option>
+                <option>	NH	</option>
+                <option>	NJ	</option>
+                <option>	NM	</option>
+                <option>	NY	</option>
+                <option>	NC	</option>
+                <option>	ND	</option>
+                <option>	OH	</option>
+                <option>	OK	</option>
+                <option>	OR	</option>
+                <option>	PA	</option>
+                <option>	RI	</option>
+                <option>	SC	</option>
+                <option>	SD	</option>
+                <option>	TN	</option>
+                <option>	TX	</option>
+                <option>	UT	</option>
+                <option>	VT	</option>
+                <option>	VA	</option>
+                <option>	WA	</option>
+                <option>	WV	</option>
+                <option>	WI	</option>
+                <option>	WY	</option>
+                <option>	AS	</option>
+                <option>	DC	</option>
+                <option>	FM	</option>
+                <option>	GU	</option>
+                <option>	MH	</option>
+                <option>	MP	</option>
+                <option>	PW	</option>
+                <option>	PR	</option>
+                <option>	VI	</option>
+                <option>	AE	</option>
+                <option>	AA	</option>
+                <option>	AE	</option>
+                <option>	AE	</option>
+                <option>	AE	</option>
+                <option>	AP	</option>
+              </select>
+            </div>
+        </div>
+
+        <!-- ZIP -->
+        <div class="uk-width-1-4@m">
+          <label class="uk-form-label">*ZIP Code</label>
+            <div class="uk-form-controls uk-inline uk-width-1-1">
+              <svg class="uk-form-icon icon-padding" xmlns="http://www.w3.org/2000/svg"><defs><style>.a{fill:none;stroke:#AFAFB7;stroke-linecap:round;stroke-linejoin:round;}</style></defs><title>compass-arrow</title><path class="a" d="M12.013,22.122a.5.5,0,0,1-.943-.231V12.93H2.109a.5.5,0,0,1-.231-.943L21.66,1.666a.5.5,0,0,1,.674.674Z"/></svg>
+                <input class="uk-input border-charcoal2" placeholder="ZIP" type="text">
+            </div>
+        </div>
+    <div class="uk-position-relative uk-margin uk-position-bottom-left"><button class="uk-button button-lt">Skip</button></div>
+    <div class="uk-position-relative uk-margin uk-position-bottom-right"><button class="uk-button button-dk">Save</button></div>
+</form>
+</div>
+</div>
+</div>
+<hr><hr>
+  </body>
+</html>
