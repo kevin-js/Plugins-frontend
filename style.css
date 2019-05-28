@@ -150,6 +150,7 @@ a:hover {
 .black {background-color: #2B2A27; color: #ffffff;}
 .clear {background: none; color: #2B2A27;}
 .white {background: #ffffff; color: #2B2A27;}
+.white2 {background: #ffffff; color: #2B2A27; opacity: 0.8;}
 
 /* BORDER COLORS */
 .border-gold {border: 2px solid #A6884D; border-radius: 8px !important;}
@@ -251,7 +252,18 @@ a:hover {
 	transition: 0.3s;
 }
 
+#calendar {
+  width: auto;
+	height: auto;
+	background-color: #ffffff;
+}
 
+.group-table table {
+  border-collapse: collapse !important;
+}
 
-
+.group-table table, th, td {
+	border: none !important;
+  border-bottom: 1px solid #AFAFB7 !important;
+}
 /*end of Style Document*/

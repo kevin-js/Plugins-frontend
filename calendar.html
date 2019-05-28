@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Profile</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/uikit.min.css"/>
+        <link rel="stylesheet" href="style_calendar.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <script src="js/uikit.min.js"></script>
+        <script src="js/uikit-icons.min.js"></script>
+        <!-- Font Awesome -->
+        <script src="https://use.fontawesome.com/f766bd3c92.js"></script>
+        <!-- FullCalendar API and Scripts -->
+        <link href='fullcalendar/packages/core/main.css' rel='stylesheet' />
+        <script src='fullcalendar/packages/core/main.js'></script>
+        <script src='fullcalendar/packages/interaction/main.min.js'></script>
+        <script src='fullcalendar/packages/moment/main.min.js'></script>
+        <link href='fullcalendar/packages/list/main.css' rel='stylesheet' />
+        <script src='fullcalendar/packages/list/main.js'></script>
+        <script src='fullcalendar/packages/rrule/main.min.js'></script>
+        <script src='fullcalendar/vendor/rrule.js'></script>
+        <link href='fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+        <script src='fullcalendar/packages/daygrid/main.js'></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    </head>
+    <body>
+      <nav class="uk-navbar-container uk-navbar-transparent uk-padding uk-visible@m" uk-navbar>
+          <div class="uk-navbar-center">
+              <ul class="uk-navbar-nav link-dk">
+                  <li class="uk-active"><a href="#">Profile</a></li>
+                  <li><a><svg class="uk-margin-left uk-margin-right" width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Diamond</title><g id="PROTOTYPE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <g id="Calendar" transform="translate(-548.000000, -91.000000)" fill="#2B2A27">
+                              <rect id="Rectangle" transform="translate(559.313708, 102.313708) rotate(315.000000) translate(-559.313708, -102.313708) " x="551.313708" y="94.3137085" width="16" height="16" rx="1"></rect></g></g></svg></a></li>
+                      <li><a href="#">Yearbook <span uk-icon="triangle-down"></span></a></li>
+                      <div uk-dropdown="offset: -30" class="uk-navbar-dropdown">
+                          <ul class="uk-nav uk-navbar-dropdown-nav">
+                              <li><a href="#">Groups</a></li>
+                              <li><a href="#">Hall of Fame</a></li>
+                              <li><a href="#">Memories</a></li>
+                          </ul>
+                      </div>
+
+                    <li><a class="uk-text-center uk-margin-left uk-margin-right" href="#">
+                    <h5 class="norwester">Fern Creek<br>Alumni Association</h5></a></li>
+
+                  <li><a href="#">Calendar</a></li>
+                  <li><a><svg class="uk-margin-left uk-margin-right" width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Diamond</title><g id="PROTOTYPE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <g id="Calendar" transform="translate(-548.000000, -91.000000)" fill="#2B2A27">
+                              <rect id="Rectangle" transform="translate(559.313708, 102.313708) rotate(315.000000) translate(-559.313708, -102.313708) " x="551.313708" y="94.3137085" width="16" height="16" rx="1"></rect></g></g></svg></a></li>
+                  <li><a href="#">News</a></li>
+              </ul>
+          </div>
+      </nav>
+
+<div class="uk-hidden@m link-dk">
+<a class="uk-float-left uk-margin-top uk-margin-left" href="#">
+<h5 class="norwester">Fern Creek<br>Alumni Association</h5></a>
+<a class="uk-icon-link uk-icon uk-float-right uk-margin-right uk-margin-large" href="#" uk-icon="icon: table" uk-toggle="target: #offcanvas-overlay"> Menu &nbsp;</a>
+
+<!-- Mobile Menu -->
+<div id="offcanvas-overlay" uk-offcanvas="overlay: true">
+    <div class="uk-offcanvas-bar">
+      <button class="uk-offcanvas-close" type="button" uk-close></button>
+      <div class="uk-width-1-1">
+        <ul class="uk-nav uk-nav-default uk-padding">
+            <li class="uk-active"><a href="#">Profile</a></li>
+            <li><a href="#">Yearbook</a></li>
+            <li><a href="#">Groups</a></li>
+            <li><a href="#">Hall of Fame</a></li>
+            <li><a href="#">Memories</a></li>
+            <li><a href="#">Calendar</a></li>
+            <li><a href="#">News</a></li>
+        </ul>
+      </div>
+    </div>
+</div>
+</div>
+<!------------------------->
+<!-- End of Navigation ---->
+<!------------------------->
+
+<div class="uk-hidden@m">
+<br><br><br><br><br><br>
+</div>
+
+<div id='calendar' class="uk-padding-small link-dk"></div>
+<!-- FullCalendar API and Scripts -->
+<link href='fullcalendar/packages/core/main.css' rel='stylesheet' />
+<script src='fullcalendar/packages/core/main.js'></script>
+<script src='fullcalendar/packages/interaction/main.min.js'></script>
+<script src='fullcalendar/packages/moment/main.min.js'></script>
+<link href='fullcalendar/packages/list/main.css' rel='stylesheet' />
+<script src='fullcalendar/packages/list/main.js'></script>
+<script src='fullcalendar/packages/rrule/main.min.js'></script>
+<script src='fullcalendar/vendor/rrule.js'></script>
+<link href='fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+<script src='fullcalendar/packages/daygrid/main.js'></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    plugins: [ 'dayGrid', 'moment', 'list', 'interaction', 'rrule' ],
+    timeZone: 'UTC',
+    defaultView: 'listMonth',
+    defaultDate: '2019-05-07',
+    header: {
+      left: 'title',
+      right: 'listMonth,dayGridMonth,addEventButton',
+    },
+    customButtons: {
+      addEventButton: {
+        text: 'Add',
+        click: function() {
+          var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+          var date = new Date(dateStr + 'T00:00:00'); // will be in local time
+
+          if (!isNaN(date.valueOf())) { // valid?
+            calendar.addEvent({
+              title: 'dynamic event',
+              start: date,
+              allDay: true
+            });
+            alert('Great. Now, update your database...');
+          } else {
+            alert('Invalid date.');
+          }
+        }
+      }
+    },
+    footer: {
+      center: 'prev,next today',
+    },
+
+    events: [
+      {
+        title: 'All Day Event',
+        start: '2019-05-01'
+      },
+      {
+        title: 'Long Event',
+        start: '2019-05-07',
+        end: '2019-05-10'
+      },
+      {
+        groupId: '999',
+        title: 'Repeating Event',
+        start: '2019-05-09T16:00:00'
+      },
+      {
+        groupId: '999',
+        title: 'Repeating Event',
+        start: '2019-05-16T16:00:00'
+      },
+      {
+        title: 'Conference',
+        start: '2019-05-11',
+        end: '2019-05-13'
+      },
+    ]
+  });
+
+  calendar.render();
+});
+
+</script>
+    <a class="uk-button uk-button-default uk-hidden" href="#eventContent" uk-toggle>Add Event</a>
+
+    <!-- Add Event Modal -->
+    <div id="eventContent" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header fog">
+            <h2 class="uk-modal-title">Create an Event</h2>
+        </div>
+
+        <div class="uk-modal-body" uk-overflow-auto>
+
+        </div>
+
+        <div class="uk-modal-footer fog uk-text-left">
+            <button class="uk-button button-lt uk-modal-close" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+
+
+<div class="uk-margin-large"></div>
+
+    </body>
+</html>

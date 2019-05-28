@@ -1,0 +1,240 @@
+@charset "UTF-8";
+/* CSS Document */
+
+html, body {
+	width: 100%;
+	height: auto;
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+	font-size: 22px;
+  line-height: 28px;
+  background-color: #ffffff;
+}
+
+@media (max-width: 960px) {
+  html, body { font-size: 18px; line-height: 24px;}
+}
+@media (max-width: 550px) {
+  html, body { font-size: 14px; line-height: 18px;}
+}
+
+@font-face {
+  font-family: 'Norwester';
+  src: url('norwester/norwester.eot'); /* IE9 Compat Modes */
+  src: url('norwester/norwester.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('norwester/norwester.woff') format('woff'), /* Pretty Modern Browsers */
+       url('norwester/norwester.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('norwester/norwester.svg#svgNorwester') format('svg'); /* Legacy iOS */
+}
+
+/* Type will scale with modules */
+h1 {font-size: 3.0em; line-height: 1em; font-family: 'Norwester', Fallback, sans-serif;}
+h2 {font-size: 2.6em; line-height: 1em; font-family: 'Norwester', Fallback, sans-serif;}
+h3 {font-size: 2.2em; line-height: 1em; font-family: 'Lato', sans-serif;}
+h4 {font-size: 1.5em; line-height: 1em;	font-family: 'Lato', sans-serif;}
+h5, p, label {font-size: 1.1em; line-height: 1.4em;	font-family: 'Lato', sans-serif;}
+h6 {font-size: 0.9em; line-height: 1.2em;	font-family: 'Lato', sans-serif; color: #999999; font-style: italic;}
+
+a, li {
+	font-family:'Lato', sans-serif !important;
+	font-size: 1.1em !important;
+	color: #A6884D !important;
+	text-decoration: none;
+  font-weight: 400;
+	cursor: pointer;
+}
+
+.font-small {font-size: 14px !important;}
+
+.profile-label {
+	font-size: 1em;
+	line-height: 1em;
+	font-family: 'Norwester', Fallback, sans-serif;
+	color: #999999 !important;
+}
+
+.profile-field {
+	font-size: 1.1em;
+	line-height: 1.5em;
+	font-family: 'Lato', sans-serif;
+	color: #2B2A27 !important;
+	font-weight: 600;
+	margin-bottom: 24px;
+}
+
+.button-lt {
+  font-family:'Lato', sans-serif !important;
+  background-color: #ffffff;
+  border: 1px solid #575654;
+  color: #575654 !important;
+  border-radius: 4px;
+  letter-spacing: normal !important;
+}
+
+.button-lt:hover {
+  background-color: #575654;
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+.button-dk {
+  font-family:'Lato', sans-serif !important;
+  background-color: #575654;
+  color: #ffffff !important;
+  border: 1px solid #575654;
+  border-radius: 4px;
+  letter-spacing: normal !important;
+}
+
+.button-dk:hover {
+  background-color: #000000;
+  font-weight: 600;
+}
+
+.button-gold {
+  font-family:'Lato', sans-serif !important;
+  background-color: #A6884D;
+  border: 1px solid #A6884D;
+  color: #ffffff !important;
+  border-radius: 4px;
+  letter-spacing: normal !important;
+}
+
+.button-gold:hover {
+  background-color: #A47517 !important;
+  font-weight: 600;
+}
+
+a:hover {
+	font-weight: 600;
+  text-decoration: underline;
+}
+
+.norwester {font-family: 'Norwester', Fallback, sans-serif;}
+
+.tight {
+	line-height: 0.5em !important;
+}
+
+.wide {
+	line-height: 1.6em !important;
+}
+
+.line {line-height: 1.8em !important;}
+
+.font-med {font-size: 1.2em; line-height: 1.5em; color: #2B2A27;}
+
+.uk-container-small {
+	max-width: 1020px;
+}
+
+/* TEXT COLORS */
+.font-gold {color: #A6884D !important;}
+.font-fog {color: #F0F1ED !important;}
+.font-hint {color: #999999 !important;}
+.font-red {color: #cf0000 !important;}
+.font-slate {color: #AFAFB7 !important;}
+.font-charcoal {color: #575654 !important;}
+.font-black {color: #2b2a27 !important;}
+.font-white {color: #ffffff !important;}
+.font-link-lt a {color: #ffffff !important;}
+.font-link-lt a:hover {color: #45B29D !important;}
+
+/* BACKGROUND COLORS */
+.gold {background-color: #A6884D !important; color: #2B2A27;}
+.fog {background-color: #F0F1ED !important; color: #2B2A27;}
+.red {background-color: #cf0000; color: #ffffff;}
+.slate {background-color: #AFAFB7; color: #2B2A27;}
+.charcoal {background-color: #575654; color: #ffffff !important;}
+.black {background-color: #2B2A27; color: #ffffff;}
+.clear {background: none; color: #2B2A27;}
+.white {background: #ffffff; color: #2B2A27;}
+
+/* BORDER COLORS */
+.border-gold {border: 2px solid #A6884D; border-radius: 8px !important;}
+.border-fog {border: 1px solid #F0F1ED;}
+.border-red {border: 1px solid #cf0000;}
+.border-slate {border: 1px solid #AFAFB7; border-radius: 8px !important;}
+.border-charcoal {border: 1px solid #575654 !important; border-radius: 8px !important;}
+.border-charcoal2 {border: 1px solid #575654 !important; border-radius: 4px !important;}
+.border-black {border: 1px solid #2B2A27;}
+.border-none {border: none !important;}
+.tab-border {border-bottom: 2px solid #2B2A27 !important;}
+.table-border {border-bottom: 1px solid #AFAFB7 !important;}
+
+#logo {
+	width: 30%;
+	height: auto;
+}
+
+@media only screen and (max-width: 600px) {
+#intro {height: 200px;}
+.portrait {margin-top: 0; margin-left: 40%; width: 20%;}
+.tight {line-height: 0.1em !important;}
+}
+
+.icon-padding {
+  padding: 8px 6px;
+}
+
+.container-top {
+	background-color: #2B2A27;
+	border: 1px solid #2B2A27;
+	border-radius: 8px 8px 0 0;
+	padding: 15px 30px !important;
+}
+
+.link-dk a {color: #575654 !important;}
+.link-dk a:hover {color: #2b2a27 !important;}
+.link-dk a:active {color: #2b2a27 !important; text-decoration: underline !important;}
+
+.link-tab a {font-family: 'Norwester', Fallback, sans-serif !important; color: #575654 !important;}
+.link-tab a:hover {color: #2b2a27 !important; text-decoration: none !important;}
+
+.tab-active {
+	color: #A6884D !important;
+	border-bottom: 8px solid #A6884D !important;
+}
+
+/* Active */
+.uk-tab::before {
+  border-bottom: 1.5px solid #AFAFB7 !important;
+}
+
+.uk-tab > * > a {
+  border-bottom: 5px solid transparent !important;
+}
+
+/* Active */
+.uk-tab > .uk-active > a {
+	color: #2b2a27 !important;
+  border-color: #A6884D !important;
+}
+
+.alumni-table table {
+  border-collapse: collapse;
+}
+
+.alumni-table table, th, td {
+  border: 1px solid #2b2a27 !important;
+}
+
+.alumni-table .selected {
+	background-color: #2b2a27 !important;
+	color: #ffffff !important;
+	font-weight: 700 !important;
+}
+
+.alumni-table td:hover {
+	background-color: #AFAFB7 !important;
+	transition: 0.3s;
+}
+
+#calendar {
+  max-width: 900px;
+  margin: 40px auto;
+}
+
+
+/*end of Style Document*/

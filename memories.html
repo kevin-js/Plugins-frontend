@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Memories</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/uikit.min.css"/>
+        <link rel="stylesheet" href="style.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <script src="js/uikit.min.js"></script>
+        <script src="js/uikit-icons.min.js"></script>
+        <!-- Font Awesome -->
+        <script src="https://use.fontawesome.com/f766bd3c92.js"></script>
+    </head>
+    <body>
+      <nav class="uk-navbar-container uk-navbar-transparent uk-padding uk-visible@m" uk-navbar>
+          <div class="uk-navbar-center">
+              <ul class="uk-navbar-nav link-dk">
+                  <li class="uk-active"><a href="#">Profile</a></li>
+                  <li><a><svg class="uk-margin-left uk-margin-right" width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Diamond</title><g id="PROTOTYPE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <g id="Calendar" transform="translate(-548.000000, -91.000000)" fill="#2B2A27">
+                              <rect id="Rectangle" transform="translate(559.313708, 102.313708) rotate(315.000000) translate(-559.313708, -102.313708) " x="551.313708" y="94.3137085" width="16" height="16" rx="1"></rect></g></g></svg></a></li>
+                      <li><a href="#">Yearbook <span uk-icon="triangle-down"></span></a></li>
+                      <div uk-dropdown="offset: -30" class="uk-navbar-dropdown">
+                          <ul class="uk-nav uk-navbar-dropdown-nav">
+                              <li><a href="#">Groups</a></li>
+                              <li><a href="#">Hall of Fame</a></li>
+                              <li><a href="#">Memories</a></li>
+                          </ul>
+                      </div>
+
+                    <li><a class="uk-text-center uk-margin-left uk-margin-right" href="#">
+                    <h5 class="norwester">Fern Creek<br>Alumni Association</h5></a></li>
+
+                  <li><a href="#">Calendar</a></li>
+                  <li><a><svg class="uk-margin-left uk-margin-right" width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Diamond</title><g id="PROTOTYPE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <g id="Calendar" transform="translate(-548.000000, -91.000000)" fill="#2B2A27">
+                              <rect id="Rectangle" transform="translate(559.313708, 102.313708) rotate(315.000000) translate(-559.313708, -102.313708) " x="551.313708" y="94.3137085" width="16" height="16" rx="1"></rect></g></g></svg></a></li>
+                  <li><a href="#">News</a></li>
+              </ul>
+          </div>
+      </nav>
+
+<div class="uk-hidden@m link-dk">
+<a class="uk-float-left uk-margin-top uk-margin-left" href="#">
+<h5 class="norwester">Fern Creek<br>Alumni Association</h5></a>
+<a class="uk-icon-link uk-icon uk-float-right uk-margin-right uk-margin-large" href="#" uk-icon="icon: table" uk-toggle="target: #offcanvas-overlay"> Menu &nbsp;</a>
+
+<!-- Mobile Menu -->
+<div id="offcanvas-overlay" uk-offcanvas="overlay: true">
+    <div class="uk-offcanvas-bar">
+      <button class="uk-offcanvas-close" type="button" uk-close></button>
+      <div class="uk-width-1-1">
+        <ul class="uk-nav uk-nav-default uk-padding">
+            <li class="uk-active"><a href="#">Profile</a></li>
+            <li><a href="#">Yearbook</a></li>
+            <li><a href="#">Groups</a></li>
+            <li><a href="#">Hall of Fame</a></li>
+            <li><a href="#">Memories</a></li>
+            <li><a href="#">Calendar</a></li>
+            <li><a href="#">News</a></li>
+        </ul>
+      </div>
+    </div>
+</div>
+</div>
+<!------------------------->
+<!-- End of Navigation ---->
+<!------------------------->
+<div class="uk-hidden@m">
+<br><br><br><br><br><br>
+</div>
+
+<div class="uk-padding uk-clearfix">
+<h3 class="uk-position-relative uk-margin uk-margin-right uk-float-left norwester">Memories</h3>
+<div class="uk-position-relative uk-float-right"><button class="uk-button button-dk" href="#image-modal" uk-toggle>Add a Memory</button></div>
+<!-- Here is the code for the add an image modal -->
+<div id="image-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body fog">
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+        <h2 class="uk-modal-title">Add a Memory</h2>
+        <form>
+            <div class="uk-margin">
+                <div uk-form-custom>
+                    <input type="file">
+                    <button class="uk-button button-lt" type="button" tabindex="-1"><span uk-icon="plus-circle"></span> &nbsp;Image</button>
+                </div>
+            </div>
+          <div class="uk-margin">
+            <span class="profile-label">*Memory Description</span>
+            <textarea class="uk-textarea" rows="5" placeholder="Enter an event description"></textarea>
+          </div>
+        </form>
+
+        <p class="uk-text-left">
+            <button class="uk-button button-dk" type="button">Save</button>
+            <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
+        </p>
+    </div>
+</div>
+</div>
+
+<div class="uk-margin-right uk-margin-left">
+<div class="uk-child-width-1-3@m uk-grid-small" uk-grid="masonry: true" uk-lightbox="animation: scale">
+    <div>
+        <a href="memory/1.png" data-caption="Photo Description Goes Here">
+              <img src="memory/1.png" width="100%" height="auto">
+        </a>
+    </div>
+    <div>
+      <a href="memory/2.png" data-caption="Photo Description Goes Here">
+            <img src="memory/2.png" width="100%" height="auto">
+      </a>
+    </div>
+    <div>
+      <a href="memory/3.png" data-caption="Photo Description Goes Here">
+            <img src="memory/3.png" width="100%" height="auto">
+      </a>
+    </div>
+    <div>
+        <a href="memory/4.png" data-caption="Photo Description Goes Here">
+              <img src="memory/4.png" width="100%" height="auto">
+        </a>
+    </div>
+    <div>
+        <a href="memory/5.png" data-caption="Photo Description Goes Here">
+              <img src="memory/5.png" width="100%" height="auto">
+        </a>
+    </div>
+    <div>
+      <a href="memory/6.png" data-caption="Photo Description Goes Here">
+              <img src="memory/6.png" width="100%" height="auto">
+        </a>
+    </div>
+    <div>
+        <a href="memory/7.png" data-caption="Photo Description Goes Here">
+              <img src="memory/7.png" width="100%" height="auto">
+        </a>
+    </div>
+    <div>
+        <a href="memory/8.png" data-caption="Photo Description Goes Here">
+              <img src="memory/8.png" width="100%" height="auto">
+        </a>
+    </div>
+    <div>
+        <a href="memory/1.png" data-caption="Photo Description Goes Here">
+              <img src="memory/1.png" width="100%" height="auto">
+        </a>
+    </div>
+    <div>
+      <a href="memory/2.png" data-caption="Photo Description Goes Here">
+            <img src="memory/2.png" width="100%" height="auto">
+      </a>
+    </div>
+    <div>
+      <a href="memory/3.png" data-caption="Photo Description Goes Here">
+            <img src="memory/3.png" width="100%" height="auto">
+      </a>
+    </div>
+    <div>
+        <a href="memory/4.png" data-caption="Photo Description Goes Here">
+              <img src="memory/4.png" width="100%" height="auto">
+        </a>
+    </div>
+    <div>
+        <a href="memory/5.png" data-caption="Photo Description Goes Here">
+              <img src="memory/5.png" width="100%" height="auto">
+        </a>
+    </div>
+    <div>
+      <a href="memory/6.png" data-caption="Photo Description Goes Here">
+              <img src="memory/6.png" width="100%" height="auto">
+        </a>
+    </div>
+    <div>
+        <a href="memory/7.png" data-caption="Photo Description Goes Here">
+              <img src="memory/7.png" width="100%" height="auto">
+        </a>
+    </div>
+    <div>
+        <a href="memory/8.png" data-caption="Photo Description Goes Here">
+              <img src="memory/8.png" width="100%" height="auto">
+        </a>
+    </div>
+
+ </div>
+</div>
+
+
+
+<div class="uk-margin-large"></div>
+
+    </body>
+</html>

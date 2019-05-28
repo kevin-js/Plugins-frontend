@@ -76,7 +76,7 @@
 <div class="uk-card uk-card-default uk-margin uk-margin-right uk-margin-left">
     <div class="uk-card-header container-top">
         <div class="uk-grid-small uk-flex-middle" uk-grid>
-        <h4 class="norwester font-white">Profile Information &nbsp;<a class="font-white" href="">(Edit)</a></h4>
+        <h4 class="norwester font-white">Profile Information</h4>
         </div>
     </div>
     <div class="uk-card-body white">
@@ -94,33 +94,95 @@
               </form>
           </div>
           <a href=""><span uk-icon="icon: lock"></span>&nbsp;Change Password</a><br><br>
-          <span class="profile-label">Name</span>
-          <span id="name" class="profile-field">Leslie Cole</span>
-          <span class="profile-label">Graduated</span>
-          <span id="nickname" class="profile-field">1956</span>
-          </div>
+        <!-- Far Left Section -->
+              <label class="profile-label">Name</label>
+              <input id="name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="Leslie Cole">
+              <label class="profile-label">Grad Year &nbsp;<span uk-icon="info" uk-tooltip="Only an administrator can edit your graduation year. If yours is incorrect, please contact an Alumni Association official to have it corrected."></label><br>
+              <input id="grad_year" class="uk-input uk-form-width-small border-charcoal2" type="text" value="1956" disabled>
+        </div>
 
+        <!-- Far Left Section -->
           <div>
-            <span class="profile-label">Nicknames</span>
-            <span id="nickname" class="profile-field">Les, Lee, Rogers</span>
+            <label class="profile-label">Nicknames</label>
+            <input id="nickname" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="Les, Lee, Rogers">
             <span class="profile-label">Email</span>
-            <span id="email" class="profile-field">leslie_cole@gmail.com</span>
+            <input id="email" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="leslie_cole@gmail.com">
             <span class="profile-label">Home Phone</span>
-            <span id="home_phone" class="profile-field">(123) 456-7890</span>
+            <input id="home_phone" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="(123) 456-7890">
             <span class="profile-label">Cell Phone</span>
-            <span id="mobile_phone" class="profile-field">(987) 654-3210</span>
+            <input id="cell_phone" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="(987) 654-3210">
             <span class="profile-label">Birthday</span>
-            <span id="birthday" class="profile-field">- -</span>
+            <input id="dob" class="uk-input uk-width-small border-charcoal2 uk-margin-bottom" type="text" value="mm/dd/yyyy">
           </div>
 
           <div>
             <span class="profile-label">Marital Status</span>
-            <span id="marital_status" class="profile-field">Married</span>
+            <select class="uk-select border-charcoal2 uk-margin-bottom">
+              <option>Single</option>
+              <option>Married</option>
+              <option>Divorced</option>
+              <option>Widowed</option>
+              <option>Unspecified</option>
+            </select>
+
             <span class="profile-label">Address</span>
             <span>
-            <span id="address_line1" class="profile-field">123 Main Street</span><br>
-            <span id="address_line2" class="profile-field">Apartment #12</span><br>
-            <span id="city" class="profile-field">Louisville</span>,<span id="state" class="profile-field"> KY</span><span id="zip" class="profile-field"> 40202</span>
+            <input id="address_line1" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="123 Main Street"><br>
+            <input id="address_line2" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="Apartment #12"><br>
+            <input id="city" class="uk-input uk-width-1-3 border-charcoal2 uk-margin-bottom" type="text" value="Louisville">, <select class="uk-select uk-width-1-4 border-charcoal2 uk-margin-bottom">
+                <option value="AL">AL</option>
+                <option value="AK">AK</option>
+                <option value="AZ">AZ</option>
+                <option value="AR">AR</option>
+                <option value="CA">CA</option>
+                <option value="CO">CO</option>
+                <option value="CT">CT</option>
+                <option value="DE">DE</option>
+                <option value="DC">DC</option>
+                <option value="FL">FL</option>
+                <option value="GA">GA</option>
+                <option value="HI">HI</option>
+                <option value="ID">ID</option>
+                <option value="IL">IL</option>
+                <option value="IN">IN</option>
+                <option value="IA">IA</option>
+                <option value="KS">KS</option>
+                <option value="KY">KY</option>
+                <option value="LA">LA</option>
+                <option value="ME">ME</option>
+                <option value="MD">MD</option>
+                <option value="MA">MA</option>
+                <option value="MI">MI</option>
+                <option value="MN">MN</option>
+                <option value="MS">MS</option>
+                <option value="MO">MO</option>
+                <option value="MT">MT</option>
+                <option value="NE">NE</option>
+                <option value="NV">NV</option>
+                <option value="NH">NH</option>
+                <option value="NJ">NJ</option>
+                <option value="NM">NM</option>
+                <option value="NY">NY</option>
+                <option value="NC">NC</option>
+                <option value="ND">ND</option>
+                <option value="OH">OH</option>
+                <option value="OK">OK</option>
+                <option value="OR">OR</option>
+                <option value="PA">PA</option>
+                <option value="RI">RI</option>
+                <option value="SC">SC</option>
+                <option value="SD">SD</option>
+                <option value="TN">TN</option>
+                <option value="TX">TX</option>
+                <option value="UT">UT</option>
+                <option value="VT">VT</option>
+                <option value="VA">VA</option>
+                <option value="WA">WA</option>
+                <option value="WV">WV</option>
+                <option value="WI">WI</option>
+                <option value="WY">WY</option>
+              </select>
+            <input id="zip" class="uk-input uk-width-1-4 border-charcoal2 uk-margin-bottom" type="text" value="47129">
           </span>
                   <span class="profile-label uk-margin">Privacy &nbsp;<span uk-icon="info" uk-tooltip="All alumni can view your yearbook photo, name and graduation year.  If you set your profile as public,  paid members can also view your phone number, address, email, birthday, and marital status.  To hide this information set your profile as private."></span></span>
                   <span uk-toggle="target: .toggle" id="public_toggle">
@@ -128,6 +190,8 @@
                   </span>
           </div>
       </div>
+      <div class="uk-position-relative uk-margin uk-margin-right uk-float-left"><button class="uk-button button-dk">Save</button></div>
+      <div class="uk-position-relative uk-margin uk-float-left"><button class="uk-button button-lt">Cancel</button></div>
 </div>
 </div>
 

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Yearbook (C)</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/uikit.min.css"/>
+        <link rel="stylesheet" href="style.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+        <script src="js/uikit.min.js"></script>
+        <script src="js/uikit-icons.min.js"></script>
+        <!-- Font Awesome -->
+        <script src="https://use.fontawesome.com/f766bd3c92.js"></script>
+    </head>
+    <body>
+      <nav class="uk-navbar-container uk-navbar-transparent uk-padding uk-visible@m" uk-navbar>
+          <div class="uk-navbar-center">
+              <ul class="uk-navbar-nav link-dk">
+                  <li class="uk-active"><a href="profile.html">Profile</a></li>
+                  <li><a><svg class="uk-margin-left uk-margin-right" width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Diamond</title><g id="PROTOTYPE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <g id="Calendar" transform="translate(-548.000000, -91.000000)" fill="#2B2A27">
+                              <rect id="Rectangle" transform="translate(559.313708, 102.313708) rotate(315.000000) translate(-559.313708, -102.313708) " x="551.313708" y="94.3137085" width="16" height="16" rx="1"></rect></g></g></svg></a></li>
+                      <li><a href="yearbook.html">Yearbook <span uk-icon="triangle-down"></span></a></li>
+                      <div uk-dropdown="offset: -30" class="uk-navbar-dropdown">
+                          <ul class="uk-nav uk-navbar-dropdown-nav">
+                              <li><a href="groups.html">Groups</a></li>
+                              <li><a href="hall_of_fame.html">Hall of Fame</a></li>
+                              <li><a href="memories.html">Memories</a></li>
+                          </ul>
+                      </div>
+
+                    <li><a class="uk-text-center uk-margin-left uk-margin-right" href="yearbook.html">
+                    <h5 class="norwester">Fern Creek<br>Alumni Association</h5></a></li>
+
+                  <li><a href="calendar.html">Calendar</a></li>
+                  <li><a><svg class="uk-margin-left uk-margin-right" width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Diamond</title><g id="PROTOTYPE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <g id="Calendar" transform="translate(-548.000000, -91.000000)" fill="#2B2A27">
+                              <rect id="Rectangle" transform="translate(559.313708, 102.313708) rotate(315.000000) translate(-559.313708, -102.313708) " x="551.313708" y="94.3137085" width="16" height="16" rx="1"></rect></g></g></svg></a></li>
+                  <li><a href="news.html">News</a></li>
+              </ul>
+          </div>
+      </nav>
+
+<div class="uk-hidden@m link-dk">
+<a class="uk-float-left uk-margin-top uk-margin-left" href="#">
+<h5 class="norwester">Fern Creek<br>Alumni Association</h5></a>
+<a class="uk-icon-link uk-icon uk-float-right uk-margin-right uk-margin-large" href="#" uk-icon="icon: table" uk-toggle="target: #offcanvas-overlay"> Menu &nbsp;</a>
+
+<!-- Mobile Menu -->
+<div id="offcanvas-overlay" uk-offcanvas="overlay: true">
+    <div class="uk-offcanvas-bar">
+      <button class="uk-offcanvas-close" type="button" uk-close></button>
+      <div class="uk-width-1-1">
+        <ul class="uk-nav uk-nav-default uk-padding">
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="yearbook.html">Yearbook</a></li>
+            <li><a href="groups.html">Groups</a></li>
+            <li><a href="hall_of_fame.html">Hall of Fame</a></li>
+            <li><a href="memories.html">Memories</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="news.html">News</a></li>
+        </ul>
+      </div>
+    </div>
+</div>
+</div>
+<!------------------------->
+<!-- End of Navigation ---->
+<!------------------------->
+<div class="uk-hidden@m">
+<br><br><br><br><br><br>
+</div>
+
+<div class="uk-margin uk-margin-large-right uk-margin-large-left">
+<h4 class="norwester"><i class="fa fa-filter"></i> &nbsp;Filters</h4>
+<hr class="table-border"></hr>
+</div>
+
+<form class="uk-form-stacked uk-margin uk-margin-large-right uk-margin-large-left">
+<div class="uk-inline uk-margin-bottom uk-width-1-1 uk-width-1-4@m">
+<label class="uk-form-label norwester">Alumni Name</label>
+<input class="uk-input border-charcoal2" type="text">
+</div>
+
+<div class="uk-inline uk-margin-bottom uk-width-1-1 uk-width-1-4@m">
+<label class="uk-form-label norwester">Graduation Year</label>
+<select class="uk-select border-charcoal2">
+  <option> All </option>
+  <option>	2019	</option>
+  <option>	2018	</option>
+  <option>	2017	</option>
+  <option>	2016	</option>
+  <option>	2015	</option>
+  <option>	2914	</option>
+  <option>	2013	</option>
+  <option>	2012	</option>
+  <option>	2011	</option>
+  <option>	2010	</option>
+  <option>	2009	</option>
+  <option>	2008	</option>
+  <option>	2007	</option>
+  <option>	2006	</option>
+  <option>	2005	</option>
+  <option>	2004	</option>
+  <option>	2003	</option>
+  <option>	2002	</option>
+  <option>	2001	</option>
+  <option>	2000	</option>
+  <option>	1999	</option>
+  <option>	1998	</option>
+  <option>	1997	</option>
+  <option>	1996	</option>
+  <option>	1995	</option>
+  <option>	1994	</option>
+  <option>	1993	</option>
+  <option>	1992	</option>
+  <option>	1991	</option>
+  <option>	1990	</option>
+  <option>	1989	</option>
+  <option>	1988	</option>
+  <option>	1987	</option>
+  <option>	1986	</option>
+  <option>	1985	</option>
+  <option>	1984	</option>
+  <option>	1983	</option>
+  <option>	1982	</option>
+  <option>	1981	</option>
+  <option>	1980	</option>
+  <option>	1979	</option>
+  <option>	1978	</option>
+  <option>	1977	</option>
+  <option>	1976	</option>
+  <option>	1975	</option>
+  <option>	1974	</option>
+  <option>	1973	</option>
+  <option>	1972	</option>
+  <option>	1971	</option>
+  <option>	1970	</option>
+  <option>	1969	</option>
+  <option>	1968	</option>
+  <option>	1967	</option>
+  <option>	1966	</option>
+  <option>	1965	</option>
+  <option>	1964	</option>
+  <option>	1963	</option>
+  <option>	1962	</option>
+  <option>	1961	</option>
+  <option>	1960	</option>
+  <option>	1959	</option>
+  <option>	1958	</option>
+  <option>	1957	</option>
+  <option>	1956	</option>
+  <option>	1955	</option>
+  <option>	1954	</option>
+  <option>	1953	</option>
+  <option>	1952	</option>
+  <option>	1951	</option>
+  <option>	1950	</option>
+  <option>	1949	</option>
+  <option>	1948	</option>
+  <option>	1947	</option>
+  <option>	1946	</option>
+  <option>	1945	</option>
+  <option>	1944	</option>
+  <option>	1943	</option>
+  <option>	1942	</option>
+  <option>	1941	</option>
+  <option>	1940	</option>
+  <option>	1939	</option>
+  <option>	1938	</option>
+  <option>	1937	</option>
+  <option>	1936	</option>
+  <option>	1935	</option>
+  <option>	1934	</option>
+  <option>	1933	</option>
+  <option>	1932	</option>
+  <option>	1931	</option>
+  <option>	1930	</option>
+  <option>	1929	</option>
+  <option>	1928	</option>
+  <option>	1927	</option>
+  <option>	1926	</option>
+  <option>	1925	</option>
+  <option>	1924	</option>
+  <option>	1923	</option>
+  <option>	1922	</option>
+  <option>	1921	</option>
+  <option>	1920	</option>
+</select>
+</div>
+
+<div class="uk-inline uk-margin-bottom uk-width-1-1 uk-width-1-4@m">
+<label class="uk-form-label norwester">Hall of Fame</label>
+<select class="uk-select border-charcoal2">
+  <option> Show All </option>
+  <option> Hall of Fame Only</option>
+</select>
+</div>
+
+<button class="uk-button button-lt uk-inline uk-margin-small-top" type="button">Update Results</button>
+
+</form>
+
+<!-- Start of yearbook card view/listing -->
+<div class="uk-child-width-1-3@m uk-margin uk-margin-medium-right uk-margin-left uk-grid-match uk-grid-small" uk-grid>
+    <div>
+        <a style="text-decoration: none !important;" uk-toggle="target: #rebecca-himmelheiber-graves">
+        <div class="uk-card uk-card-default">
+            <div class="uk-card-media-top uk-height-large uk-cover-container">
+                <img src="yearbook/1.jpg" uk-cover>
+            </div>
+            <div class="uk-card-body">
+              <div class="uk-card-badge gold font-white icon-padding" uk-tooltip="Hall of Fame Recipient"><i class="fa fa-trophy"></i></div>
+                <h3 class="uk-card-title">Rebecca Himmelheiber-Graves</h3>
+                <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Becky, Anderson</span><br>
+                <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+            </div>
+        </div>
+      </a>
+    </div>
+    <div>
+      <div class="uk-card uk-card-default">
+        <a style="text-decoration: none !important;" uk-toggle="target: #rachel-greene">
+          <div class="uk-card-media-top uk-height-large uk-cover-container">
+              <img src="yearbook/2.jpg" uk-cover>
+          </div>
+          <div class="uk-card-body">
+            <div class="uk-card-badge gold icon-padding" uk-tooltip="Deceased">
+              <svg width="22px" height="24px" viewBox="0 0 22 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <title>death-rip</title>
+                  <g id="Style-Guide" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <g id="Artboard" transform="translate(-1107.000000, -1433.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                          <g id="death-rip" transform="translate(1107.000000, 1433.000000)">
+                              <path d="M15.625,7.859 L16,7.859 C16.4832491,7.85899999 16.875,7.46724915 16.875,6.984 C16.875,6.50075085 16.4832491,6.10900001 16,6.109 L15.625,6.109 C15.3488576,6.109 15.125,6.33285763 15.125,6.609 L15.125,7.359 C15.125,7.49160824 15.1776784,7.6187852 15.2714466,7.71255339 C15.3652148,7.80632158 15.4923918,7.859 15.625,7.859 Z" id="Path"></path>
+                              <path d="M6.625,7.859 L7,7.859 C7.48324915,7.85899999 7.87499997,7.46724915 7.87499997,6.984 C7.87499997,6.50075085 7.48324915,6.10900001 7,6.109 L6.625,6.109 C6.34885763,6.109 6.125,6.33285763 6.125,6.609 L6.125,7.359 C6.125,7.49160824 6.17767842,7.6187852 6.27144661,7.71255339 C6.3652148,7.80632158 6.49239176,7.859 6.625,7.859 Z" id="Path"></path>
+                              <path d="M2.659,18.287 C3.25190495,18.0851823 3.87369174,17.9811571 4.5,17.979 C4.63,17.979 4.76,17.984 4.889,17.992 C5.07986231,18.0045457 5.26115733,17.9071044 5.356,17.741 C6.51890287,15.7229136 8.67083369,14.4793007 11,14.4793007 C13.3291663,14.4793007 15.4810971,15.7229136 16.644,17.741 C16.7388427,17.9071044 16.9201377,18.0045457 17.111,17.992 C17.24,17.984 17.37,17.979 17.5,17.979 C18.1263083,17.9811571 18.748095,18.0851823 19.341,18.287 C19.4935274,18.3381594 19.6613541,18.3128014 19.7919576,18.218862 C19.9225611,18.1249225 19.9999854,17.9738785 20,17.813 L20,5.479 C20,1.729 15.334,0.021 11,0.021 C6.666,0.021 2,1.729 2,5.479 L2,17.813 C2.00001459,17.9738785 2.07743885,18.1249225 2.20804238,18.218862 C2.33864591,18.3128014 2.50647258,18.3381594 2.659,18.287 Z M13.875,8.487 L13.875,5.487 C13.875,5.14182203 14.154822,4.862 14.5,4.862 L16,4.862 C17.1736051,4.862 18.125,5.81339491 18.125,6.987 C18.125,8.16060509 17.1736051,9.112 16,9.112 L15.625,9.112 C15.3488576,9.112 15.125,9.33585763 15.125,9.612 L15.125,11.487 C15.125,11.832178 14.845178,12.112 14.5,12.112 C14.154822,12.112 13.875,11.832178 13.875,11.487 L13.875,8.487 Z M10.5,6.109 C10.154822,6.109 9.875,5.82917797 9.875,5.484 C9.875,5.13882203 10.154822,4.859 10.5,4.859 L12.5,4.859 C12.845178,4.859 13.125,5.13882203 13.125,5.484 C13.125,5.82917797 12.845178,6.109 12.5,6.109 C12.2928932,6.109 12.125,6.27689322 12.125,6.484 L12.125,10.484 C12.125,10.6911068 12.2928932,10.859 12.5,10.859 C12.845178,10.859 13.125,11.138822 13.125,11.484 C13.125,11.829178 12.845178,12.109 12.5,12.109 L10.5,12.109 C10.154822,12.109 9.875,11.829178 9.875,11.484 C9.875,11.138822 10.154822,10.859 10.5,10.859 C10.7071068,10.859 10.875,10.6911068 10.875,10.484 L10.875,6.484 C10.875,6.38454382 10.8354912,6.2891611 10.765165,6.21883496 C10.6948389,6.14850882 10.5994562,6.109 10.5,6.109 Z M4.875,8.484 L4.875,5.484 C4.875,5.13882203 5.15482203,4.859 5.5,4.859 L7,4.859 C8.07698828,4.86056043 8.9825139,5.66758124 9.10755115,6.73728768 C9.2325884,7.80699411 8.53759506,8.80109848 7.49,9.051 C7.40178543,9.07184417 7.33176394,9.13880461 7.307,9.226 C7.28298934,9.31323546 7.30739219,9.40665263 7.371,9.471 L8.942,11.042 C9.18610985,11.2861099 9.18610985,11.6818901 8.94199999,11.926 C8.69789014,12.1701099 8.30210986,12.1701099 8.058,11.926 L6.552,10.419 C6.4804929,10.3473116 6.37280528,10.3258349 6.27926836,10.3646078 C6.18573144,10.4033808 6.12481884,10.4947456 6.125,10.596 L6.125,11.484 C6.125,11.829178 5.84517797,12.109 5.5,12.109 C5.15482203,12.109 4.875,11.829178 4.875,11.484 L4.875,8.484 Z" id="Shape"></path>
+                              <path d="M17.5,19.479 C17.1024305,19.4787583 16.7066056,19.5315573 16.323,19.636 C16.0706511,19.7028937 15.8093118,19.5643839 15.723,19.318 C15.0160953,17.3174349 13.1247858,15.9798237 11.003,15.9798237 C8.88121421,15.9798237 6.98990465,17.3174349 6.283,19.318 C6.19668819,19.5643839 5.93534892,19.7028937 5.683,19.636 C4.42580169,19.2952302 3.08262322,19.5159329 2.00056885,20.2410743 C0.91851448,20.9662157 0.203755511,22.1246447 0.041,23.417 C0.0231062084,23.5592907 0.067172422,23.7024149 0.162,23.81 C0.2569679,23.9175209 0.393543949,23.9790712 0.537,23.979 L21.469,23.979 C21.6124561,23.9790712 21.7490321,23.9175209 21.844,23.81 C21.9388276,23.7024149 21.9828938,23.5592907 21.965,23.417 C21.6817436,21.1666902 19.7680671,19.4788832 17.5,19.479 L17.5,19.479 Z" id="Path"></path></g></g></g></svg>
+            </div>
+              <h3 class="uk-card-title">Rachel Greene</h3>
+              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Smith</span><br>
+              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="uk-card uk-card-default">
+          <div class="uk-card-media-top uk-height-large uk-cover-container">
+              <img src="yearbook/3.jpg" uk-cover>
+          </div>
+          <div class="uk-card-body">
+              <h3 class="uk-card-title ">Andrew Roberts</h3>
+              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Andy</span><br>
+              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+          </div>
+      </div>
+    </div>
+    <div>
+        <div class="uk-card uk-card-default">
+            <div class="uk-card-media-top uk-height-large uk-cover-container">
+                <img src="yearbook/4.jpg" uk-cover>
+            </div>
+            <div class="uk-card-body">
+              <div class="uk-card-badge gold font-white icon-padding" uk-tooltip="Hall of Fame Recipient"><i class="fa fa-trophy"></i></div>
+                <h3 class="uk-card-title ">Roger Madison III</h3>
+                <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
+                <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+            </div>
+        </div>
+    </div>
+    <div>
+      <div class="uk-card uk-card-default">
+          <div class="uk-card-media-top uk-height-large uk-cover-container">
+              <img src="yearbook/5.jpg" uk-cover>
+          </div>
+          <div class="uk-card-body">
+              <h3 class="uk-card-title ">Robert Rhodes</h3>
+              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Bobby</span><br>
+              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+          </div>
+      </div>
+    </div>
+    <div>
+      <div class="uk-card uk-card-default">
+          <div class="uk-card-media-top uk-height-large uk-cover-container">
+              <img src="yearbook/6.jpg" uk-cover>
+          </div>
+          <div class="uk-card-body">
+              <h3 class="uk-card-title ">Alexander Davidson</h3>
+              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
+              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+          </div>
+      </div>
+    </div>
+    <div>
+        <div class="uk-card uk-card-default">
+            <div class="uk-card-media-top uk-height-large uk-cover-container">
+                <img src="yearbook/15.jpg" uk-cover>
+            </div>
+            <div class="uk-card-body">
+              <div class="uk-card-badge gold font-white icon-padding" uk-tooltip="Hall of Fame Recipient"><i class="fa fa-trophy"></i></div>
+                <h3 class="uk-card-title ">Roger Madison III</h3>
+                <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
+                <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+            </div>
+        </div>
+    </div>
+    <div>
+      <div class="uk-card uk-card-default">
+          <div class="uk-card-media-top uk-height-large uk-cover-container">
+              <img src="yearbook/7.jpg" uk-cover>
+          </div>
+          <div class="uk-card-body">
+              <h3 class="uk-card-title ">Robert Rhodes</h3>
+              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Bobby</span><br>
+              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+          </div>
+      </div>
+    </div>
+    <div>
+      <div class="uk-card uk-card-default">
+          <div class="uk-card-media-top uk-height-large uk-cover-container">
+              <img src="yearbook/8.jpg" uk-cover>
+          </div>
+          <div class="uk-card-body">
+              <h3 class="uk-card-title ">Alexander Davidson</h3>
+              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
+              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+          </div>
+      </div>
+    </div>
+    <div>
+        <div class="uk-card uk-card-default">
+            <div class="uk-card-media-top uk-height-large uk-cover-container">
+                <img src="yearbook/9.jpg" uk-cover>
+            </div>
+            <div class="uk-card-body">
+              <div class="uk-card-badge gold font-white icon-padding" uk-tooltip="Hall of Fame Recipient"><i class="fa fa-trophy"></i></div>
+                <h3 class="uk-card-title ">Roger Madison III</h3>
+                <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
+                <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+            </div>
+        </div>
+    </div>
+    <div>
+      <div class="uk-card uk-card-default">
+          <div class="uk-card-media-top uk-height-large uk-cover-container">
+              <img src="yearbook/10.jpg" uk-cover>
+          </div>
+          <div class="uk-card-body">
+              <h3 class="uk-card-title ">Robert Rhodes</h3>
+              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Bobby</span><br>
+              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+          </div>
+      </div>
+    </div>
+    <div>
+      <div class="uk-card uk-card-default">
+          <div class="uk-card-media-top uk-height-large uk-cover-container">
+              <img src="yearbook/11.jpg" uk-cover>
+          </div>
+          <div class="uk-card-body">
+              <h3 class="uk-card-title ">Alexander Davidson</h3>
+              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
+              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+          </div>
+      </div>
+    </div>
+    <div>
+        <div class="uk-card uk-card-default">
+            <div class="uk-card-media-top uk-height-large uk-cover-container">
+                <img src="yearbook/12.jpg" uk-cover>
+            </div>
+            <div class="uk-card-body">
+              <div class="uk-card-badge gold font-white icon-padding" uk-tooltip="Hall of Fame Recipient"><i class="fa fa-trophy"></i></div>
+                <h3 class="uk-card-title ">Roger Madison III</h3>
+                <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
+                <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+            </div>
+        </div>
+    </div>
+    <div>
+      <div class="uk-card uk-card-default">
+          <div class="uk-card-media-top uk-height-large uk-cover-container">
+              <img src="yearbook/13.jpg" uk-cover>
+          </div>
+          <div class="uk-card-body">
+              <h3 class="uk-card-title ">Robert Rhodes</h3>
+              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Bobby</span><br>
+              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+          </div>
+      </div>
+    </div>
+    <div>
+      <div class="uk-card uk-card-default">
+          <div class="uk-card-media-top uk-height-large uk-cover-container">
+              <img src="yearbook/14.jpg" uk-cover>
+          </div>
+          <div class="uk-card-body">
+              <h3 class="uk-card-title ">Alexander Davidson</h3>
+              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
+              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
+          </div>
+      </div>
+    </div>
+</div>
+
+<!--Off-Canvas Popout for someone with a public profile -->
+<div id="rebecca-himmelheiber-graves" uk-offcanvas="mode: push; overlay: true">
+    <div class="uk-offcanvas-bar white uk-width-1-1 uk-width-1-3@m">
+    <button class="uk-offcanvas-close font-black" type="button" uk-close="ratio: 2"></button>
+    <h4 class="norwester font-black uk-text-center">Rebecca Himmelheiber-Graves</h4>
+    <div class="uk-width-1-1 uk-margin">
+        <div class="uk-cover-container uk-height-medium">
+          <img src="yearbook/elderly.jpg" uk-cover>
+        </div>
+      <hr>
+      <span class="profile-label">Email</span><br>
+      <a id="email" href="mailto:leslie_cole@gmail.com">leslie_cole@gmail.com</a><br><br>
+      <span class="profile-label uk-margin-top">Home Phone</span><br>
+      <span id="home_phone" class="profile-field">(123) 456-7890</span><br><br>
+      <span class="profile-label uk-margin-top">Cell Phone</span><br>
+      <span id="mobile_phone" class="profile-field">(987) 654-3210</span><br><br>
+      <span class="profile-label uk-margin-top">Birthday</span><br>
+      <span id="birthday" class="profile-field">June 8th</span><br><br>
+      <span class="profile-label uk-margin-top">Marital Status</span><br>
+      <span id="marital_status" class="profile-field">Married</span><br><br>
+      <span class="profile-label uk-margin-top">Address</span><br>
+      <span>
+      <span id="address_line1" class="profile-field">123 Main Street</span><br>
+      <span id="address_line2" class="profile-field">Apartment #12</span><br>
+      <span id="city" class="profile-field">Louisville</span>,<span id="state" class="profile-field"> KY</span><span id="zip" class="profile-field"> 40202</span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!--Off-Canvas Popout for someone with a private profile -->
+<div id="rachel-greene" uk-offcanvas="mode: push; overlay: true">
+    <div class="uk-offcanvas-bar white uk-width-1-1 uk-width-1-3@m">
+    <button class="uk-offcanvas-close font-black" type="button" uk-close="ratio: 2"></button>
+    <h4 class="norwester font-black uk-text-center">Rachel Greene</h4><br><br>
+      <h5 class="profile-label uk-text-center uk-margin"> <i class="fa fa-user-secret fa-3x"></i> <br><br>Profile is Private</h5>
+    </div>
+</div>
+
+
+
+    </body>
+</html>
