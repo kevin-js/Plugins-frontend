@@ -1,6 +1,10 @@
 # AlumniAssociation
 Alumni Association Web Portal for Campbell Boyer at Plugins LLC 
 
+## branches
+- master: main branch for general designs.
+- node-templates: templatized webpages for use with the Node.js backend in [ejs format](https://ejs.co/).
+
 ## Membership Options:
 - Leads to Membership Types
 
