@@ -50,7 +50,7 @@
 
 
   <div class="uk-padding uk-position-relative uk-position-bottom-center uk-text-center">
-  <h4 class="uk-inline uk-margin-right uk-margin-top">Not a member? </h4> <a class="uk-button button-lt uk-inline" href="sign_up.html">Create An Account</a>
+  <h4 class="uk-inline uk-margin-right uk-margin-top">Not a member? </h4> <a class="uk-button button-lt uk-inline" href="/">Create An Account</a>
   </div>
 
   <script type="text/javascript">
@@ -63,7 +63,7 @@
           password: $('#password-input').val()
         },
         success: function(data) {
-          window.location.pathname = '/profile';
+          window.location.pathname = data.redirect;
         },
         error: function(req, err) {
           alert(err);
