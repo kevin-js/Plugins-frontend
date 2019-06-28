@@ -4,61 +4,9 @@
   <title>Groups</title>
   <%- include('header'); %>
 </head>
-    <body>
-      <nav class="uk-navbar-container uk-navbar-transparent uk-padding uk-visible@m" uk-navbar>
-          <div class="uk-navbar-center">
-              <ul class="uk-navbar-nav link-dk">
-                  <li class="uk-active"><a href="profile.html">Profile</a></li>
-                  <li><a><svg class="uk-margin-left uk-margin-right" width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Diamond</title><g id="PROTOTYPE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                          <g id="Calendar" transform="translate(-548.000000, -91.000000)" fill="#2B2A27">
-                              <rect id="Rectangle" transform="translate(559.313708, 102.313708) rotate(315.000000) translate(-559.313708, -102.313708) " x="551.313708" y="94.3137085" width="16" height="16" rx="1"></rect></g></g></svg></a></li>
-                      <li><a href="yearbook.html">Yearbook <span uk-icon="triangle-down"></span></a></li>
-                      <div uk-dropdown="offset: -30" class="uk-navbar-dropdown">
-                          <ul class="uk-nav uk-navbar-dropdown-nav">
-                              <li><a href="groups.html">Groups</a></li>
-                              <li><a href="hall_of_fame.html">Hall of Fame</a></li>
-                              <li><a href="memories.html">Memories</a></li>
-                          </ul>
-                      </div>
-
-                    <li><a class="uk-text-center uk-margin-left uk-margin-right" href="yearbook.html">
-                    <h5 class="norwester">Fern Creek<br>Alumni Association</h5></a></li>
-
-                  <li><a href="calendar.html">Calendar</a></li>
-                  <li><a><svg class="uk-margin-left uk-margin-right" width="23px" height="23px" viewBox="0 0 23 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><title>Diamond</title><g id="PROTOTYPE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                          <g id="Calendar" transform="translate(-548.000000, -91.000000)" fill="#2B2A27">
-                              <rect id="Rectangle" transform="translate(559.313708, 102.313708) rotate(315.000000) translate(-559.313708, -102.313708) " x="551.313708" y="94.3137085" width="16" height="16" rx="1"></rect></g></g></svg></a></li>
-                  <li><a href="news.html">News</a></li>
-              </ul>
-          </div>
-      </nav>
-
-<div class="uk-hidden@m link-dk">
-<a class="uk-float-left uk-margin-top uk-margin-left" href="#">
-<h5 class="norwester">Fern Creek<br>Alumni Association</h5></a>
-<a class="uk-icon-link uk-icon uk-float-right uk-margin-right uk-margin-large" href="#" uk-icon="icon: table" uk-toggle="target: #offcanvas-overlay"> Menu &nbsp;</a>
-
-<!-- Mobile Menu -->
-<div id="offcanvas-overlay" uk-offcanvas="overlay: true">
-    <div class="uk-offcanvas-bar">
-      <button class="uk-offcanvas-close" type="button" uk-close></button>
-      <div class="uk-width-1-1">
-        <ul class="uk-nav uk-nav-default uk-padding">
-            <li><a href="profile.html">Profile</a></li>
-            <li><a href="yearbook.html">Yearbook</a></li>
-            <li><a href="groups.html">Groups</a></li>
-            <li><a href="hall_of_fame.html">Hall of Fame</a></li>
-            <li><a href="memories.html">Memories</a></li>
-            <li><a href="calendar.html">Calendar</a></li>
-            <li><a href="news.html">News</a></li>
-        </ul>
-      </div>
-    </div>
-</div>
-</div>
-<!------------------------->
-<!-- End of Navigation ---->
-<!------------------------->
+<body>
+  <%- include('top-navigation'); %>
+  
 <div class="uk-hidden@m">
 <br><br><br><br><br><br>
 </div>
@@ -68,73 +16,73 @@
 <div class="uk-position-relative uk-float-right"><button class="uk-button button-dk" href="#image-modal" uk-toggle>Request</button></div>
 <!-- Here is the code for the add an image modal -->
 <div id="image-modal" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body fog">
-      <button class="uk-modal-close-default" type="button" uk-close></button>
-        <h2 class="uk-modal-title">Request a Group</h2>
-        <form>
-          <div class="uk-margin">
-            <span class="profile-label">*Your Name</span>
-            <input class="uk-input" type="text">
-          </div>
-          <div class="uk-margin">
-            <span class="profile-label">*Your Email</span>
-            <input class="uk-input" type="text">
-          </div>
-          <div class="uk-margin">
-            <span class="profile-label">*Reason for Request</span>
-            <textarea class="uk-textarea" rows="5" placeholder="Enter an event description"></textarea>
-          </div>
-        </form>
+<div class="uk-modal-dialog uk-modal-body fog">
+  <button class="uk-modal-close-default" type="button" uk-close></button>
+    <h2 class="uk-modal-title">Request a Group</h2>
+    <form>
+      <div class="uk-margin">
+        <span class="profile-label">*Your Name</span>
+        <input class="uk-input" type="text">
+      </div>
+      <div class="uk-margin">
+        <span class="profile-label">*Your Email</span>
+        <input class="uk-input" type="text">
+      </div>
+      <div class="uk-margin">
+        <span class="profile-label">*Reason for Request</span>
+        <textarea class="uk-textarea" rows="5" placeholder="Enter an event description"></textarea>
+      </div>
+    </form>
 
-        <p class="uk-text-left">
-            <button class="uk-button button-dk" type="button">Submit</button>
-            <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
-        </p>
-    </div>
+    <p class="uk-text-left">
+        <button class="uk-button button-dk" type="button">Submit</button>
+        <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
+    </p>
+</div>
 </div>
 </div>
 
 <!-- Member Detail Modal -->
 <div id="modal-group-details" class="uk-modal-full" uk-modal>
-    <div class="uk-modal-dialog fog uk-padding" uk-overflow-auto uk-height-viewport>
-        <button class="uk-modal-close-full uk-close-large fog" type="button" uk-close></button>
-      <h3 class="norwester font-black uk-text-center uk-padding">Member Details</h3>
-      <div class="uk-container border-charcoal white uk-margin">
-        <div class="uk-grid-match uk-margin-remove uk-flex-top uk-padding" uk-grid>
-        <div class="uk-width-1-3@m">
-            <h4 class="norwester font-black">Rebecca Himmelheiber-Graves</h4>
-            <img class="uk-border-rounded uk-height-small uk-width-auto" src="yearbook/elderly.jpg">
-        </div>
-        <div class="uk-width-1-3@m">
-          <span class="profile-label">Email</span><br>
-          <a id="email" href="mailto:leslie_cole@gmail.com">leslie_cole@gmail.com</a><br><br>
-          <span class="profile-label">Home Phone</span><br>
-          <span id="home_phone" class="profile-field">(123) 456-7890</span><br><br>
-          <span class="profile-label">Cell Phone</span><br>
-          <span id="mobile_phone" class="profile-field">(987) 654-3210</span><br><br>
-          <span class="profile-label">Birthday</span><br>
-          <span id="birthday" class="profile-field">June 8th</span>
-        </div>
-        <div class="uk-width-1-3@m">
-          <span class="profile-label">Marital Status</span>
-          <span id="marital_status" class="profile-field">Married</span><br>
-          <span class="profile-label">Address</span><br>
-          <span>
-          <span id="address_line1" class="profile-field">123 Main Street</span><br>
-          <span id="address_line2" class="profile-field">Apartment #12</span><br>
-          <span id="city" class="profile-field">Louisville</span>,<span id="state" class="profile-field"> KY</span><span id="zip" class="profile-field"> 40202</span>
-          </span>
-        </div>
-        </div>
-      </div>
-      <div class="uk-container uk-padding border-charcoal white uk-margin">
-        <h4 class="norwester font-black uk-text-center">Rachel Greene</h4><br><br>
-        <h5 class="profile-label uk-text-center uk-margin"> <i class="fa fa-user-secret fa-3x"></i> <br><br>Profile is Private</h5>
-      </div>
-      <br><br>
-      </div>
+<div class="uk-modal-dialog fog uk-padding" uk-overflow-auto uk-height-viewport>
+    <button class="uk-modal-close-full uk-close-large fog" type="button" uk-close></button>
+  <h3 class="norwester font-black uk-text-center uk-padding">Member Details</h3>
+  <div class="uk-container border-charcoal white uk-margin">
+    <div class="uk-grid-match uk-margin-remove uk-flex-top uk-padding" uk-grid>
+    <div class="uk-width-1-3@m">
+        <h4 class="norwester font-black">Rebecca Himmelheiber-Graves</h4>
+        <img class="uk-border-rounded uk-height-small uk-width-auto" src="yearbook/elderly.jpg">
+    </div>
+    <div class="uk-width-1-3@m">
+      <span class="profile-label">Email</span><br>
+      <a id="email" href="mailto:leslie_cole@gmail.com">leslie_cole@gmail.com</a><br><br>
+      <span class="profile-label">Home Phone</span><br>
+      <span id="home_phone" class="profile-field">(123) 456-7890</span><br><br>
+      <span class="profile-label">Cell Phone</span><br>
+      <span id="mobile_phone" class="profile-field">(987) 654-3210</span><br><br>
+      <span class="profile-label">Birthday</span><br>
+      <span id="birthday" class="profile-field">June 8th</span>
+    </div>
+    <div class="uk-width-1-3@m">
+      <span class="profile-label">Marital Status</span>
+      <span id="marital_status" class="profile-field">Married</span><br>
+      <span class="profile-label">Address</span><br>
+      <span>
+      <span id="address_line1" class="profile-field">123 Main Street</span><br>
+      <span id="address_line2" class="profile-field">Apartment #12</span><br>
+      <span id="city" class="profile-field">Louisville</span>,<span id="state" class="profile-field"> KY</span><span id="zip" class="profile-field"> 40202</span>
+      </span>
     </div>
     </div>
+  </div>
+  <div class="uk-container uk-padding border-charcoal white uk-margin">
+    <h4 class="norwester font-black uk-text-center">Rachel Greene</h4><br><br>
+    <h5 class="profile-label uk-text-center uk-margin"> <i class="fa fa-user-secret fa-3x"></i> <br><br>Profile is Private</h5>
+  </div>
+  <br><br>
+  </div>
+</div>
+</div>
 </div>
 
 <!--------------------------->
@@ -144,72 +92,72 @@
 <div class="uk-margin-right uk-margin-left">
 <div class="uk-grid uk-child-width-1-2@m" uk-grid>
 <div>
-    <div class="uk-card uk-card-default">
-        <div class="uk-card-header container-top">
-            <h4 class="norwester font-white">Groups You Lead</h4>
-        </div>
-        <table class="uk-table uk-margin-remove group-table">
-          <tbody>
-                  <tr>
-
-                  <td class="uk-clearfix">
-                  <a href="#modal-group-details" uk-toggle><h4>25 Year Reunion Committee</h4></a>
-                  <h5 class="font-charcoal uk-position-relative">
-                  <span class="uk-float-left"><span id="member_count">22</span> Members</span>
-                  <span class="uk-float-right"><a href="#">Contact Group</a> | <a href="#">Close</a></span>
-                  </h5>
-                  </td>
-                  </tr>
-                  <tr><td>
-                    <h4>Clean Up Louisville Committee</h4>
-                    <h5 class="font-charcoal uk-position-relative">
-                    <span class="uk-float-left"><span id="member_count">22</span> Members</span>
-                    <span class="uk-float-right"><a href="#">Contact Group</a> | <a href="#">Close</a></span>
-                    </h5>
-                  </td></tr>
-          </tbody>
-      </table>
+<div class="uk-card uk-card-default">
+    <div class="uk-card-header container-top">
+        <h4 class="norwester font-white">Groups You Lead</h4>
     </div>
+    <table class="uk-table uk-margin-remove group-table">
+      <tbody>
+              <tr>
+
+              <td class="uk-clearfix">
+              <a href="#modal-group-details" uk-toggle><h4>25 Year Reunion Committee</h4></a>
+              <h5 class="font-charcoal uk-position-relative">
+              <span class="uk-float-left"><span id="member_count">22</span> Members</span>
+              <span class="uk-float-right"><a href="#">Contact Group</a> | <a href="#">Close</a></span>
+              </h5>
+              </td>
+              </tr>
+              <tr><td>
+                <h4>Clean Up Louisville Committee</h4>
+                <h5 class="font-charcoal uk-position-relative">
+                <span class="uk-float-left"><span id="member_count">22</span> Members</span>
+                <span class="uk-float-right"><a href="#">Contact Group</a> | <a href="#">Close</a></span>
+                </h5>
+              </td></tr>
+      </tbody>
+  </table>
+</div>
 </div>
 
 <div>
-    <div class="uk-card uk-card-default">
-        <div class="uk-card-header container-top">
-            <h4 class="norwester font-white">Groups you Joined</h4>
-        </div>
-        <table class="uk-table uk-margin-remove group-table">
-          <tbody>
-                  <tr><td class="uk-clearfix">
-                  <h4>50 Year Reunion Committee</h4>
-                  <h5 class="font-charcoal uk-position-relative">
-                  <span class="uk-float-left"><span id="member_count">22</span> Members</span>
-                  <span class="uk-float-right"><a href="#">Contact Leader</a> | <a href="#">Leave</a></span>
-                  </h5>
-                  </td></tr>
-                  <tr><td>
-                    <h4>Alimni Association Officers</h4>
-                    <h5 class="font-charcoal uk-position-relative">
-                    <span class="uk-float-left"><span id="member_count">22</span> Members</span>
-                    <span class="uk-float-right"><a href="#">Contact Leader</a> | <a href="#">Leave</a></span>
-                    </h5>
-                  </td></tr>
-                  <tr><td class="uk-clearfix">
-                  <h4>Cross Country Runners Club</h4>
-                  <h5 class="font-charcoal uk-position-relative">
-                  <span class="uk-float-left"><span id="member_count">22</span> Members</span>
-                  <span class="uk-float-right"><a href="#">Contact Leader</a> | <a href="#">Leave</a></span>
-                  </h5>
-                  </td></tr>
-                  <tr><td>
-                    <h4>Track & Field, Monthly Brunch</h4>
-                    <h5 class="font-charcoal uk-position-relative">
-                    <span class="uk-float-left"><span id="member_count">22</span> Members</span>
-                    <span class="uk-float-right"><a href="#">Contact Leader</a> | <a href="#">Leave</a></span>
-                    </h5>
-                  </td></tr>
-          </tbody>
-      </table>
+<div class="uk-card uk-card-default">
+    <div class="uk-card-header container-top">
+        <h4 class="norwester font-white">Groups you Joined</h4>
     </div>
+    <table class="uk-table uk-margin-remove group-table">
+      <tbody>
+              <tr><td class="uk-clearfix">
+              <h4>50 Year Reunion Committee</h4>
+              <h5 class="font-charcoal uk-position-relative">
+              <span class="uk-float-left"><span id="member_count">22</span> Members</span>
+              <span class="uk-float-right"><a href="#">Contact Leader</a> | <a href="#">Leave</a></span>
+              </h5>
+              </td></tr>
+              <tr><td>
+                <h4>Alimni Association Officers</h4>
+                <h5 class="font-charcoal uk-position-relative">
+                <span class="uk-float-left"><span id="member_count">22</span> Members</span>
+                <span class="uk-float-right"><a href="#">Contact Leader</a> | <a href="#">Leave</a></span>
+                </h5>
+              </td></tr>
+              <tr><td class="uk-clearfix">
+              <h4>Cross Country Runners Club</h4>
+              <h5 class="font-charcoal uk-position-relative">
+              <span class="uk-float-left"><span id="member_count">22</span> Members</span>
+              <span class="uk-float-right"><a href="#">Contact Leader</a> | <a href="#">Leave</a></span>
+              </h5>
+              </td></tr>
+              <tr><td>
+                <h4>Track & Field, Monthly Brunch</h4>
+                <h5 class="font-charcoal uk-position-relative">
+                <span class="uk-float-left"><span id="member_count">22</span> Members</span>
+                <span class="uk-float-right"><a href="#">Contact Leader</a> | <a href="#">Leave</a></span>
+                </h5>
+              </td></tr>
+      </tbody>
+  </table>
+</div>
 </div>
 </div>
 </div>
@@ -218,170 +166,170 @@
 <!-- User Setup Section -->
 <!--------------------------->
 <div class="uk-card uk-card-default uk-margin-large-top uk-margin-right uk-margin-left">
-    <div class="uk-card-header container-top uk-clearfix">
-      <div class="uk-float-right uk-visible@m">
-        <select class="uk-select border-charcoal2 uk-inline uk-width-small">
-            <option>10 per page</option>
-            <option>50 per page</option>
-            <option>100 per Page </option>
-        </select>
+<div class="uk-card-header container-top uk-clearfix">
+  <div class="uk-float-right uk-visible@m">
+    <select class="uk-select border-charcoal2 uk-inline uk-width-small">
+        <option>10 per page</option>
+        <option>50 per page</option>
+        <option>100 per Page </option>
+    </select>
+</div>
+    <div class="uk-grid-small uk-flex-middle" uk-grid>
+    <h4 class="norwester font-white">Groups Available<h5 class="font-white" id="group_count">(14)</h5></h4>
     </div>
-        <div class="uk-grid-small uk-flex-middle" uk-grid>
-        <h4 class="norwester font-white">Groups Available<h5 class="font-white" id="group_count">(14)</h5></h4>
-        </div>
+</div>
+<div class="charcoal uk-padding-small">
+      <form class="uk-width-1-1 uk-padding-small">
+      <div class="uk-form-controls uk-inline uk-width-1-3@m uk-margin-right uk-margin-bottom-small">
+        <span class="uk-form-icon" uk-icon="icon: search"></span>
+          <input class="uk-input border-charcoal2" type="text" placeholder="Search by Group Name">
+      </div>
+      <div class="uk-inline uk-width-1-3@m uk-margin-right uk-margin-bottom-small">
+          <select class="uk-select border-charcoal2">
+              <option>Sort Alphabetically (A-Z)</option>
+              <option>Sort Alphabetically (Z-A)</option>
+          </select>
+      </div>
+      <div class="uk-inline uk-float-right uk-margin-bottom-small">
+      <h5 class="font-white"><a href="#" class="font-white">Clear Filters</a></h5>
     </div>
-    <div class="charcoal uk-padding-small">
-          <form class="uk-width-1-1 uk-padding-small">
-          <div class="uk-form-controls uk-inline uk-width-1-3@m uk-margin-right uk-margin-bottom-small">
-            <span class="uk-form-icon" uk-icon="icon: search"></span>
-              <input class="uk-input border-charcoal2" type="text" placeholder="Search by Group Name">
-          </div>
-          <div class="uk-inline uk-width-1-3@m uk-margin-right uk-margin-bottom-small">
-              <select class="uk-select border-charcoal2">
-                  <option>Sort Alphabetically (A-Z)</option>
-                  <option>Sort Alphabetically (Z-A)</option>
-              </select>
-          </div>
-          <div class="uk-inline uk-float-right uk-margin-bottom-small">
-          <h5 class="font-white"><a href="#" class="font-white">Clear Filters</a></h5>
-        </div>
-        </form>
-        </div>
+    </form>
+    </div>
 
-    <div class="uk-card-body white uk-padding-remove uk-margin-remove uk-width-1-1">
-      <table class="uk-table uk-table-large uk-margin-remove uk-width-1-1 uk-overflow-auto">
-        <thead class="uk-card-header white">
-          <tr>
-              <th class="uk-table-shrink border-none uk-width-1-2 ">Group Name</th>
-              <th class="uk-table-shrink border-none"># of Members</th>
-              <th class="uk-table-shrink border-none">Actions</th>
-              <th class="uk-table-shrink border-none"></th>
-          </tr>
-      </thead>
-      <div class="uk-card-body white uk-padding-remove">
-        <tbody>
-          <tr>
-            <td class="table-border border-none">
-            <span id="group_name">Group Name # 1</span>
-            </td>
-          <td class="table-border border-none">
-            <span id="member-count">22</span>
-          </td>
-          <td class="table-border border-none"><span class="uk-inline"><a href="#">Contact Leader</a></td> <td class="table-border border-none"> <a href="#">Join</a></span></td>
-        </tr>
-        <tr>
-          <td class="table-border border-none">
-          <span id="group_name">Group Name # 2</span>
-          </td>
-        <td class="table-border border-none">
-          <span id="member-count">2</span>
-        </td>
-        <td class="table-border border-none"><span class="uk-inline"><a href="#">Contact Leader</a></td> <td class="table-border border-none"> <a href="#">Join</a></span></td>
+<div class="uk-card-body white uk-padding-remove uk-margin-remove uk-width-1-1">
+  <table class="uk-table uk-table-large uk-margin-remove uk-width-1-1 uk-overflow-auto">
+    <thead class="uk-card-header white">
+      <tr>
+          <th class="uk-table-shrink border-none uk-width-1-2 ">Group Name</th>
+          <th class="uk-table-shrink border-none"># of Members</th>
+          <th class="uk-table-shrink border-none">Actions</th>
+          <th class="uk-table-shrink border-none"></th>
       </tr>
+  </thead>
+  <div class="uk-card-body white uk-padding-remove">
+    <tbody>
       <tr>
         <td class="table-border border-none">
-        <span id="group_name">Group Name # 3</span>
+        <span id="group_name">Group Name # 1</span>
         </td>
       <td class="table-border border-none">
-        <span id="member-count">24</span>
+        <span id="member-count">22</span>
       </td>
       <td class="table-border border-none"><span class="uk-inline"><a href="#">Contact Leader</a></td> <td class="table-border border-none"> <a href="#">Join</a></span></td>
     </tr>
     <tr>
       <td class="table-border border-none">
-      <span id="group_name">Group Name # 4</span>
+      <span id="group_name">Group Name # 2</span>
       </td>
     <td class="table-border border-none">
-      <span id="member-count">87</span>
+      <span id="member-count">2</span>
     </td>
     <td class="table-border border-none"><span class="uk-inline"><a href="#">Contact Leader</a></td> <td class="table-border border-none"> <a href="#">Join</a></span></td>
   </tr>
   <tr>
     <td class="table-border border-none">
-    <span id="group_name">Group Name # 5</span>
+    <span id="group_name">Group Name # 3</span>
     </td>
   <td class="table-border border-none">
-    <span id="member-count">922</span>
+    <span id="member-count">24</span>
   </td>
   <td class="table-border border-none"><span class="uk-inline"><a href="#">Contact Leader</a></td> <td class="table-border border-none"> <a href="#">Join</a></span></td>
 </tr>
 <tr>
   <td class="table-border border-none">
-  <span id="group_name">Group Name # 6</span>
+  <span id="group_name">Group Name # 4</span>
   </td>
 <td class="table-border border-none">
-  <span id="member-count">228</span>
+  <span id="member-count">87</span>
 </td>
 <td class="table-border border-none"><span class="uk-inline"><a href="#">Contact Leader</a></td> <td class="table-border border-none"> <a href="#">Join</a></span></td>
 </tr>
 <tr>
-  <td class="table-border border-none">
-  <span id="group_name">Group Name # 7</span>
-  </td>
 <td class="table-border border-none">
-  <span id="member-count">6</span>
+<span id="group_name">Group Name # 5</span>
+</td>
+<td class="table-border border-none">
+<span id="member-count">922</span>
 </td>
 <td class="table-border border-none"><span class="uk-inline"><a href="#">Contact Leader</a></td> <td class="table-border border-none"> <a href="#">Join</a></span></td>
 </tr>
 <tr>
-  <td class="table-border border-none">
-  <span id="group_name">Group Name # 8</span>
-  </td>
 <td class="table-border border-none">
-  <span id="member-count">22</span>
+<span id="group_name">Group Name # 6</span>
+</td>
+<td class="table-border border-none">
+<span id="member-count">228</span>
 </td>
 <td class="table-border border-none"><span class="uk-inline"><a href="#">Contact Leader</a></td> <td class="table-border border-none"> <a href="#">Join</a></span></td>
 </tr>
 <tr>
-  <td class="table-border border-none">
-  <span id="group_name">Group Name # 9</span>
-  </td>
 <td class="table-border border-none">
-  <span id="member-count">22</span>
+<span id="group_name">Group Name # 7</span>
+</td>
+<td class="table-border border-none">
+<span id="member-count">6</span>
 </td>
 <td class="table-border border-none"><span class="uk-inline"><a href="#">Contact Leader</a></td> <td class="table-border border-none"> <a href="#">Join</a></span></td>
 </tr>
 <tr>
-  <td class="table-border border-none">
-  <span id="group_name">Group Name # 10</span>
-  </td>
 <td class="table-border border-none">
-  <span id="member-count">22</span>
+<span id="group_name">Group Name # 8</span>
+</td>
+<td class="table-border border-none">
+<span id="member-count">22</span>
+</td>
+<td class="table-border border-none"><span class="uk-inline"><a href="#">Contact Leader</a></td> <td class="table-border border-none"> <a href="#">Join</a></span></td>
+</tr>
+<tr>
+<td class="table-border border-none">
+<span id="group_name">Group Name # 9</span>
+</td>
+<td class="table-border border-none">
+<span id="member-count">22</span>
+</td>
+<td class="table-border border-none"><span class="uk-inline"><a href="#">Contact Leader</a></td> <td class="table-border border-none"> <a href="#">Join</a></span></td>
+</tr>
+<tr>
+<td class="table-border border-none">
+<span id="group_name">Group Name # 10</span>
+</td>
+<td class="table-border border-none">
+<span id="member-count">22</span>
 </td>
 <td class="table-border border-none"><span class="uk-inline"><a href="#">Contact Leader</a></td> <td class="table-border border-none"> <a href="#">Join</a></span></td>
 </tr>
 </tbody>
 </table>
-      <div class="uk-padding-small black">
-      <ul class="uk-pagination uk-flex-center uk-margin-remove">
-      <li><a href="#"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
-      <li><div>
-          <select class="uk-select border-charcoal2">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-              <option>6</option>
-              <option>7</option>
-              <option>8</option>
-              <option>9</option>
-              <option>10</option>
-              <option>11</option>
-              <option>12</option>
-              <option>13</option>
-              <option>14</option>
-              <option>15</option>
-              <option>16</option>
-              <option>17</option>
-              <option>18</option>
-              <option>19</option>
-          </select>
-      </div></li>
-      <li class="font-white uk-margin-small">of 19</li>
-      <li><a href="#"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
-      </ul>
-      </div>
+  <div class="uk-padding-small black">
+  <ul class="uk-pagination uk-flex-center uk-margin-remove">
+  <li><a href="#"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
+  <li><div>
+      <select class="uk-select border-charcoal2">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+          <option>11</option>
+          <option>12</option>
+          <option>13</option>
+          <option>14</option>
+          <option>15</option>
+          <option>16</option>
+          <option>17</option>
+          <option>18</option>
+          <option>19</option>
+      </select>
+  </div></li>
+  <li class="font-white uk-margin-small">of 19</li>
+  <li><a href="#"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
+  </ul>
+  </div>
 
 
 </div>
@@ -394,5 +342,5 @@
 
 <div class="uk-margin-large"></div>
 
-    </body>
+</body>
 </html>
