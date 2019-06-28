@@ -56,7 +56,7 @@
             <label class="uk-form-label">*First Name</label>
             <div class="uk-form-controls uk-inline uk-width-1-1">
               <span class="uk-form-icon" uk-icon="icon: user"></span>
-                <input class="uk-input border-charcoal2" type="text">
+                <input id="first_name" class="uk-input border-charcoal2" type="text">
             </div>
         </div>
 
@@ -65,7 +65,7 @@
             <label class="uk-form-label">*Last Name</label>
             <div class="uk-form-controls uk-inline uk-width-1-1">
               <span class="uk-form-icon" uk-icon="icon: user"></span>
-                <input class="uk-input border-charcoal2" type="text">
+                <input id="last_name" class="uk-input border-charcoal2" type="text">
             </div>
         </div>
 
@@ -74,7 +74,7 @@
             <label class="uk-form-label">Nickname</label>
             <div class="uk-form-controls uk-inline uk-width-1-1">
               <span class="uk-form-icon" uk-icon="icon: user"></span>
-                <input class="uk-input border-charcoal2" type="text">
+                <input id="nickname" class="uk-input border-charcoal2" type="text">
             </div>
         </div>
 
@@ -82,7 +82,7 @@
         <div class="uk-width-1-2@m">
             <label class="uk-form-label">Marital Status</label>
             <div class="uk-form-controls uk-inline uk-width-1-1">
-              <select class="uk-select border-charcoal2">
+              <select id="marital_status" class="uk-select border-charcoal2">
                 <option> - - </option>
                 <option>Single</option>
                 <option>Married</option>
@@ -96,7 +96,7 @@
             <label class="uk-form-label">Home Phone #</label>
             <div class="uk-form-controls uk-inline uk-width-1-1">
               <span class="uk-form-icon" uk-icon="icon: receiver"></span>
-              <input class="uk-input border-charcoal2" placeholder="(###) ###-####" type="text">
+              <input id="home_phone" class="uk-input border-charcoal2" placeholder="(###) ###-####" type="text">
             </div>
         </div>
 
@@ -105,7 +105,7 @@
             <label class="uk-form-label">Cell Phone #</label>
             <div class="uk-form-controls uk-inline uk-width-1-1">
               <span class="uk-form-icon" uk-icon="icon: receiver"></span>
-              <input class="uk-input border-charcoal2" placeholder="(###) ###-####" type="text">
+              <input id="cell_phone" class="uk-input border-charcoal2" placeholder="(###) ###-####" type="text">
             </div>
         </div>
 
@@ -114,7 +114,7 @@
           <label class="uk-form-label">*Home Address Line 1</label>
             <div class="uk-form-controls uk-inline uk-width-1-1">
               <span class="uk-form-icon" uk-icon="icon: home"></span>
-              <input class="uk-input border-charcoal2" placeholder="123 Main Street" type="text">
+              <input id="address_line_1" class="uk-input border-charcoal2" placeholder="123 Main Street" type="text">
             </div>
         </div>
 
@@ -123,7 +123,7 @@
           <label class="uk-form-label">*Home Address Line 2</label>
             <div class="uk-form-controls uk-inline uk-width-1-1">
               <span class="uk-form-icon" uk-icon="icon: home"></span>
-              <input class="uk-input border-charcoal2" placeholder="Apartment B" type="text">
+              <input id="address_line_2" class="uk-input border-charcoal2" placeholder="Apartment B" type="text">
             </div>
         </div>
 
@@ -132,7 +132,7 @@
           <label class="uk-form-label">*City</label>
             <div class="uk-form-controls uk-inline uk-width-1-1">
               <span class="uk-form-icon" uk-icon="icon: location"></span>
-              <input class="uk-input border-charcoal2" type="text">
+              <input id="city" class="uk-input border-charcoal2" type="text">
             </div>
         </div>
 
@@ -140,7 +140,7 @@
         <div class="uk-width-1-4@m">
           <label class="uk-form-label">*State</label>
             <div class="uk-form-controls uk-inline uk-width-1-1">
-              <select class="uk-select border-charcoal2">
+              <select id="state" class="uk-select border-charcoal2">
                 <option> - - </option>
                 <option>	AL	</option>
                 <option>	AK	</option>
@@ -216,15 +216,45 @@
           <label class="uk-form-label">*ZIP Code</label>
             <div class="uk-form-controls uk-inline uk-width-1-1">
               <svg class="uk-form-icon icon-padding" xmlns="http://www.w3.org/2000/svg"><defs><style>.a{fill:none;stroke:#AFAFB7;stroke-linecap:round;stroke-linejoin:round;}</style></defs><title>compass-arrow</title><path class="a" d="M12.013,22.122a.5.5,0,0,1-.943-.231V12.93H2.109a.5.5,0,0,1-.231-.943L21.66,1.666a.5.5,0,0,1,.674.674Z"/></svg>
-                <input class="uk-input border-charcoal2" placeholder="ZIP" type="text">
+                <input id="zip_code" class="uk-input border-charcoal2" placeholder="ZIP" type="text">
             </div>
         </div>
     <div class="uk-position-relative uk-margin uk-position-bottom-left"><a class="uk-button button-lt" href="membership_options.html">Skip</a></div>
-    <div class="uk-position-relative uk-margin uk-position-bottom-right"><a class="uk-button button-dk" href="membership_options.html">Save</a></div>
+    <div class="uk-position-relative uk-margin uk-position-bottom-right" onclick="saveProfile()"><a class="uk-button button-dk">Save</a></div>
 </form>
 </div>
 </div>
 </div>
 <hr><hr>
-  </body>
+<script type="text/javascript">
+  function saveProfile() {
+    $.ajax({
+      url: '/api/update-profile-data',
+      type: 'POST',
+      data: {
+        name: $('#first_name').val() + ' ' + $('#last_name').val(),
+        nicknames: $('#nickname').val(),
+        home_phone: $('#home_phone').val(),
+        cell_phone: $('#cell_phone').val(),
+        marital_status: $('#marital_status').val(),
+        address_line_1: $('#address_line_1').val(),
+        address_line_2: $('#address_line_2').val(),
+        city: $('#city').val(),
+        state: $('#state').val(),
+        zip_code: $('#zip_code').val()
+      },
+      success: function(data) {
+        if (data.redirect) {
+          window.location.pathname = data.redirect;
+        } else {
+          window.location.pathname = '/membership_options';
+        }
+      },
+      error: function(err) {
+        alert(err);
+      }
+    });
+  }
+</script>
+</body>
 </html>
