@@ -60,7 +60,11 @@
           password: $('#password-input').val()
         },
         success: function(data) {
-          window.location.pathname = data.redirect
+          if (data.redirect) {
+            window.location.pathname = data.redirect;
+          } else {
+            window.location.pathname = '/profile_info';
+          }
         },
         error: function(err) {
           alert(err);
