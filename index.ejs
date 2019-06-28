@@ -31,17 +31,17 @@
           <div class="uk-margin">
             <div class="uk-inline">
                 <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                <input id="password-input" class="uk-input border-charcoal2" placeholder="Password" type="text">
+                <input id="password-input" class="uk-input border-charcoal2" placeholder="Password" type="password">
             </div>
         </div>
         <div class="uk-margin">
           <div class="uk-inline">
               <span class="uk-form-icon" uk-icon="icon: lock"></span>
-              <input class="uk-input border-charcoal2" placeholder="Confirm Password" type="text">
+              <input id="confirm-password" class="uk-input border-charcoal2" placeholder="Confirm Password" type="password">
           </div>
         </div>
         <h6>By creating an account, you agree to our <a>Terms of Service</a> and <a>Privacy Policy</a></h6>
-        <button class="uk-button button-dk" onclick="createAccount()">Create Account</button>
+        <button class="uk-button button-dk" onclick="validateAndCreateAccount()">Create Account</button>
       </div>
     </div>
   </div>
@@ -70,6 +70,18 @@
           alert(err);
         }
       });
+    }
+
+    function validateAndCreateAccount() {
+      if (!$('#email-input').val()) {
+        alert('email field is blank');
+      } else if (!$('#password-input').val()) {
+        alert('password field is blank');
+      } else if ($('#confirm-password').val() !== $('#password-input').val()) {
+        alert('passwords do not match');
+      } else {
+        createAccount();
+      }
     }
   </script>
 </body>
