@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="142px" height="163px" viewBox="0 0 142 163" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Style-Guide" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="single-neutral-profile-picture" transform="translate(1.000000, 0.000000)" stroke="#AFAFB7">
+            <g id="New_Symbol_1" transform="translate(35.000000, 39.200000)">
+                <circle id="Oval" cx="34.608" cy="24.521" r="22.75"></circle>
+                <path d="M70,82.271 C64.6438743,67.5577925 50.6577954,57.7652326 35,57.7652326 C19.3422046,57.7652326 5.3561257,67.5577925 0,82.271" id="Path" stroke-width="0.989"></path>
+            </g>
+            <rect id="Rectangle" x="0" y="0.7" width="140" height="161" rx="1"></rect>
+            <rect id="Rectangle" x="21" y="21.7" width="98" height="119"></rect>
+        </g>
+    </g>
+</svg>
