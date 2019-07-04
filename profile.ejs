@@ -139,49 +139,62 @@
             <link href='fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
             <script src='fullcalendar/packages/daygrid/main.js'></script>
             <script>
-            document.addEventListener('DOMContentLoaded', function() {
-              var calendarEl = document.getElementById('calendar');
+              document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
+                $.ajax({
+                  url: '/api/events',
+                  type: 'GET',
+                  data: {
+                    date: new Date()
+                  },
+                  success: function(data) {
+                    if (data) {
+                      if (!Array.isArray(data)) {
+                        data = [data];
+                      }
+                    } else {
+                      data = []
+                    }
+                    
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                      plugins: [ 'dayGrid', 'moment', 'list', 'interaction', 'rrule' ],
+                      timeZone: 'UTC',
+                      defaultView: 'listMonth',
+                      defaultDate: new Date(),
+                      header: {
+                        left: 'title',
+                        right: 'prev,next',
+                      },
+                      customButtons: {
+                        addEventButton: {
+                          text: 'Add',
+                          click: function() {
+                            var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+                            var date = new Date(dateStr + 'T00:00:00'); // will be in local time
 
-              var calendar = new FullCalendar.Calendar(calendarEl, {
-                plugins: [ 'dayGrid', 'moment', 'list', 'interaction', 'rrule' ],
-                timeZone: 'UTC',
-                defaultView: 'listMonth',
-                defaultDate: '2019-05-07',
-                header: {
-                  left: 'title',
-                  right:  'prev,next',
-                },
-                events: [
-                  {
-                    title: 'All Day Event',
-                    start: '2019-05-01'
+                            if (!isNaN(date.valueOf())) { // valid?
+                              calendar.addEvent({
+                                title: 'dynamic event',
+                                start: date,
+                                allDay: true
+                              });
+                              alert('Great. Now, update your database...');
+                            } else {
+                              alert('Invalid date.');
+                            }
+                          }
+                        }
+                      },
+                      events: data
+                      });
+
+                      calendar.render();
                   },
-                  {
-                    title: 'Long Event',
-                    start: '2019-05-07',
-                    end: '2019-05-10'
-                  },
-                  {
-                    groupId: '999',
-                    title: 'Repeating Event',
-                    start: '2019-05-09T16:00:00'
-                  },
-                  {
-                    groupId: '999',
-                    title: 'Repeating Event',
-                    start: '2019-05-16T16:00:00'
-                  },
-                  {
-                    title: 'Conference',
-                    start: '2019-05-11',
-                    end: '2019-05-13'
-                  },
-                ]
+                  error: function() {
+                    alert('there was an issue loading the events calendar. Please refresh the page and try again.');
+                  }
+                });
               });
-
-              calendar.render();
-            });
-
             </script>
           </div>
 
