@@ -3,6 +3,18 @@
 <head>
   <title>Alumni Association Web App</title>
   <%- include('header'); %>
+  <!-- Facebook SDK -->
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId            : '408871246386479',
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v3.3'
+      });
+    };
+  </script>
+  <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
 </head>
 <body>    
 
@@ -18,7 +30,7 @@
       <!-- Facebook Option -->
       <div>
         <h4>Log in via Facebook <i class="font-hint">(Recommended)</i></h4>
-        <button class="uk-button facebook"><span uk-icon="facebook"></span> Connect with Facebook</button>
+        <button class="uk-button facebook" onclick="facebookLogin()"><span uk-icon="facebook"></span> Connect with Facebook</button>
         <h5>Benefits:<br>- Faster Login<br>- No extra passwords to remember<br>- View which of your friends are members<br></h5>
       </div>
         <!-- Create new Account Option-->
@@ -82,6 +94,32 @@
       } else {
         createAccount();
       }
+    }
+
+    function facebookLogin() {
+      FB.login(function(response) {
+        if (response.authResponse) {
+          $.ajax({
+            url: '/api/login-with-facebook',
+            type: 'POST',
+            data: response.authResponse,
+            success: function(data) {
+              if (data.redirect) {
+                window.location.pathname = data.redirect;
+              } else {
+                window.location.pathname = '/profile';
+              }
+            },
+            error: function(err) {
+              alert(err);
+            }
+          })
+        } else {
+         console.log('User cancelled login or did not fully authorize.');
+        }
+      }, {
+        scope: 'email,user_birthday'
+      });
     }
   </script>
 </body>

@@ -3,6 +3,18 @@
 <head>
   <title>Sign Into</title>
   <%- include('header'); %>
+  <!-- Facebook SDK -->
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId            : '408871246386479',
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v3.3'
+      });
+    };
+  </script>
+  <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
 </head>
 <body>
 
@@ -17,7 +29,7 @@
 
         <div class="uk-container uk-container-expand uk-position-relative uk-padding-large white border-slate">
           <h2 class="uk-text-center">Sign In</h2>
-          <button class="uk-button facebook uk-width-1-1"><span uk-icon="facebook"></span> Sign in with Facebook</button>
+          <button class="uk-button facebook uk-width-1-1" onclick="facebookLogin()"><span uk-icon="facebook"></span> Sign in with Facebook</button>
           <hr class="uk-divider-icon">
         <div>
           <h4 class="uk-text-center">Sign in with Email</h4><br>
@@ -62,6 +74,32 @@
         error: function(req, err) {
           alert(err);
         }
+      });
+    }
+
+    function facebookLogin() {
+      FB.login(function(response) {
+        if (response.authResponse) {
+          $.ajax({
+            url: '/api/login-with-facebook',
+            type: 'POST',
+            data: response.authResponse,
+            success: function(data) {
+              if (data.redirect) {
+                window.location.pathname = data.redirect;
+              } else {
+                window.location.pathname = '/profile';
+              }
+            },
+            error: function(err) {
+              alert(err);
+            }
+          })
+        } else {
+         console.log('User cancelled login or did not fully authorize.');
+        }
+      }, {
+        scope: 'email,user_birthday'
       });
     }
   </script>
