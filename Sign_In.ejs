@@ -86,15 +86,30 @@
             data: response.authResponse,
             success: function(data) {
               if (data.redirect) {
-                window.location.pathname = data.redirect;
+                $.ajax({
+                  url: data.redirect,
+                  type: 'POST',
+                  data: {
+                    email: data.email,
+                    password: data.password
+                  }, 
+                  success: function(data) {
+                    if (data.redirect) {
+                      window.location.pathname = data.redirect;
+                    } else {
+                      window.location.pathname = '/profile';
+                    }   
+                  },
+                  error: function(err) { alert(JSON.stringify(err)); }
+                });
               } else {
                 window.location.pathname = '/profile';
               }
             },
             error: function(err) {
-              alert(err);
+              alert(JSON.stringify(err));
             }
-          })
+          });
         } else {
          console.log('User cancelled login or did not fully authorize.');
         }
