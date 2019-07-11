@@ -98,23 +98,17 @@
     </div>
     <table class="uk-table uk-margin-remove group-table">
       <tbody>
-              <tr>
-
-              <td class="uk-clearfix">
-              <a href="#modal-group-details" uk-toggle><h4>25 Year Reunion Committee</h4></a>
-              <h5 class="font-charcoal uk-position-relative">
-              <span class="uk-float-left"><span id="member_count">22</span> Members</span>
-              <span class="uk-float-right"><a href="#">Contact Group</a> | <a href="#">Close</a></span>
-              </h5>
-              </td>
-              </tr>
-              <tr><td>
-                <h4>Clean Up Louisville Committee</h4>
-                <h5 class="font-charcoal uk-position-relative">
-                <span class="uk-float-left"><span id="member_count">22</span> Members</span>
-                <span class="uk-float-right"><a href="#">Contact Group</a> | <a href="#">Close</a></span>
-                </h5>
-              </td></tr>
+        <% leaderGroups.forEach(function(group) { %>
+        <tr>
+          <td class="uk-clearfix">
+          <a href="#modal-group-details" uk-toggle><h4><%= group.group_name %></h4></a>
+          <h5 class="font-charcoal uk-position-relative">
+          <span class="uk-float-left"><span id="member_count"><%= group.users.length %></span> Member<% if(group.users.length > 1) { %>s<% } %></span>
+          <span class="uk-float-right"><a href="#">Contact Group</a> | <a href="#">Close</a></span>
+          </h5>
+          </td>
+        </tr>
+        <% }); %>
       </tbody>
   </table>
 </div>
@@ -127,34 +121,17 @@
     </div>
     <table class="uk-table uk-margin-remove group-table">
       <tbody>
-              <tr><td class="uk-clearfix">
-              <h4>50 Year Reunion Committee</h4>
-              <h5 class="font-charcoal uk-position-relative">
-              <span class="uk-float-left"><span id="member_count">22</span> Members</span>
-              <span class="uk-float-right"><a href="#">Contact Leader</a> | <a href="#">Leave</a></span>
-              </h5>
-              </td></tr>
-              <tr><td>
-                <h4>Alimni Association Officers</h4>
-                <h5 class="font-charcoal uk-position-relative">
-                <span class="uk-float-left"><span id="member_count">22</span> Members</span>
-                <span class="uk-float-right"><a href="#">Contact Leader</a> | <a href="#">Leave</a></span>
-                </h5>
-              </td></tr>
-              <tr><td class="uk-clearfix">
-              <h4>Cross Country Runners Club</h4>
-              <h5 class="font-charcoal uk-position-relative">
-              <span class="uk-float-left"><span id="member_count">22</span> Members</span>
-              <span class="uk-float-right"><a href="#">Contact Leader</a> | <a href="#">Leave</a></span>
-              </h5>
-              </td></tr>
-              <tr><td>
-                <h4>Track & Field, Monthly Brunch</h4>
-                <h5 class="font-charcoal uk-position-relative">
-                <span class="uk-float-left"><span id="member_count">22</span> Members</span>
-                <span class="uk-float-right"><a href="#">Contact Leader</a> | <a href="#">Leave</a></span>
-                </h5>
-              </td></tr>
+        <% participantGroups.forEach(function(group) { %>
+        <tr>
+          <td class="uk-clearfix">
+          <a href="#modal-group-details" uk-toggle><h4><%= group.group_name %></h4></a>
+          <h5 class="font-charcoal uk-position-relative">
+          <span class="uk-float-left"><span id="member_count"><%= group.users.length %></span> Member<% if(group.users.length > 1) { %>s<% } %></span>
+          <span class="uk-float-right"><a href="#">Contact Group</a> | <a href="#">Close</a></span>
+          </h5>
+          </td>
+        </tr>
+        <% }); %>
       </tbody>
   </table>
 </div>
