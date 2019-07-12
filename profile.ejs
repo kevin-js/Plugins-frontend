@@ -22,15 +22,7 @@
           <div>
             <div class="uk-width-auto">
               <img id="profile-photo" class="uk-border-rounded uk-height-small uk-width-auto" 
-                src="<%= user.profilePhotoRef ? '/api/photo/' + user.profilePhotoRef : '/profile_photo_placeholder.svg' %>">
-              <form>
-                  <div class="uk-margin">
-                      <div uk-form-custom>
-                          <input id="profile-photo-input" type="file">
-                          <button class="uk-button button-lt" type="button" tabindex="-1"><span uk-icon="file-edit"></span> &nbsp;Edit Photo</button>
-                      </div>
-                  </div>
-              </form>
+                src="<%= user.profilePhotoRef ? '/api/photo/' + user.profilePhotoRef : '/profile_photo_placeholder.svg' %>" alt="/profile_photo_placeholder.svg">
           </div>
           <a href="#pw-modal" uk-toggle><span uk-icon="icon: lock"></span>&nbsp;Change Password</a><br><br>
           <span class="profile-label">Name</span>
