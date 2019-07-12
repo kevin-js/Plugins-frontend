@@ -10,7 +10,7 @@ function createAccount() {
       if (data.redirect) {
         window.location.pathname = data.redirect;
       } else {
-        window.location.pathname = '/profile_info';
+        window.location.pathname = '/profile-info';
       }
     },
     error: function(err) {

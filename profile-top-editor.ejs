@@ -191,8 +191,9 @@
                       }
                     </style>
                     <label class="switch">
+                      <!-- todo: need to configure this to save to isPublic field -->
                       <% if (user.isPublic) { %>
-                        <input id="profile-visibility-toggle" type="checkbox" checked>
+                        <input id="profile-visibility-toggle" type="checkbox" checked="1">
                       <% } else { %>
                         <input id="profile-visibility-toggle" type="checkbox">
                       <% } %>

@@ -219,7 +219,7 @@
                 <input id="zip_code" class="uk-input border-charcoal2" placeholder="ZIP" type="text">
             </div>
         </div>
-    <div class="uk-position-relative uk-margin uk-position-bottom-left"><a class="uk-button button-lt" href="membership_options.html">Skip</a></div>
+    <div class="uk-position-relative uk-margin uk-position-bottom-left"><a class="uk-button button-lt" href="/membership-options">Skip</a></div>
     <div class="uk-position-relative uk-margin uk-position-bottom-right" onclick="saveProfile()"><a class="uk-button button-dk">Save</a></div>
 </form>
 </div>
@@ -247,7 +247,7 @@
         if (data.redirect) {
           window.location.pathname = data.redirect;
         } else {
-          window.location.pathname = '/membership_options';
+          window.location.pathname = '/membership-options';
         }
       },
       error: function(err) {
