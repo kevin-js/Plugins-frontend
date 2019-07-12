@@ -21,7 +21,7 @@
       <div class="uk-grid-match uk-child-width-1-3@m uk-flex-top" uk-grid>
           <div>
             <div class="uk-width-auto">
-              <img class="uk-border-circle" src="assets/avatar.png" width="200" height="200" alt="Profile Photo">
+              <img class="uk-border-circle" src="<%= user.profilePhotoRef ? '/api/photo' + user.profilePhotoRef : '/profile_photo_placeholder.svg' %>" width="200" height="200" alt="Profile Photo">
               <form>
                   <div class="uk-margin uk-margin-left">
                       <div uk-form-custom>
@@ -31,43 +31,43 @@
                   </div>
               </form>
           </div>
-          <a href=""><span uk-icon="icon: lock"></span>&nbsp;Change Password</a><br><br>
         <!-- Far Left Section -->
               <label class="profile-label">Name</label>
-              <input id="name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= name %>">
+              <input id="name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.name %>">
               <label class="profile-label">Grad Year &nbsp;<span uk-icon="info" uk-tooltip="Only an administrator can edit your graduation year. If yours is incorrect, please contact an Alumni Association official to have it corrected."></label><br>
-              <input id="grad_year" class="uk-input uk-form-width-small border-charcoal2" type="text" value="<%= graduation_year %>" disabled>
+              <input id="grad_year" class="uk-input uk-form-width-small border-charcoal2" type="text" value="<%= user.graduation_year %>" disabled>
         </div>
 
         <!-- Far Left Section -->
           <div>
             <label class="profile-label">Nicknames</label>
-            <input id="nickname" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= nicknames %>">
+            <input id="nickname" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.nicknames %>">
             <span class="profile-label">Email</span>
-            <input id="email" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= email %>">
+            <input id="email" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.email %>">
             <span class="profile-label">Home Phone</span>
-            <input id="home_phone" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= home_phone %>">
+            <input id="home_phone" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.home_phone %>">
             <span class="profile-label">Cell Phone</span>
-            <input id="cell_phone" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= cell_phone %>">
+            <input id="cell_phone" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.cell_phone %>">
             <span class="profile-label">Birthday</span>
-            <input id="dob" class="uk-input uk-width-small border-charcoal2 uk-margin-bottom" type="text" placeholder="mm/dd/yyyy" value="<%= birthday %>">
+            <input id="dob" class="uk-input uk-width-small border-charcoal2 uk-margin-bottom" type="text" placeholder="mm-dd-yyyy" value="<%= user.birthday %>">
           </div>
 
           <div>
             <span class="profile-label">Marital Status</span>
-            <select id="marital_status" class="uk-select border-charcoal2 uk-margin-bottom" value="<%= marital_status %>">
+            <select id="marital_status" class="uk-select border-charcoal2 uk-margin-bottom" value="<%= user.marital_status %>">
+              <option></option>
               <option>Single</option>
               <option>Married</option>
               <option>Divorced</option>
               <option>Widowed</option>
-              <option>Unspecified</option>
             </select>
 
             <span class="profile-label">Address</span>
             <span>
-            <input id="address_line1" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= address_line_1 %>"><br>
-            <input id="address_line2" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= address_line_2 %>"><br>
-            <input id="city" class="uk-input uk-width-1-3 border-charcoal2 uk-margin-bottom" type="text" value="<%= city %>">, <select id="state" class="uk-select uk-width-1-4 border-charcoal2 uk-margin-bottom" value="<%= state %>">
+            <input id="address_line1" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.address_line_1 %>"><br>
+            <input id="address_line2" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.address_line_2 %>"><br>
+            <input id="city" class="uk-input uk-width-1-3 border-charcoal2 uk-margin-bottom" type="text" value="<%= user.city %>">, <select id="state" class="uk-select uk-width-1-4 border-charcoal2 uk-margin-bottom" value="<%= user.state %>">
+                <option value=""></option>
                 <option value="AL">AL</option>
                 <option value="AK">AK</option>
                 <option value="AZ">AZ</option>
@@ -120,11 +120,11 @@
                 <option value="WI">WI</option>
                 <option value="WY">WY</option>
               </select>
-            <input id="zip" class="uk-input uk-width-1-4 border-charcoal2 uk-margin-bottom" type="text" value="<%= zip_code %>">
+            <input id="zip" class="uk-input uk-width-1-4 border-charcoal2 uk-margin-bottom" type="text" value="<%= user.zip_code %>">
           </span>
                   <span class="profile-label uk-margin">Privacy &nbsp;<span uk-icon="info" uk-tooltip="All alumni can view your yearbook photo, name and graduation year.  If you set your profile as public,  paid members can also view your phone number, address, email, birthday, and marital status.  To hide this information set your profile as private."></span></span>
                   <span uk-toggle="target: .toggle" id="public_toggle">
-                    <p class="toggle"><i class="fa fa-toggle-on"></i> &nbsp;Profile is Public</p><p class="toggle" hidden><i class="fa fa-toggle-off"></i> &nbsp;Profile is Private</p>
+                    <p class="toggle"><i id="profile-visibility-toggle" class="fa fa-toggle-on"></i> &nbsp;Profile is Public</p><p class="toggle" hidden><i class="fa fa-toggle-off"></i> &nbsp;Profile is Private</p>
                   </span>
           </div>
       </div>
