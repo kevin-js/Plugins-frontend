@@ -98,7 +98,13 @@
     </div>
     <table class="uk-table uk-margin-remove group-table">
       <tbody>
-        <% leaderGroups.forEach(function(group) { %>
+        <% if (leaderGroups.length == 0) { %>
+          <td class="uk-clearfix">
+          <p>
+            <i>You are not currently leading any groups.</i>
+          </p>
+          </td>
+        <% } else { leaderGroups.forEach(function(group) { %>
         <tr>
           <td class="uk-clearfix">
           <a href="#modal-group-details" uk-toggle><h4><%= group.group_name %></h4></a>
@@ -108,7 +114,7 @@
           </h5>
           </td>
         </tr>
-        <% }); %>
+        <% }); } %>
       </tbody>
   </table>
 </div>
@@ -121,17 +127,23 @@
     </div>
     <table class="uk-table uk-margin-remove group-table">
       <tbody>
-        <% participantGroups.forEach(function(group) { %>
+        <% if(participantGroups.length == 0) { %>
+          <td class="uk-clearfix">
+          <p>
+            <i>You are not currently a participant in any group.</i>
+          </p>
+          </td>
+        <% } else { participantGroups.forEach(function(group) { %>
         <tr>
           <td class="uk-clearfix">
           <a href="#modal-group-details" uk-toggle><h4><%= group.group_name %></h4></a>
           <h5 class="font-charcoal uk-position-relative">
           <span class="uk-float-left"><span id="member_count"><%= group.users.length %></span> Member<% if(group.users.length > 1) { %>s<% } %></span>
-          <span class="uk-float-right"><a href="#">Contact Group</a> | <a href="#">Close</a></span>
+          <span class="uk-float-right"><a href="#">Contact Leader</a> | <a href="#">Leave</a></span>
           </h5>
           </td>
         </tr>
-        <% }); %>
+        <% }); } %>
       </tbody>
   </table>
 </div>
@@ -152,7 +164,7 @@
     </select>
 </div>
     <div class="uk-grid-small uk-flex-middle" uk-grid>
-    <h4 class="norwester font-white">Groups Available<h5 class="font-white" id="group_count">(14)</h5></h4>
+    <h4 class="norwester font-white">Groups Available<h5 class="font-white" id="group_count">(<%= groups.length %>)</h5></h4>
     </div>
 </div>
 <div class="charcoal uk-padding-small">
@@ -307,17 +319,9 @@
   <li><a href="#"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
   </ul>
   </div>
-
-
 </div>
 </div>
 </div>
-
-
-
-
-
-<div class="uk-margin-large"></div>
-
+  <div class="uk-margin-large"></div>
 </body>
 </html>
