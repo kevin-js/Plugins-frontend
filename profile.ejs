@@ -62,7 +62,11 @@
             <span id="city" class="profile-field"><%= [user.city, user.state, user.zip_code].filter(e => e).join(', ') || '--' %></span>
           </span>
                   <span class="profile-label uk-margin">Privacy &nbsp;<span uk-icon="info" uk-tooltip="All alumni can view your yearbook photo, name and graduation year.  If you set your profile as public,  paid members can also view your phone number, address, email, birthday, and marital status.  To hide this information set your profile as private."></span></span>
-                  <span><i class="fa fa-toggle-on font-slate"></i> &nbsp;Profile is Public</p></span>
+                  <% if (user.isPublic) { %> 
+                    <span><i class="fa fa-toggle-on font-slate"></i> &nbsp;Profile is Public</p></span>
+                  <% } else { %> 
+                    <span><i class="fa fa-toggle-off font-slate"></i> &nbsp;Profile is Private</p></span>
+                  <% } %>
           </div>
       </div>
 </div>

@@ -123,8 +123,78 @@
             <input id="zip" class="uk-input uk-width-1-4 border-charcoal2 uk-margin-bottom" type="text" value="<%= user.zip_code %>">
           </span>
                   <span class="profile-label uk-margin">Privacy &nbsp;<span uk-icon="info" uk-tooltip="All alumni can view your yearbook photo, name and graduation year.  If you set your profile as public,  paid members can also view your phone number, address, email, birthday, and marital status.  To hide this information set your profile as private."></span></span>
-                  <span uk-toggle="target: .toggle" id="public_toggle">
-                    <p class="toggle"><i id="profile-visibility-toggle" class="fa fa-toggle-on"></i> &nbsp;Profile is Public</p><p class="toggle" hidden><i class="fa fa-toggle-off"></i> &nbsp;Profile is Private</p>
+                  <span id="public_toggle">
+                    <style type="text/css">
+                      .switch {
+                        position: relative;
+                        display: inline-block;
+                        width: 60px;
+                        height: 34px;
+                      }
+
+                      .switch input { 
+                        opacity: 0;
+                        width: 0;
+                        height: 0;
+                      }
+
+                      .slider {
+                        position: absolute;
+                        cursor: pointer;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background-color: #ccc;
+                        -webkit-transition: .4s;
+                        transition: .4s;
+                      }
+
+                      .slider:before {
+                        position: absolute;
+                        content: "";
+                        height: 26px;
+                        width: 26px;
+                        left: 4px;
+                        bottom: 4px;
+                        background-color: white;
+                        -webkit-transition: .4s;
+                        transition: .4s;
+                      }
+
+                      input:checked + .slider {
+                        background-color: #2196F3;
+                      }
+
+                      input:focus + .slider {
+                        box-shadow: 0 0 1px #2196F3;
+                      }
+
+                      input:checked + .slider:before {
+                        -webkit-transform: translateX(26px);
+                        -ms-transform: translateX(26px);
+                        transform: translateX(26px);
+                      }
+
+                      /* Rounded sliders */
+                      .slider.round {
+                        border-radius: 34px;
+                      }
+
+                      .slider.round:before {
+                        border-radius: 50%;
+                      }
+                    </style>
+                    <label class="switch">
+                      <% if (user.isPublic) { %>
+                        <input id="profile-visibility-toggle" type="checkbox" checked>
+                      <% } else { %>
+                        <input id="profile-visibility-toggle" type="checkbox">
+                      <% } %>
+                      <span class="slider round"></span>
+                    </label>
+                    <span>&nbsp;Make profile public</span>
+                    <!-- <p class="toggle"><input type="checkbox" id="profile-visibility-toggle" class="fa fa-toggle-on"></input> &nbsp;Profile is Public</p><p class="toggle" hidden><i class="fa fa-toggle-off"></i> &nbsp;Profile is Private</p> -->
                   </span>
           </div>
       </div>
@@ -244,7 +314,8 @@
         address_line_2: $('#address_line2').val(),
         city: $('#city').val(),
         state: $('#state').val(),
-        zip_code: $('#zip').val()
+        zip_code: $('#zip').val(),
+        isPublic: $('#profile-visibility-toggle').prop('checked')
       },
       success: function(data) {
         if (data.redirect) {
