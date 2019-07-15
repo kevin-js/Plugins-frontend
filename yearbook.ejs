@@ -10,6 +10,7 @@
 <br><br><br><br><br><br>
 </div>
 
+<div id="app">
 <div class="uk-margin uk-margin-large-right uk-margin-large-left">
 <h4 class="norwester"><i class="fa fa-filter"></i> &nbsp;Filters</h4>
 <hr class="table-border"></hr>
@@ -18,13 +19,13 @@
 <form class="uk-form-stacked uk-margin uk-margin-large-right uk-margin-large-left">
 <div class="uk-inline uk-margin-bottom uk-width-1-1 uk-width-1-4@m">
 <label class="uk-form-label norwester">Alumni Name</label>
-<input class="uk-input border-charcoal2" type="text">
+<input class="uk-input border-charcoal2" type="text" v-model="searchName">
 </div>
 
 <div class="uk-inline uk-margin-bottom uk-width-1-1 uk-width-1-4@m">
 <label class="uk-form-label norwester">Graduation Year</label>
-<select class="uk-select border-charcoal2">
-  <option> All </option>
+<select class="uk-select border-charcoal2" v-model="gradYear">
+  <option selected> All </option>
   <option>	2019	</option>
   <option>	2018	</option>
   <option>	2017	</option>
@@ -130,41 +131,27 @@
 
 <div class="uk-inline uk-margin-bottom uk-width-1-1 uk-width-1-4@m">
 <label class="uk-form-label norwester">Hall of Fame</label>
-<select class="uk-select border-charcoal2">
-  <option> Show All </option>
-  <option> Hall of Fame Only</option>
+<select class="uk-select border-charcoal2" v-model="hofOnly">
+  <option selected v-bind:value="false">Show All</option>
+  <option v-bind:value="true">Hall of Fame Only</option>
 </select>
 </div>
 
-<button class="uk-button button-lt uk-inline uk-margin-small-top" type="button">Update Results</button>
+<button class="uk-button button-lt uk-inline uk-margin-small-top" type="button" v-on:click="updateResults">Update Results</button>
 
 </form>
 
 <!-- Start of yearbook card view/listing -->
 <div class="uk-child-width-1-3@m uk-margin uk-margin-medium-right uk-margin-left uk-grid-match uk-grid-small" uk-grid>
-    <div>
-        <a style="text-decoration: none !important;" uk-toggle="target: #rebecca-himmelheiber-graves">
-        <div class="uk-card uk-card-default">
-            <div class="uk-card-media-top uk-height-large uk-cover-container">
-                <img src="/yearbook/1.jpg" uk-cover>
-            </div>
-            <div class="uk-card-body">
-              <div class="uk-card-badge gold font-white icon-padding" uk-tooltip="Hall of Fame Recipient"><i class="fa fa-trophy"></i></div>
-                <h3 class="uk-card-title">Rebecca Himmelheiber-Graves</h3>
-                <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Becky, Anderson</span><br>
-                <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-            </div>
+  <div v-for="user in displayUsers" :key="user.id">
+    <a style="text-decoration: none !important;" uk-toggle="target: #profile-preview" v-on:click="renderProfilePreview(user)">
+    <div class="uk-card uk-card-default">
+        <div class="uk-card-media-top uk-height-large uk-cover-container">
+            <img v-bind:src="'/api/photo/' + user.profilePhotoRef" alt="/profile_photo_placeholder.svg" uk-cover>
         </div>
-      </a>
-    </div>
-    <div>
-      <div class="uk-card uk-card-default">
-        <a style="text-decoration: none !important;" uk-toggle="target: #rachel-greene">
-          <div class="uk-card-media-top uk-height-large uk-cover-container">
-              <img src="/yearbook/2.jpg" uk-cover>
-          </div>
-          <div class="uk-card-body">
-            <div class="uk-card-badge gold icon-padding" uk-tooltip="Deceased">
+        <div class="uk-card-body">
+          <div class="uk-card-badge gold font-white icon-padding" uk-tooltip="Hall of Fame Recipient" v-if="user.isHallOfFame"><i class="fa fa-trophy"></i></div>
+          <div class="uk-card-badge gold icon-padding" uk-tooltip="Deceased" v-if="user.isDeceased">
               <svg width="22px" height="24px" viewBox="0 0 22 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <title>death-rip</title>
                   <g id="Style-Guide" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -175,200 +162,43 @@
                               <path d="M2.659,18.287 C3.25190495,18.0851823 3.87369174,17.9811571 4.5,17.979 C4.63,17.979 4.76,17.984 4.889,17.992 C5.07986231,18.0045457 5.26115733,17.9071044 5.356,17.741 C6.51890287,15.7229136 8.67083369,14.4793007 11,14.4793007 C13.3291663,14.4793007 15.4810971,15.7229136 16.644,17.741 C16.7388427,17.9071044 16.9201377,18.0045457 17.111,17.992 C17.24,17.984 17.37,17.979 17.5,17.979 C18.1263083,17.9811571 18.748095,18.0851823 19.341,18.287 C19.4935274,18.3381594 19.6613541,18.3128014 19.7919576,18.218862 C19.9225611,18.1249225 19.9999854,17.9738785 20,17.813 L20,5.479 C20,1.729 15.334,0.021 11,0.021 C6.666,0.021 2,1.729 2,5.479 L2,17.813 C2.00001459,17.9738785 2.07743885,18.1249225 2.20804238,18.218862 C2.33864591,18.3128014 2.50647258,18.3381594 2.659,18.287 Z M13.875,8.487 L13.875,5.487 C13.875,5.14182203 14.154822,4.862 14.5,4.862 L16,4.862 C17.1736051,4.862 18.125,5.81339491 18.125,6.987 C18.125,8.16060509 17.1736051,9.112 16,9.112 L15.625,9.112 C15.3488576,9.112 15.125,9.33585763 15.125,9.612 L15.125,11.487 C15.125,11.832178 14.845178,12.112 14.5,12.112 C14.154822,12.112 13.875,11.832178 13.875,11.487 L13.875,8.487 Z M10.5,6.109 C10.154822,6.109 9.875,5.82917797 9.875,5.484 C9.875,5.13882203 10.154822,4.859 10.5,4.859 L12.5,4.859 C12.845178,4.859 13.125,5.13882203 13.125,5.484 C13.125,5.82917797 12.845178,6.109 12.5,6.109 C12.2928932,6.109 12.125,6.27689322 12.125,6.484 L12.125,10.484 C12.125,10.6911068 12.2928932,10.859 12.5,10.859 C12.845178,10.859 13.125,11.138822 13.125,11.484 C13.125,11.829178 12.845178,12.109 12.5,12.109 L10.5,12.109 C10.154822,12.109 9.875,11.829178 9.875,11.484 C9.875,11.138822 10.154822,10.859 10.5,10.859 C10.7071068,10.859 10.875,10.6911068 10.875,10.484 L10.875,6.484 C10.875,6.38454382 10.8354912,6.2891611 10.765165,6.21883496 C10.6948389,6.14850882 10.5994562,6.109 10.5,6.109 Z M4.875,8.484 L4.875,5.484 C4.875,5.13882203 5.15482203,4.859 5.5,4.859 L7,4.859 C8.07698828,4.86056043 8.9825139,5.66758124 9.10755115,6.73728768 C9.2325884,7.80699411 8.53759506,8.80109848 7.49,9.051 C7.40178543,9.07184417 7.33176394,9.13880461 7.307,9.226 C7.28298934,9.31323546 7.30739219,9.40665263 7.371,9.471 L8.942,11.042 C9.18610985,11.2861099 9.18610985,11.6818901 8.94199999,11.926 C8.69789014,12.1701099 8.30210986,12.1701099 8.058,11.926 L6.552,10.419 C6.4804929,10.3473116 6.37280528,10.3258349 6.27926836,10.3646078 C6.18573144,10.4033808 6.12481884,10.4947456 6.125,10.596 L6.125,11.484 C6.125,11.829178 5.84517797,12.109 5.5,12.109 C5.15482203,12.109 4.875,11.829178 4.875,11.484 L4.875,8.484 Z" id="Shape"></path>
                               <path d="M17.5,19.479 C17.1024305,19.4787583 16.7066056,19.5315573 16.323,19.636 C16.0706511,19.7028937 15.8093118,19.5643839 15.723,19.318 C15.0160953,17.3174349 13.1247858,15.9798237 11.003,15.9798237 C8.88121421,15.9798237 6.98990465,17.3174349 6.283,19.318 C6.19668819,19.5643839 5.93534892,19.7028937 5.683,19.636 C4.42580169,19.2952302 3.08262322,19.5159329 2.00056885,20.2410743 C0.91851448,20.9662157 0.203755511,22.1246447 0.041,23.417 C0.0231062084,23.5592907 0.067172422,23.7024149 0.162,23.81 C0.2569679,23.9175209 0.393543949,23.9790712 0.537,23.979 L21.469,23.979 C21.6124561,23.9790712 21.7490321,23.9175209 21.844,23.81 C21.9388276,23.7024149 21.9828938,23.5592907 21.965,23.417 C21.6817436,21.1666902 19.7680671,19.4788832 17.5,19.479 L17.5,19.479 Z" id="Path"></path></g></g></g></svg>
             </div>
-              <h3 class="uk-card-title">Rachel Greene</h3>
-              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Smith</span><br>
-              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-          </div>
-        </a>
-      </div>
-    </div>
-    <div>
-      <div class="uk-card uk-card-default">
-          <div class="uk-card-media-top uk-height-large uk-cover-container">
-              <img src="/yearbook/3.jpg" uk-cover>
-          </div>
-          <div class="uk-card-body">
-              <h3 class="uk-card-title ">Andrew Roberts</h3>
-              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Andy</span><br>
-              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-          </div>
-      </div>
-    </div>
-    <div>
-        <div class="uk-card uk-card-default">
-            <div class="uk-card-media-top uk-height-large uk-cover-container">
-                <img src="/yearbook/4.jpg" uk-cover>
-            </div>
-            <div class="uk-card-body">
-              <div class="uk-card-badge gold font-white icon-padding" uk-tooltip="Hall of Fame Recipient"><i class="fa fa-trophy"></i></div>
-                <h3 class="uk-card-title ">Roger Madison III</h3>
-                <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
-                <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-            </div>
+            <h3 class="uk-card-title">{{ user.name }}</h3>
+            <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">{{ user.nicknames || '--' }}</span><br>
+            <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> {{ user.graduation_year || '--' }}</span></h5>
         </div>
     </div>
-    <div>
-      <div class="uk-card uk-card-default">
-          <div class="uk-card-media-top uk-height-large uk-cover-container">
-              <img src="/yearbook/5.jpg" uk-cover>
-          </div>
-          <div class="uk-card-body">
-              <h3 class="uk-card-title ">Robert Rhodes</h3>
-              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Bobby</span><br>
-              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-          </div>
-      </div>
-    </div>
-    <div>
-      <div class="uk-card uk-card-default">
-          <div class="uk-card-media-top uk-height-large uk-cover-container">
-              <img src="/yearbook/6.jpg" uk-cover>
-          </div>
-          <div class="uk-card-body">
-              <h3 class="uk-card-title ">Alexander Davidson</h3>
-              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
-              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-          </div>
-      </div>
-    </div>
-    <div>
-        <div class="uk-card uk-card-default">
-            <div class="uk-card-media-top uk-height-large uk-cover-container">
-                <img src="/yearbook/15.jpg" uk-cover>
-            </div>
-            <div class="uk-card-body">
-              <div class="uk-card-badge gold font-white icon-padding" uk-tooltip="Hall of Fame Recipient"><i class="fa fa-trophy"></i></div>
-                <h3 class="uk-card-title ">Roger Madison III</h3>
-                <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
-                <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-            </div>
-        </div>
-    </div>
-    <div>
-      <div class="uk-card uk-card-default">
-          <div class="uk-card-media-top uk-height-large uk-cover-container">
-              <img src="/yearbook/7.jpg" uk-cover>
-          </div>
-          <div class="uk-card-body">
-              <h3 class="uk-card-title ">Robert Rhodes</h3>
-              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Bobby</span><br>
-              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-          </div>
-      </div>
-    </div>
-    <div>
-      <div class="uk-card uk-card-default">
-          <div class="uk-card-media-top uk-height-large uk-cover-container">
-              <img src="/yearbook/8.jpg" uk-cover>
-          </div>
-          <div class="uk-card-body">
-              <h3 class="uk-card-title ">Alexander Davidson</h3>
-              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
-              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-          </div>
-      </div>
-    </div>
-    <div>
-        <div class="uk-card uk-card-default">
-            <div class="uk-card-media-top uk-height-large uk-cover-container">
-                <img src="/yearbook/9.jpg" uk-cover>
-            </div>
-            <div class="uk-card-body">
-              <div class="uk-card-badge gold font-white icon-padding" uk-tooltip="Hall of Fame Recipient"><i class="fa fa-trophy"></i></div>
-                <h3 class="uk-card-title ">Roger Madison III</h3>
-                <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
-                <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-            </div>
-        </div>
-    </div>
-    <div>
-      <div class="uk-card uk-card-default">
-          <div class="uk-card-media-top uk-height-large uk-cover-container">
-              <img src="/yearbook/10.jpg" uk-cover>
-          </div>
-          <div class="uk-card-body">
-              <h3 class="uk-card-title ">Robert Rhodes</h3>
-              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Bobby</span><br>
-              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-          </div>
-      </div>
-    </div>
-    <div>
-      <div class="uk-card uk-card-default">
-          <div class="uk-card-media-top uk-height-large uk-cover-container">
-              <img src="/yearbook/11.jpg" uk-cover>
-          </div>
-          <div class="uk-card-body">
-              <h3 class="uk-card-title ">Alexander Davidson</h3>
-              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
-              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-          </div>
-      </div>
-    </div>
-    <div>
-        <div class="uk-card uk-card-default">
-            <div class="uk-card-media-top uk-height-large uk-cover-container">
-                <img src="/yearbook/12.jpg" uk-cover>
-            </div>
-            <div class="uk-card-body">
-              <div class="uk-card-badge gold font-white icon-padding" uk-tooltip="Hall of Fame Recipient"><i class="fa fa-trophy"></i></div>
-                <h3 class="uk-card-title ">Roger Madison III</h3>
-                <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
-                <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-            </div>
-        </div>
-    </div>
-    <div>
-      <div class="uk-card uk-card-default">
-          <div class="uk-card-media-top uk-height-large uk-cover-container">
-              <img src="/yearbook/13.jpg" uk-cover>
-          </div>
-          <div class="uk-card-body">
-              <h3 class="uk-card-title ">Robert Rhodes</h3>
-              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">Bobby</span><br>
-              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-          </div>
-      </div>
-    </div>
-    <div>
-      <div class="uk-card uk-card-default">
-          <div class="uk-card-media-top uk-height-large uk-cover-container">
-              <img src="/yearbook/14.jpg" uk-cover>
-          </div>
-          <div class="uk-card-body">
-              <h3 class="uk-card-title ">Alexander Davidson</h3>
-              <h5><i class="fa fa-tags" uk-tooltip="Alternative Names"></i> <span id="nicknames">- -</span><br>
-              <i class="fa fa-graduation-cap" uk-tooltip="Graduation Year"></i><span id="grad_year"> 1956</span></h5>
-          </div>
-      </div>
-    </div>
+    </a>
+  </div>
 </div>
 
 <!--Off-Canvas Popout for someone with a public profile -->
-<div id="rebecca-himmelheiber-graves" uk-offcanvas="mode: push; overlay: true">
+<div id="profile-preview" uk-offcanvas="mode: push; overlay: true">
     <div class="uk-offcanvas-bar white uk-width-1-1 uk-width-1-3@m">
     <button class="uk-offcanvas-close font-black" type="button" uk-close="ratio: 2"></button>
-    <h4 class="norwester font-black uk-text-center">Rebecca Himmelheiber-Graves</h4>
-    <div class="uk-width-1-1 uk-margin">
+    <h4 class="norwester font-black uk-text-center">{{ selectedUser.name || '--' }}</h4>
+
+    <h5 class="profile-label uk-text-center uk-margin" v-if="!selectedUser.isPublic"> <i class="fa fa-user-secret fa-3x"></i> <br><br>Profile is Private</h5>
+    
+    <div class="uk-width-1-1 uk-margin" v-if="selectedUser.isPublic">
         <div class="uk-cover-container uk-height-medium">
-          <img src="/yearbook/elderly.jpg" uk-cover>
+          <img v-bind:src="'/api/photo/' + selectedUser.profilePhotoRef" uk-cover>
         </div>
       <hr>
       <span class="profile-label">Email</span><br>
-      <a id="email" href="mailto:leslie_cole@gmail.com">leslie_cole@gmail.com</a><br><br>
+      <a id="email" href="mailto:leslie_cole@gmail.com">{{ selectedUser.email || '--' }}</a><br><br>
       <span class="profile-label uk-margin-top">Home Phone</span><br>
-      <span id="home_phone" class="profile-field">(123) 456-7890</span><br><br>
+      <span id="home_phone" class="profile-field">{{ selectedUser.home_phone || '--' }}</span><br><br>
       <span class="profile-label uk-margin-top">Cell Phone</span><br>
-      <span id="mobile_phone" class="profile-field">(987) 654-3210</span><br><br>
+      <span id="mobile_phone" class="profile-field">{{ selectedUser.cell_phone || '--' }}</span><br><br>
       <span class="profile-label uk-margin-top">Birthday</span><br>
-      <span id="birthday" class="profile-field">June 8th</span><br><br>
+      <span id="birthday" class="profile-field">{{ selectedUser.birthday || '--' }}</span><br><br>
       <span class="profile-label uk-margin-top">Marital Status</span><br>
-      <span id="marital_status" class="profile-field">Married</span><br><br>
+      <span id="marital_status" class="profile-field">{{ selectedUser.marital_status || '--' }}</span><br><br>
       <span class="profile-label uk-margin-top">Address</span><br>
       <span>
-      <span id="address_line1" class="profile-field">123 Main Street</span><br>
-      <span id="address_line2" class="profile-field">Apartment #12</span><br>
-      <span id="city" class="profile-field">Louisville</span>,<span id="state" class="profile-field"> KY</span><span id="zip" class="profile-field"> 40202</span>
+      <span id="address_line1" class="profile-field">{{ selectedUser.address_line_1 || '--' }}</span><br>
+      <span id="address_line2" class="profile-field">{{ selectedUser.address_line_2 || '--' }}</span><br>
+      <span id="city" class="profile-field" v-if="selectedUser.city">{{ selectedUser.city }}, </span><span id="state" class="profile-field" v-if="selectedUser.state">{{ selectedUser.state }}</span><span id="zip" class="profile-field" v-if="selectedUser.zip_code">{{ selectedUser.zip_code }}</span>
       </span>
     </div>
   </div>
@@ -378,12 +208,50 @@
 <div id="rachel-greene" uk-offcanvas="mode: push; overlay: true">
     <div class="uk-offcanvas-bar white uk-width-1-1 uk-width-1-3@m">
     <button class="uk-offcanvas-close font-black" type="button" uk-close="ratio: 2"></button>
-    <h4 class="norwester font-black uk-text-center">Rachel Greene</h4><br><br>
-      <h5 class="profile-label uk-text-center uk-margin"> <i class="fa fa-user-secret fa-3x"></i> <br><br>Profile is Private</h5>
+    
     </div>
 </div>
 
+</div>
+<script type="text/javascript">
+  // todo: perhaps should async load users to improve time to first byte,
+  // should also paginate here instead of loading all users
+  var app = new Vue({
+    el: '#app',
+    data: {
+      searchName: '',
+      gradYear: 'All',
+      hofOnly: false,
+      users: <%- JSON.stringify(users) %>,
+      displayUsers: <%- JSON.stringify(users) %>,
+      selectedUser: {}
+    },
+    methods: {
+      updateResults: function() {
+        var self = this;
+        this.displayUsers = this.users.filter(function(user) {
+          if (self.hofOnly) {
+            return user.isHallOfFame;
+          }
+          return true;
+        }).filter(function(user) {
+          if (self.gradYear !== 'All') {
+            return user.graduation_year == self.gradYear;
+          }
+          return true;
+        }).filter(function(user) {
+          if (self.searchName) {
+            return user.name.toLowerCase().indexOf(self.searchName.toLowerCase()) !== -1;
+          }
+          return true;
+        });
+      },
+      renderProfilePreview: function(user) {
+        this.selectedUser = user;
+      }
+    }
+  });
+</script>
 
-
-    </body>
+</body>
 </html>
