@@ -10,6 +10,7 @@
 <!--------------------------->
 <!-- Profile Info Section -->
 <!--------------------------->
+<div id="app">
 <div class="uk-container"></div>
 <div class="uk-card uk-card-default uk-margin uk-margin-right uk-margin-left">
     <div class="uk-card-header container-top">
@@ -314,7 +315,16 @@
     </div>
 </div>
 
+</div>
 <script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    data: {},
+    methods: {
+      
+    }
+  });
+
   $('#profile-photo-input').onchange = function(e) {
     console.log(e);
   };
@@ -348,5 +358,5 @@
 </script>
 <div class="uk-margin-large"></div>
 
-    </body>
+</body>
 </html>
