@@ -6,63 +6,79 @@
 </head>
 <body>
   <%- include('top-navigation'); %>    
-<div class="uk-hidden@m">
-<br><br><br><br><br><br>
-</div>
+  <div class="uk-hidden@m">
+  <br><br><br><br><br><br>
+  </div>
 
-<div id="app">
-<div class="uk-padding uk-clearfix">
-<h3 class="uk-position-relative uk-margin uk-margin-right uk-float-left norwester">Memories</h3>
-<div class="uk-position-relative uk-float-right"><button class="uk-button button-dk" href="#image-modal" uk-toggle>Add a Memory</button></div>
-<!-- Here is the code for the add an image modal -->
-<div id="image-modal" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body fog">
-      <button class="uk-modal-close-default" type="button" uk-close></button>
-        <h2 class="uk-modal-title">Add a Memory</h2>
-        <form>
+  <div id="app">
+    <div class="uk-padding uk-clearfix">
+      <h3 class="uk-position-relative uk-margin uk-margin-right uk-float-left norwester">Memories</h3>
+      <div class="uk-position-relative uk-float-right"><button class="uk-button button-dk" href="#image-modal" uk-toggle>Add a Memory</button></div>
+
+      <!-- Here is the code for the add an image modal -->
+      <div id="image-modal" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body fog">
+          <button class="uk-modal-close-default" type="button" uk-close></button>
+          <h2 class="uk-modal-title">Add a Memory</h2>
+          <form>
+              <div class="uk-margin">
+                  <div uk-form-custom>
+                      <input id="new-memory-file" type="file">
+                      <button class="uk-button button-lt" type="button" tabindex="-1"><span uk-icon="plus-circle"></span> &nbsp;Image</button>
+                  </div>
+              </div>
             <div class="uk-margin">
-                <div uk-form-custom>
-                    <input type="file">
-                    <button class="uk-button button-lt" type="button" tabindex="-1"><span uk-icon="plus-circle"></span> &nbsp;Image</button>
-                </div>
+              <span class="profile-label">*Memory Description</span>
+              <textarea class="uk-textarea" rows="5" placeholder="Enter an event description" v-model="newMemoryDescription"></textarea>
             </div>
-          <div class="uk-margin">
-            <span class="profile-label">*Memory Description</span>
-            <textarea class="uk-textarea" rows="5" placeholder="Enter an event description"></textarea>
-          </div>
-        </form>
+          </form>
 
-        <p class="uk-text-left">
-            <button class="uk-button button-dk" type="button">Save</button>
+          <p class="uk-text-left">
+            <button class="uk-button button-dk" type="button" v-on:click="saveMemory">Save</button>
             <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
-        </p>
+          </p>
+        </div>
+      </div>
     </div>
-</div>
-</div>
 
-<div class="uk-margin-right uk-margin-left">
-<div class="uk-child-width-1-3@m uk-grid-small" uk-grid="masonry: true" uk-lightbox="animation: scale">
-    <div>
-        <a v-for="memory in memories" v-bind:href="memory.photo_ref" v-bind:data-caption="memory.description">
-              <img v-bind:src="'/api/photo/' + memory.photo_ref" width="100%" height="auto">
-        </a>
+    <div class="uk-margin-right uk-margin-left">
+      <div class="uk-child-width-1-3@m uk-grid-small" uk-grid="masonry: true" uk-lightbox="animation: scale">
+        <div>
+          <a v-for="memory in memories" v-bind:href="'/api/photo/' + memory.photo_ref" v-bind:data-caption="memory.description">
+            <img v-bind:src="'/api/photo/' + memory.photo_ref" width="100%" height="auto">
+          </a>
+        </div>
+      </div>
     </div>
-</div>
-</div>
-<div class="uk-margin-large"></div>
-</div>
+    <div class="uk-margin-large"></div>
+  </div>
 
-<script type="text/javascript">
-  var app = new Vue({
-    el: '#app',
-    data: {
-      memories: <%- JSON.stringify(memories) %>
-    },
-    methods: {
+  <script type="text/javascript">
+    var app = new Vue({
+      el: '#app',
+      data: {
+        memories: <%- JSON.stringify(memories) %>,
+        newMemoryDescription: ''
+      },
+      methods: {
+        saveMemory: function() {
+          var formData = new FormData();
+          formData.append('memoryImage', $('#new-memory-file')[0].files[0]);
+          formData.append('memoryDescription', this.newMemoryDescription);
 
-    }
-  });
-</script>
+          axios.post('/api/memory', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(function(res) {
+            var modal = UIkit.modal('#image-modal').hide();
+          }).catch(function(err) {
+            alert('There was an issue saving your memory. Please refresh the page and try again.');
+          });
+        }
+      }
+    });
+  </script>
 
 </body>
 </html>

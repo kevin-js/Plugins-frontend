@@ -285,7 +285,7 @@
             <span class="profile-label">Current Password</span><br>
             <div class="uk-inline">
                 <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                <input id="current-password-field" class="uk-input" placeholder="Current Password" type="text">
+                <input id="current-password-field" class="uk-input" placeholder="Current Password" type="password">
             </div>
         </div>
           <div class="uk-margin boundary">
@@ -343,11 +343,10 @@
         newPassword: $('#new-password-field').val()
       },
       success: function(data) {
-        // todo: page can't be scrolled here, need another way to programmatically dismiss page
         $('#current-password-field').val('');
         $('#new-password-field').val('');
         $('#confirm-password-field').val('');
-        $('#pw-modal').hide();
+        UIkit.modal('#pw-modal').hide();
       },
       error: function(err) {
         alert(JSON.stringify(err));
