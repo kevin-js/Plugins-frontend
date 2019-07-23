@@ -213,65 +213,66 @@
 <!-- Your Memories Section -->
 <!--------------------------->
 <div class="uk-card uk-card-default uk-margin uk-margin-right uk-margin-left">
-    <div class="uk-card-header container-top">
-        <div class="uk-grid-small uk-flex-middle" uk-grid>
+  <div class="uk-card-header container-top">
+      <div class="uk-grid-small uk-flex-middle" uk-grid>
         <h4 class="norwester font-white">Your Shared Memories</h4>
-        </div>
-    </div>
-    <div class="uk-card-body white">
-      <div class="uk-clearfix">
+      </div>
+  </div>
+  <div class="uk-card-body white">
+    <div class="uk-clearfix">
       <h5 class="uk-float-left">Share your special moments with fellow alumni. </br>All photos will appear on the communal 'Memories' page.</h5>
       <a class="uk-float-right" href="memories.html">Memories &nbsp;<i class="fa fa-external-link"></i></a>
-      </div>
+    </div>
 
-      <div class="uk-grid-match uk-child-width-1-4@m uk-flex-middle" uk-grid="masonry: true">
-          <div>
-            <div class="uk-padding">
-              <img class="uk-height-small uk-width-auto" src="assets/image-file-add.png"><br>
-
-              <a class="font-black" href="#image-modal" uk-toggle><i class="fa fa-plus"></i>&nbsp; Your First Photo</a>
-
-                          <!-- Here is the code for the add an image modal -->
-                          <div id="image-modal" uk-modal>
-                              <div class="uk-modal-dialog uk-modal-body fog">
-                                <button class="uk-modal-close-default" type="button" uk-close></button>
-                                  <h2 class="uk-modal-title">Add a Memory</h2>
-                                  <form>
-                                      <div class="uk-margin">
-                                          <div uk-form-custom>
-                                              <input type="file">
-                                              <button class="uk-button button-lt" type="button" tabindex="-1"><span uk-icon="plus-circle"></span> &nbsp;Image</button>
-                                          </div>
-                                      </div>
-                                    <div class="uk-margin">
-                                      <span class="profile-label">*Memory Description</span>
-                                      <textarea class="uk-textarea" rows="5" placeholder="Enter an event description"></textarea>
-                                    </div>
-                                  </form>
-
-                                  <p class="uk-text-left">
-                                      <button class="uk-button button-dk" type="button">Save</button>
-                                      <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
-                                  </p>
-                              </div>
+    <% if (user.membership && user.membership.membership_type !== 'free') { %>
+    <div class="uk-grid-match uk-child-width-1-4@m uk-flex-middle" uk-grid="masonry: true">
+      <div>
+        <div class="uk-padding">
+          <% if (memories.length > 0) { %> 
+            <% for (var idx = 0; idx < memories.length; idx++) { %>
+              <span>
+                <img class="uk-height-small uk-width-auto" src="/api/photo/<%= memories[idx].photo_ref %>" />
+              </span>
+            <% } %> 
+            <img class="uk-height-small uk-width-auto" src="assets/image-file-add.png" /><br />
+            <span><a class="font-black" href="#image-modal" uk-toggle><i class="fa fa-plus"></i>&nbsp; Add a Photo</a></span>
+          <% } else { %>
+            <img class="uk-height-small uk-width-auto" src="assets/image-file-add.png" /><br />
+            <a class="font-black" href="#image-modal" uk-toggle><i class="fa fa-plus"></i>&nbsp; Your First Photo</a>
+          <% } %>
+          
+          <!-- Here is the code for the add an image modal -->
+          <div id="image-modal" uk-modal>
+            <div class="uk-modal-dialog uk-modal-body fog">
+              <button class="uk-modal-close-default" type="button" uk-close></button>
+                <h2 class="uk-modal-title">Add a Memory</h2>
+                <form>
+                  <div class="uk-margin">
+                      <div uk-form-custom>
+                          <input id="new-memory-file" type="file">
+                          <button class="uk-button button-lt" type="button" tabindex="-1"><span uk-icon="plus-circle"></span> &nbsp;Image</button>
                       </div>
                   </div>
+                  <div class="uk-margin">
+                    <span class="profile-label">*Memory Description</span>
+                    <textarea class="uk-textarea" rows="5" placeholder="Enter an event description" v-model="newMemoryDescription"></textarea>
+                  </div>
+                </form>
 
+                <p class="uk-text-left">
+                    <button class="uk-button button-dk" type="button" v-on:click="saveMemory">Save</button>
+                    <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
+                </p>
             </div>
           </div>
-
-          <div>
-
           </div>
 
-          <div>
-
-          </div>
-
-          <div>
-
-          </div>
+        </div>
       </div>
+    </div>
+    <% } else { %>
+      <p>To contribute to the Memories page, please upgrade your <a href="/membership-options">membership plan</a>.</p>
+    <% } %>
 </div>
 </div>
 
@@ -317,11 +318,28 @@
 
 </div>
 <script type="text/javascript">
-  var app = new Vue({
-    el: '#app',
-    data: {},
+  var memoryUploadWidget = new Vue({
+    el: '#image-modal',
+    data: {
+      memories: <%- JSON.stringify(memories) %>,
+      newMemoryDescription: ''
+    },
     methods: {
-      
+      saveMemory: function() {
+        var formData = new FormData();
+        formData.append('memoryImage', $('#new-memory-file')[0].files[0]);
+        formData.append('memoryDescription', this.newMemoryDescription);
+
+        axios.post('/api/memory', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function(res) {
+          var modal = UIkit.modal('#image-modal').hide();
+        }).catch(function(err) {
+          alert('There was an issue saving your memory. Please refresh the page and try again.');
+        });
+      }
     }
   });
 

@@ -13,6 +13,8 @@
   <div id="app">
     <div class="uk-padding uk-clearfix">
       <h3 class="uk-position-relative uk-margin uk-margin-right uk-float-left norwester">Memories</h3>
+
+      <% if (user.membership && user.membership.membership_type !== 'free') { %>
       <div class="uk-position-relative uk-float-right"><button class="uk-button button-dk" href="#image-modal" uk-toggle>Add a Memory</button></div>
 
       <!-- Here is the code for the add an image modal -->
@@ -39,6 +41,7 @@
           </p>
         </div>
       </div>
+      <% } %>
     </div>
 
     <div class="uk-margin-right uk-margin-left">
