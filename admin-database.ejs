@@ -22,7 +22,7 @@
       <h4 class="norwester font-white"><i class="fa fa-filter"></i> &nbsp; Filters</h4>
     </div>
     <div class="uk-inline uk-float-right uk-margin-small">
-      <h5 class="font-white tight"><a class="font-white">Clear Filters</a> &nbsp;|&nbsp; <a class="font-white" v-on:click="redoSearch">Search</a></h5>
+      <h5 class="font-white tight"><a class="font-white" v-on:click="clearFilters">Clear Filters</a> &nbsp;|&nbsp; <a class="font-white" v-on:click="redoSearch">Search</a></h5>
       <!-- <a class="font-white">Export</a></h5> -->
     </div>
   </div>
@@ -39,7 +39,7 @@
       <div class="uk-inline uk-margin-bottom uk-width-small">
       <label class="uk-form-label">Grad Year</label>
       <select class="uk-select border-charcoal2" v-model="searchGradYear">
-        <option> All </option>
+        <option value="" default> All </option>
         <option>	2019	</option>
         <option>	2018	</option>
         <option>	2017	</option>
@@ -156,18 +156,18 @@
       <div class="uk-inline uk-margin-bottom uk-width-1-6@m">
       <label class="uk-form-label">Membership</label>
       <select class="uk-select border-charcoal2" v-model="searchMembership">
-        <option> All </option>
-        <option>Free</option>
-        <option>Annual</option>
-        <option>Lifetime</option>
-        <option>Lifetime > 50 </option>
+        <option value="" default> All </option>
+        <option value="free">Free</option>
+        <option value="annual">Annual</option>
+        <option value="lifetime">Lifetime</option>
+        <option value="lifetime_50_plus">Lifetime > 50 </option>
       </select>
       </div>
 
       <div class="uk-inline uk-margin-bottom uk-width-1-6@m">
       <label class="uk-form-label">Permissions</label>
       <select class="uk-select border-charcoal2" v-model="searchPermissions">
-        <option> All </option>
+        <option value="" default>All</option>
         <option>Admin</option>
         <option>Group Leader</option>
       </select>
@@ -186,7 +186,7 @@
       <div class="uk-inline uk-margin-bottom">
       <label class="uk-form-label">State</label>
       <select class="uk-select border-charcoal2" v-model="searchState">
-          <option value="All">All</option>
+          <option value="" default>All</option>
           <option value="AL">AL</option>
         	<option value="AK">AK</option>
         	<option value="AZ">AZ</option>
@@ -249,28 +249,25 @@
       <div class="uk-inline uk-margin-bottom">
       <label class="uk-form-label">Mortality</label>
       <select class="uk-select border-charcoal2" v-model="searchMortalityStatus">
-      <OPTION>All	</option>
-      <OPTION>Alive</option>
-      <OPTION>Deceased</option>
+        <option value="" default>All</option>
+        <option value="alive">Alive</option>
+        <option value="deceased">Deceased</option>
       </select>
       </div>
 
       <div class="uk-inline uk-margin-bottom">
       <label class="uk-form-label">Hall of Fame</label>
       <select class="uk-select border-charcoal2" v-model="searchHOFStatus">
-      <OPTION>All	</option>
-      <OPTION>Winner</option>
-      <OPTION>Non-Winner</option>
+        <option value="" default>All</option>
+        <option value="winner">Winner</option>
+        <option value="non-winner">Non-Winner</option>
       </select>
       </div>
 
       <div class="uk-inline uk-margin-bottom">
       <label class="uk-form-label">Groups</label>
       <select class="uk-select border-charcoal2" v-model="searchGroups">
-      <OPTION>All	</option>
-      <OPTION>Band</option>
-      <OPTION>Choir</option>
-      <OPTION>Student Council</option>
+        <option value="" default>All</option>
       </select>
       </div>
 
@@ -282,19 +279,20 @@
 
     <div class="uk-margin-large-top uk-margin-left uk-margin-right uk-clearfix">
     <h4 class="uk-position-relative uk-margin-right uk-float-left norwester">Results</h4>
-    <div class="uk-position-relative uk-float-right"><button class="uk-button button-lt" href="#modal-new-alum" uk-toggle>Add to Database</button></div>
+    <!-- <div class="uk-position-relative uk-float-right"><button class="uk-button button-lt" href="#modal-new-alum" uk-toggle>Add to Database</button></div> -->
   </div>
 
     <div class="uk-card uk-card-default uk-margin-right uk-margin-left">
       <div class="uk-card-header container-top uk-clearfix">
-        <p class="font-white float-left uk-inline"> Showing <span id="table_start">1</span> - <span id="table_end">10</span> of <span id="table_total">187</span></p>
+        <p class="font-white float-left uk-inline"> Showing <span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.floor( filteredUsers.length, pageNumber * pageSize) }}</span> of <span id="table_total">{{ filteredUsers.length }}</span></p>
 
         <div class="uk-float-right uk-visible@m">
-          <select class="uk-select border-charcoal2 uk-inline uk-width-small">
-              <option>10 per page</option>
-              <option>50 per page</option>
-              <option>100 per Page </option>
+          <select class="uk-select border-charcoal2 uk-inline uk-width-small" v-model="pageSize">
+              <option>10</option>
+              <option>50</option>
+              <option>100</option>
           </select>
+          <span class="font-white">&nbsp;per page</span>
       </div>
     </div>
         <div class="uk-overflow-auto uk-height-xxlarge">
@@ -311,36 +309,36 @@
           </thead>
 
         <div class="uk-card-body white uk-padding-remove">
-
             <tbody>
-              <tr>
+              <tr v-for="user in displayUsers" Key="user.id">
 
                 <td class="table-border border-none font-small">
-                  <p><span id="alum_name">Erin Greene</span><br><span id="alt_names">Madison</span><br><span id="grad_yr">Class of 1956</span></p>
+                  <p><span id="alum_name">{{ user.name }}</span><br><span id="alt_names">{{ user.nicknames }}</span><br><span id="grad_yr" v-if="user.graduation_year">Class of {{ user.graduation_year }}</span></p>
                 </td>
 
                 <!--Be sure to add a break at 20 characters for uber long emails so they wrap -->
               <td class="table-border border-none font-small">
-                <p><span id="email">Erin_Greene@gmail.com</span><br><span id="membership">Annual-Autopay</span></p>
+                <p><span id="email">{{ user.email }}</span><br><span id="membership">{{ user.membership.membership_type }}</span></p>
               </td>
 
               <td class="table-border border-none font-small">
-                <p>H:<span id="home_phone">(812) 946-1839</span><br>C: <span id="cell_phone">(502) 718-8724</span></p>
+                <p>H:<span id="home_phone">{{ user.home_phone }}</span><br>C: <span id="cell_phone">{{ user.cell_phone }}</span></p>
               </td>
 
               <td class="table-border border-none font-small">
-                <p><span id="addr_line1">123 Main Street</span><br>
-                  <span id="addr_line2">Apartment B</span><br>
-                  <span id="city">Louisville</span>, <span id="state">KY</span> <span id="zip">40202</span></p>
+                <p><span id="addr_line1">{{ user.address_line_1 }}</span><br>
+                  <span id="addr_line2">{{ user.address_line_2 }}</span><br>
+                  <span id="city" v-if="user.city">{{ user.city }},</span> <span id="state">{{ user.state }}</span> <span id="zip">{{ user.zip_code }}</span></p>
+              </td>
+
+              <!-- todo: what permissions are these? -->
+              <td class="table-border border-none">
+                  <!-- <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Group Leader" value="Group Leader" disabled>
+                  <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled> -->
               </td>
 
               <td class="table-border border-none">
-                  <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Group Leader" value="Group Leader" disabled>
-                  <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled>
-              </td>
-
-              <td class="table-border border-none">
-                <p><a id="no_of_grps" href="#group-modal" uk-toggle>3</a></p>
+                <p><a id="no_of_grps" href="#group-modal" uk-toggle v-on:click="selectedUserGroups = user.groups">{{ user.groups.length }}</a></p>
 
                 <div id="group-modal" uk-modal>
                 <div class="uk-modal-dialog">
@@ -350,9 +348,7 @@
                     </div>
 
                     <div class="uk-modal-body" uk-overflow-auto>
-                    <p id="group"><i class="fa fa-users"></i> Alumni Board Member</p><br>
-                    <p id="group"><i class="fa fa-users"></i> 50th Reunion Committee (Class of 1970)</p><br>
-                    <p id="group"><i class="fa fa-users"></i> Class of 1970 Brunch Bunch</p>
+                    <p id="group" v-for="group in selectedUserGroups"><i class="fa fa-users"></i> {{ group.group_name }}</p><br>
                     </div>
 
                     <div class="uk-modal-footer fog uk-text-left">
@@ -362,75 +358,18 @@
               </div>
               </td>
             </tr>
-
-              <tr>
-
-                <td class="table-border border-none font-small">
-                  <p><span id="alum_name">Rodney Anderson</span><br><span id="alt_names">Rod</span><br><span id="grad_yr">Class of 1956</span></p>
-                </td>
-
-              <!--Be sure to add a break at 20 characters for uber long emails so they wrap -->
-              <td class="table-border border-none font-small">
-                <p><span id="email">RAnderson@yahoo.com</span><br><span id="membership">Annual</span></p>
-              </td>
-
-              <td class="table-border border-none font-small">
-                <p>H:<span id="home_phone">(812) 946-7878</span><br>C: <span id="cell_phone">(502) 123-7485</span></p>
-              </td>
-
-              <td class="table-border border-none font-small">
-                <p><span id="addr_line1">456 Daisy Lane</span><br>
-                  <span id="city">Clarksville</span>, <span id="state">IN</span> <span id="zip">47129</span></p>
-              </td>
-
-              <td class="table-border border-none">
-                  <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled>
-              </td>
-
-              <td class="table-border border-none font-small">
-                <p><a id="no_of_grps" href="#group-modal" uk-toggle></a></p>
-              </td>
-              </tr>
-
-
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
             </tbody>
           </table>
           <div class="uk-padding-small black">
           <ul class="uk-pagination uk-flex-center uk-margin-remove">
-          <li><a href="#"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
+          <li><a v-on:click="paginateLeft"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
           <li><div>
-              <select class="uk-select border-charcoal2">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
-                  <option>12</option>
-                  <option>13</option>
-                  <option>14</option>
-                  <option>15</option>
-                  <option>16</option>
-                  <option>17</option>
-                  <option>18</option>
-                  <option>19</option>
+              <select class="uk-select border-charcoal2" v-model="pageNumber">
+                  <option v-for="page in Array(pageCount).keys()">{{ page + 1 }}</option>
               </select>
           </div></li>
-          <li class="font-white uk-margin-small">of 19</li>
-          <li><a href="#"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
+          <li class="font-white uk-margin-small">of {{ pageCount }}</li>
+          <li><a v-on:click="paginateRight"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
         </ul>
       </div>
     </div>
@@ -565,14 +504,93 @@
       searchZipCode: '',
       searchMortalityStatus: '',
       searchHOFStatus: '',
-      searchGroups: ''
+      searchGroups: '',
+      pageNumber: 1,
+      pageSize: 10,
+      users: <%- JSON.stringify(userList) %>,
+      filteredUsers: <%- JSON.stringify(userList) %>,
+      selectedUserGroups: []
+    },
+    computed: {
+      displayUsers: function() {
+        var startEl = (this.pageNumber - 1) * this.pageSize;
+        return this.filteredUsers.slice(startEl, startEl + this.pageSize);
+      },
+      pageCount: function() {
+        return Math.ceil(this.filteredUsers.length / this.pageSize);
+      }
     },
     methods: {
+      paginateLeft: function() {
+        if (this.pageNumber > 1) this.pageNumber--;
+      },
+      paginateRight: function() {
+        if (this.pageNumber < this.pageCount) this.pageNumber++;
+      },
       clearFilters: function() {
-        
+        this.searchName = '';
+        this.searchGradYear = '';
+        this.searchEmailAddress = '';
+        this.searchPhoneNumber = '';
+        this.searchMembership = '';
+        this.searchPermissions = '';
+        this.searchAddress = '';
+        this.searchCity = '';
+        this.searchState = '';
+        this.searchZipCode = '';
+        this.searchMortalityStatus = '';
+        this.searchHOFStatus = '';
+        this.searchGroups = '';
       },
       redoSearch: function() {
-        console.log(this.$data);
+        var self = this;
+        this.filteredUsers = this.users
+        .filter(function(user) {
+          return self.searchName ? user.name && user.name.toLowerCase().indexOf(self.searchName.toLowerCase()) !== -1 : true;
+        })
+        .filter(function(user) {
+          return self.searchGradYear ? user.graduation_year == parseInt(self.searchGradYear) : true;
+        })
+        .filter(function(user) {
+          return self.searchEmailAddress ? (user.email && user.email.toLowerCase().indexOf(self.searchEmailAddress.toLowerCase()) !== -1) : true;
+        })
+        .filter(function(user) {
+          return self.searchPhoneNumber ? (user.home_phone && user.home_phone.indexOf(self.searchPhoneNumber) !== -1 || user.cell_phone && user.cell_phone.indexOf(self.searchPhoneNumber) !== -1) : true;
+        })
+        .filter(function(user) {
+          return self.searchMembership ? user.membership.membership_type === self.searchMembership : true;
+        })
+        .filter(function(user) {
+          return self.searchCity ? user.city && user.city.toLowerCase().indexOf(self.searchCity.toLowerCase()) !== -1 : true;
+        })
+        .filter(function(user) {
+          return self.searchState ? user.state && user.state.toLowerCase().indexOf(self.searchState.toLowerCase()) !== -1 : true;
+        })
+        .filter(function(user) {
+          return self.searchZipCode ? user.zip_code && user.zip_code == self.searchZipCode : true;
+        })
+        .filter(function(user) {
+          switch (self.searchMortalityStatus) {
+            case '':
+              return true;
+            case 'alive':
+              return !user.isDeceased;
+            case 'deceased':
+              return user.isDeceased;
+          }
+        })
+        .filter(function(user) {
+          switch (self.searchHOFStatus) {
+            case '':
+              return true;
+            case 'winner':
+              return user.isHallOfFame;
+            case 'non-winner':
+              return !user.isHallOfFame;  
+          }
+        });
+
+        // todo: permissions, address, groups filter
       }
     }
   });
