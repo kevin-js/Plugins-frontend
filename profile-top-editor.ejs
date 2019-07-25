@@ -10,6 +10,7 @@
 <!--------------------------->
 <!-- Profile Info Section -->
 <!--------------------------->
+<div id="app">
 <div class="uk-container"></div>
 <form class="uk-card uk-card-default uk-margin uk-margin-right uk-margin-left" method='POST' action='/api/update-profile-data' enctype="multipart/form-data">
     <div class="uk-card-header container-top">
@@ -38,28 +39,28 @@
           </div>
         <!-- Far Left Section -->
               <label class="profile-label">Name</label>
-              <input id="name" name="name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.name %>">
-              <label class="profile-label">Grad Year &nbsp;<span uk-icon="info" uk-tooltip="Only an administrator can edit your graduation year. If yours is incorrect, please contact an Alumni Association official to have it corrected."></label><br>
-              <input id="grad_year" name="graduation_year" class="uk-input uk-form-width-small border-charcoal2" type="text" value="<%= user.graduation_year %>" disabled>
+              <input id="name" name="name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="user.name">
+              <label class="profile-label">Grad Year &nbsp;<span uk-icon="info" uk-tooltip="Only an administrator can edit your graduation year. If yours is incorrect, please contact an Alumni Association official to have it corrected."></span></label><br>
+              <input id="grad_year" name="graduation_year" class="uk-input uk-form-width-small border-charcoal2" type="text" v-model="user.graduation_year" disabled>
         </div>
 
         <!-- Far Left Section -->
           <div>
             <label class="profile-label">Nicknames</label>
-            <input id="nicknames" name="nicknames" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.nicknames %>">
+            <input id="nicknames" name="nicknames" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="user.nicknames">
             <span class="profile-label">Email</span>
-            <input id="email" name="email" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.email %>">
+            <input id="email" name="email" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="user.email">
             <span class="profile-label">Home Phone</span>
-            <input id="home_phone" name="home_phone" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.home_phone %>">
+            <input id="home_phone" name="home_phone" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="user.home_phone">
             <span class="profile-label">Cell Phone</span>
-            <input id="cell_phone" name="cell_phone" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.cell_phone %>">
+            <input id="cell_phone" name="cell_phone" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="user.cell_phone">
             <span class="profile-label">Birthday</span>
-            <input id="dob" name="birthday" class="uk-input uk-width-small border-charcoal2 uk-margin-bottom" type="text" placeholder="mm-dd-yyyy" value="<%= user.birthday %>">
+            <input id="dob" name="birthday" class="uk-input uk-width-small border-charcoal2 uk-margin-bottom" type="text" placeholder="mm-dd-yyyy" v-model="user.birthday">
           </div>
 
           <div>
             <span class="profile-label">Marital Status</span>
-            <select id="marital_status" name="marital_status" class="uk-select border-charcoal2 uk-margin-bottom" value="<%= user.marital_status %>">
+            <select id="marital_status" name="marital_status" class="uk-select border-charcoal2 uk-margin-bottom" v-model="user.marital_status">
               <option></option>
               <option>Single</option>
               <option>Married</option>
@@ -69,9 +70,9 @@
 
             <span class="profile-label">Address</span>
             <span>
-            <input id="address_line1" name="address_line_1" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.address_line_1 %>"><br>
-            <input id="address_line2" name="address_line_2" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.address_line_2 %>"><br>
-            <input id="city" name="city" class="uk-input uk-width-1-3 border-charcoal2 uk-margin-bottom" type="text" value="<%= user.city %>">, <select id="state" name="state" class="uk-select uk-width-1-4 border-charcoal2 uk-margin-bottom" value="<%= user.state %>">
+            <input id="address_line1" name="address_line_1" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="user.address_line_1"><br>
+            <input id="address_line2" name="address_line_2" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="user.address_line_2"><br>
+            <input id="city" name="city" class="uk-input uk-width-1-3 border-charcoal2 uk-margin-bottom" type="text" v-model="user.city">, <select id="state" name="state" class="uk-select uk-width-1-4 border-charcoal2 uk-margin-bottom" v-model="user.state">
                 <option value=""></option>
                 <option value="AL">AL</option>
                 <option value="AK">AK</option>
@@ -125,7 +126,7 @@
                 <option value="WI">WI</option>
                 <option value="WY">WY</option>
               </select>
-            <input id="zip" name="zip_code" class="uk-input uk-width-1-4 border-charcoal2 uk-margin-bottom" type="text" value="<%= user.zip_code %>">
+            <input id="zip" name="zip_code" class="uk-input uk-width-1-4 border-charcoal2 uk-margin-bottom" type="text" v-model="user.zip_code">
           </span>
                   <span class="profile-label uk-margin">Privacy &nbsp;<span uk-icon="info" uk-tooltip="All alumni can view your yearbook photo, name and graduation year.  If you set your profile as public,  paid members can also view your phone number, address, email, birthday, and marital status.  To hide this information set your profile as private."></span></span>
                   <span id="public_toggle">
@@ -191,152 +192,61 @@
                       }
                     </style>
                     <label class="switch">
-                      <!-- todo: need to configure this to save to isPublic field -->
-                      <% if (user.isPublic) { %>
-                        <input id="profile-visibility-toggle" type="checkbox" checked="1">
-                      <% } else { %>
-                        <input id="profile-visibility-toggle" type="checkbox">
-                      <% } %>
+                      <input id="profile-visibility-toggle" type="checkbox" v-model="user.isPublic">
                       <span class="slider round"></span>
                     </label>
                     <span>&nbsp;Make profile public</span>
-                    <!-- <p class="toggle"><input type="checkbox" id="profile-visibility-toggle" class="fa fa-toggle-on"></input> &nbsp;Profile is Public</p><p class="toggle" hidden><i class="fa fa-toggle-off"></i> &nbsp;Profile is Private</p> -->
                   </span>
           </div>
       </div>
-      <div class="uk-position-relative uk-margin uk-margin-right uk-float-left"><button class="uk-button button-dk" type="submit">Save</button></div>
+      <div class="uk-position-relative uk-margin uk-margin-right uk-float-left"><button class="uk-button button-dk" type="button" v-on:click="saveProfile">Save</button></div>
       <div class="uk-position-relative uk-margin uk-float-left"><button type="button" class="uk-button button-lt"><a href="/profile">Cancel</a></button></div>
 </div>
 </form>
-
-
-<!--------------------------->
-<!-- Group Listing Section -->
-<!--------------------------->
-<!-- 
-<div class="uk-margin-medium-top uk-margin-right uk-margin-left">
-<div class="uk-grid-match uk-child-width-1-2@m" uk-grid>
-<div>
-    <div class="uk-card uk-card-default">
-        <div class="uk-card-header container-top">
-            <h4 class="norwester font-white">Activities</h4>
-        </div>
-        <div class="uk-card-body white">
-          <p>Activity Number 1</p>
-          <a href="">Activity Link 2</a>
-          <p>Activity Number 3</p>
-          <p>Activity Number 4</p>
-          <a href="">Activity Link 5</a>
-          <p>Activity Number 6</p>
-        </div>
-    </div>
 </div>
-
-<div>
-    <div class="uk-card uk-card-default">
-        <div class="uk-card-header container-top">
-            <h4 class="norwester font-white">Membership</h4>
-        </div>
-        <div class="uk-card-body white">
-          <span class="profile-label uk-float-left">Status</span> <a class="uk-float-right" href="">View Benefits &nbsp;<i class="fa fa-external-link"></i></a>
-          <br>
-          <span id="nickname" class="profile-field"><span uk-icon="check"></span> &nbsp;Active</span><a href="">&nbsp;(Edit)</a><br><br>
-          <span class="profile-label">Payment Method</span><br>
-          <span id="pay_method" class="profile-field">Visa …1234, Exp 12/20</span><a href="">&nbsp;(Edit)</a><br><br>
-          <span class="profile-label">Renewal Scheduled On</span><br>
-          <span id="renews_on" class="profile-field">12/24/2019</span><br><br>
-          <span class="profile-label">Auto-Renew?</span><br>
-          <span id="auto-renew" class="profile-field">Yes</span> <a href="">&nbsp;(Edit)</a>
-        </div>
-    </div>
-</div>
-
-</div>
-</div>
--->
-
-<!--------------------------->
-<!-- Event Section -->
-<!--------------------------->
-<!-- <div class="uk-card uk-card-default uk-margin-medium-top uk-margin-right uk-margin-left">
-    <div class="uk-card-header container-top">
-        <div class="uk-grid-small uk-flex-middle" uk-grid>
-        <h4 class="norwester font-white">Events</h4>
-        </div>
-    </div>
-
-    <div class="uk-card-body white">
-      <div class="uk-grid-match uk-child-width-1-3@m uk-flex-top" uk-grid>
-          <div>
-            <span class="profile-label uk-margin-bottom">May 2019</span>
-            <img class="uk-width-1-1 uk-margin-right" src="assets/calendar_mockup.png" alt="Calendar">
-          </div>
-
-          <div>
-            <span class="profile-label">Upcoming</span>
-            <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top">
-            <h6><span id="event_date">Friday, May 24th</span><br>
-            <span class="font-med" id="event_time">10:00 - 11:30 AM</span><br>
-            <span id="event_title">Annual Meet and Greet Brunch</span><br>
-            <a class="line" href=""><i class="fa fa-group"></i> &nbsp;Jazz Band</a></h6>
-            </div>
-
-            <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top">
-            <h6><span id="event_date">Saturday, May 25th</span><br>
-            <span class="font-med" id="event_time">7:30 - 9:30 PM</span><br>
-            <span id="event_title">Fern Creek Annual Cancer Fundr…</span><br>
-            <a class="line" href=""><i class="fa fa-group"></i> &nbsp;Jazz Band</a></h6></div>
-
-            <div class="uk-margin-left"><br><a href=""><i class="fa fa-external-link"></i> &nbsp;View More</a></div>
-          </div>
-
-          <div>
-            <span class="profile-label">Announcements</span>
-            <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top">
-            <h6><span id="announcement_title">Class Reunion!</span><br>
-            <span class="font-med" id="announcement_details">It’s been 50 years since you graduated, and we’re celebrating with a party!</span><br>
-            <a class="line" href="">Learn More</a></h6>
-            </div>
-          </div>
-
-    </div>
-</div>
-</div>
- -->
 <div class="uk-margin-large"></div>
 
-<!-- <script type="text/javascript">
-  function saveProfile() {
-    $.ajax({
-      url: '/api/update-profile-data',
-      type: 'POST',
-      data: {
-        name: $('#name').val(),
-        nicknames: $('#nickname').val(),
-        home_phone: $('#home_phone').val(),
-        cell_phone: $('#cell_phone').val(),
-        birthday: $('#birthday').val(),
-        marital_status: $('#marital_status').val(),
-        address_line_1: $('#address_line1').val(),
-        address_line_2: $('#address_line2').val(),
-        city: $('#city').val(),
-        state: $('#state').val(),
-        zip_code: $('#zip').val(),
-        isPublic: $('#profile-visibility-toggle').prop('checked')
-      },
-      success: function(data) {
-        if (data.redirect) {
-          window.location.pathname = data.redirect;
-        } else {
-          window.location.pathname = '/profile';
+<script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    data: {
+      user: <%- JSON.stringify(user) %>
+    },
+    methods: {
+      saveProfile: function() {
+        var userPayload = Object.assign({}, this.user);
+        var formData = new FormData();
+
+        var fileUpload = $('#profile_photo_upload')[0].files[0];
+        if (fileUpload) {
+          if (fileUpload.size/1024/1024 > 1) {
+            alert('Please keep image uploads below 1 MB. You can compress your image using www.wecompress.com if you would like to use the current selected photo.');
+            return;
+          }
+          formData.append('profile_photo_upload', fileUpload);
         }
-      },
-      error: function(err) {
-        alert(err);
+        
+        formData.append('user', JSON.stringify(userPayload));        
+
+        axios.post('/api/update-profile-data', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+          .then(function(data) {
+            if (data.redirect) {
+              window.location.pathname = data.redirect;
+            } else {
+              window.location.pathname = '/profile';
+            }
+          })
+          .catch(function(err) {
+            alert(err);
+          });
       }
-    });
-  }
-</script> -->
+    }
+  });
+</script>
 
 </body>
 </html>

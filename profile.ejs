@@ -343,10 +343,6 @@
     }
   });
 
-  $('#profile-photo-input').onchange = function(e) {
-    console.log(e);
-  };
-
   function changePassword() {
     if (!$('#new-password-field').val().match(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
       alert('New password does not satisfy the security requirements.');
