@@ -13,21 +13,21 @@
 <div id="app">
 <div class="uk-padding uk-clearfix">
 <h3 class="uk-position-relative uk-margin uk-margin-right uk-float-left norwester">Hall of Fame</h3>
-<div class="uk-position-relative uk-float-right"><button class="uk-button button-dk" href="#image-modal" uk-toggle>Nominate Someone</button></div>
-<!-- Here is the code for the add an image modal -->
-<div id="image-modal" uk-modal>
+<div class="uk-position-relative uk-float-right"><button class="uk-button button-dk" href="#nomination-modal" uk-toggle>Nominate Someone</button></div>
+
+<div id="nomination-modal" uk-modal>
     <div class="uk-modal-dialog uk-modal-body fog">
       <button class="uk-modal-close-default" type="button" uk-close></button>
         <h2 class="uk-modal-title">Submit a Nomination</h2>
         <form>
           <div class="uk-margin">
             <span class="profile-label">*Alumnist Name</span>
-            <input class="uk-input" type="text">
+            <input class="uk-input" type="text" v-model="nominee_name">
           </div>
           <div class="uk-margin">
             <span class="profile-label">*Graduation Year</span><br>
-          <select class="uk-select uk-width-small">
-            <option> - - </option>
+          <select class="uk-select uk-width-small" v-model="nominee_graduation_year">
+            <option></option>
             <option>	2019	</option>
             <option>	2018	</option>
             <option>	2017	</option>
@@ -133,12 +133,12 @@
 
           <div class="uk-margin">
             <span class="profile-label">*Reason for Nominating</span>
-            <textarea class="uk-textarea" rows="5" placeholder="Enter a reason for nominating this person"></textarea>
+            <textarea class="uk-textarea" rows="5" placeholder="Enter a reason for nominating this person" v-model="nomination_reason"></textarea>
           </div>
         </form>
 
         <p class="uk-text-left">
-            <button class="uk-button button-dk" type="button">Save</button>
+            <button class="uk-button button-dk" type="button" v-on:click="submitNomination">Save</button>
             <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
         </p>
     </div>
@@ -170,9 +170,46 @@
   var app = new Vue({
     el: '#app',
     data: {
-      users: <%- JSON.stringify(users) %>
+      users: <%- JSON.stringify(users) %>,
+      nominee_name: '',
+      nominee_graduation_year: undefined,
+      nomination_reason: ''
     },
-    methods: {}
+    methods: {
+        submitNomination: function() {
+            var validationMessage = '';
+            if (!this.nominee_name) {
+                validationMessage += 'You must specify a nominee to submit a nomination.\n';
+            }
+            if (!this.nominee_graduation_year) {
+                validationMessage += 'You must specify the nominee\'s graduation year to submit a nomination.\n';
+            }
+            if (!this.nomination_reason) {
+                validationMessage += 'You must specify a reason for your nomination.'
+            }
+            if (validationMessage) {
+                alert(validationMessage);
+                return;
+            }
+            
+            var nominationRequest = {
+                nominee_name: this.nominee_name,
+                nominee_graduation_year: parseInt(this.nominee_graduation_year),
+                nomination_reason: this.nomination_reason
+            };
+            var self = this;
+            axios.post('/api/hof-nomination', nominationRequest)
+                .then(function(data) {
+                    self.nominee_name = '';
+                    self.nominee_graduation_year = undefined;
+                    self.nomination_reason = '';
+                    UIkit.modal('#nomination-modal').hide();
+                })
+                .catch(function(err) {
+                    alert('There was an issue saving your nomination request. Please try again or contact an administrator')
+                });
+        }
+    }
   });
 </script>
 </body>

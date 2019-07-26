@@ -13,29 +13,29 @@
 
 <div class="uk-padding uk-clearfix">
 <h3 class="uk-position-relative uk-margin uk-margin-right uk-float-left norwester">Groups</h3>
-<div class="uk-position-relative uk-float-right"><button class="uk-button button-dk" href="#image-modal" uk-toggle>Request</button></div>
-<!-- Here is the code for the add an image modal -->
-<div id="image-modal" uk-modal>
+<div class="uk-position-relative uk-float-right"><button class="uk-button button-dk" href="#request-modal" uk-toggle>Request</button></div>
+
+<div id="request-modal" uk-modal>
 <div class="uk-modal-dialog uk-modal-body fog">
   <button class="uk-modal-close-default" type="button" uk-close></button>
     <h2 class="uk-modal-title">Request a Group</h2>
     <form>
       <div class="uk-margin">
-        <span class="profile-label">*Your Name</span>
-        <input class="uk-input" type="text">
+        <span class="profile-label">*Group Name</span>
+        <input class="uk-input" type="text" v-model="requestedGroupName">
       </div>
       <div class="uk-margin">
-        <span class="profile-label">*Your Email</span>
-        <input class="uk-input" type="text">
+        <span class="profile-label">*Group Description</span>
+        <input class="uk-input" type="text" v-model="requestedGroupDescription">
       </div>
       <div class="uk-margin">
         <span class="profile-label">*Reason for Request</span>
-        <textarea class="uk-textarea" rows="5" placeholder="Enter an event description"></textarea>
+        <textarea class="uk-textarea" rows="5" placeholder="Please summarize the purpose of this group." v-model="requestReason"></textarea>
       </div>
     </form>
 
     <p class="uk-text-left">
-        <button class="uk-button button-dk" type="button">Submit</button>
+        <button class="uk-button button-dk" type="button" v-on:click="requestGroup">Submit</button>
         <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
     </p>
 </div>
@@ -292,6 +292,52 @@
     el: '#participant-groups',
     data: {
       myParticipantGroups: <%- JSON.stringify(participantGroups) %>
+    }
+  });
+
+  var groupRequestModal = new Vue({
+    el: '#request-modal',
+    data: {
+      requestedGroupName: '',
+      requestedGroupDescription: '',
+      requestReason: ''
+    },
+    methods: {
+      requestGroup: function() {
+        var validationMessage = '';
+        if (!this.requestedGroupName) {
+          validationMessage += 'You must specify a group name for your requested group.\n';
+        }
+        if (!this.requestedGroupDescription) {
+          validationMessage += 'You must specify a description for your requested group.\n';
+        }
+        if (!this.requestReason) {
+          validationMessage += 'You must specify a reason for requesting the group.'
+        }
+        if (validationMessage) {
+          alert(validationMessage);
+          return;
+        }
+
+        var groupRequest = {
+          requested_group_name: this.requestedGroupName,
+          requested_group_description: this.requestedGroupDescription,
+          request_reason: this.requestReason
+        };
+
+        var self = this;
+        axios.post('/api/group-request', groupRequest)
+          .then(function(data) {
+            self.requestedGroupName = '';
+            self.requestedGroupDescription = '';
+            self.requestReason = '';
+
+            UIkit.modal('#request-modal').hide();
+          })
+          .catch(function(err) {
+            alert('There was an issue submitting your group request. Please try again or contact an administrator');
+          });
+      }
     }
   });
 </script>
