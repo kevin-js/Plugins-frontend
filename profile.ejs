@@ -11,6 +11,9 @@
 <!-- Profile Info Section -->
 <!--------------------------->
 <div id="app">
+
+<a class="uk-button button-lt uk-margin-small uk-margin-right uk-margin-left uk-float-right" v-on:click="signOut"><span uk-icon="sign-out"></span> &nbsp;Sign Out</a>
+
 <div class="uk-container"></div>
 <div class="uk-card uk-card-default uk-margin uk-margin-right uk-margin-left">
     <div class="uk-card-header container-top">
@@ -318,8 +321,8 @@
 
 </div>
 <script type="text/javascript">
-  var memoryUploadWidget = new Vue({
-    el: '#image-modal',
+  var app = new Vue({
+    el: '#app',
     data: {
       memories: <%- JSON.stringify(memories) %>,
       newMemoryDescription: ''
@@ -339,6 +342,19 @@
         }).catch(function(err) {
           alert('There was an issue saving your memory. Please refresh the page and try again.');
         });
+      },
+      signOut: function() {
+        axios.get('/api/logout')
+          .then(function(data) {
+            if (data.redirect) {
+              window.location.href = data.redirect;
+            } else {
+              window.location.href = '/sign-in';
+            }
+          })
+          .catch(function(err) {
+            
+          });
       }
     }
   });
