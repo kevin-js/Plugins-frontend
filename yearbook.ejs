@@ -241,7 +241,7 @@
           return true;
         }).filter(function(user) {
           if (self.searchName) {
-            return user.name.toLowerCase().indexOf(self.searchName.toLowerCase()) !== -1;
+            return user.name && user.name.toLowerCase().indexOf(self.searchName.toLowerCase()) !== -1;
           }
           return true;
         });
