@@ -14,7 +14,7 @@ function createAccount() {
       }
     },
     error: function(err) {
-      alert(JSON.stringify(err));
+      alert('There was an error creating your account. Please try again momentarily.');
     }
   });
 }
@@ -46,8 +46,8 @@ function login() {
         window.location.pathname = '/profile';
       }
     },
-    error: function(req, err) {
-      alert(err);
+    error: function(err) {
+      alert('Invalid credentials. Please try again');
     }
   });
 }
@@ -70,8 +70,6 @@ function facebookLogin() {
           alert(JSON.stringify(err));
         }
       });
-    } else {
-     console.log('User cancelled login or did not fully authorize.');
     }
   }, {
     scope: 'email,user_birthday'
