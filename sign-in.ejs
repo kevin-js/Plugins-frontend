@@ -3,6 +3,20 @@
 <head>
   <title>Sign Into</title>
   <%- include('header'); %>
+  <!-- Facebook SDK -->
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId            : <%= facebookAppId %>,
+        autoLogAppEvents : true,
+        xfbml            : true,
+        version          : 'v3.3'
+      });
+    };
+  </script>
+  <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+  <!-- Utility functions -->
+  <script src="/js/functions.js"></script>
 </head>
 <body>
 
