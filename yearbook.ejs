@@ -147,7 +147,7 @@
     <a style="text-decoration: none !important;" uk-toggle="target: #profile-preview" v-on:click="renderProfilePreview(user)">
     <div class="uk-card uk-card-default">
         <div class="uk-card-media-top uk-height-large uk-cover-container">
-            <img v-bind:src="'/api/photo/' + user.profilePhotoRef" alt="/profile_photo_placeholder.svg" uk-cover>
+            <img v-bind:src="'/api/photo/' + user.profilePhotoRef" uk-cover>
         </div>
         <div class="uk-card-body">
           <div class="uk-card-badge gold font-white icon-padding" uk-tooltip="Hall of Fame Recipient" v-if="user.isHallOfFame"><i class="fa fa-trophy"></i></div>
