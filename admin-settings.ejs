@@ -3,21 +3,22 @@
 <head>
   <title>Admin Settings</title>
   <%- include('header'); %>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
 </head>
 <body>
-  <!-- todo: boolean switch to determine whether to render admin header -->
   <%- include('top-navigation'); %>
 
   <!-- Admin Tabs -->
   <div class="link-tab uk-margin-left uk-margin-right">
     <h4><a href="#" class="tab-active uk-padding-small">Settings</a>&nbsp;&nbsp;&nbsp;
-    <a href="admin-database.html">Database</a></h4>
+    <a href="/admin-database">Database</a></h4>
     <hr class="border-slate"></hr>
   </div>
 
 <!--------------------------->
 <!-- TAB # 1 - SETTINGS + USERS -->
 <!--------------------------->
+<div id="app">
 <div class="uk-margin-right uk-margin-left uk-margin-medium-top">
 <div class="uk-grid-match uk-child-width-1-2@m" uk-grid>
 <div>
@@ -57,7 +58,7 @@
 <div class="uk-card uk-card-default uk-margin-medium-top uk-margin-right uk-margin-left">
     <div class="uk-card-header container-top">
         <div class="uk-grid-small uk-flex-middle" uk-grid>
-        <h4 class="norwester font-white">Users <h5 class="font-white" id="user_count">(134)</h5></h4>
+        <h4 class="norwester font-white">Users <h5 class="font-white" id="user_count">({{ users.length }})</h5></h4>
         </div>
     </div>
     <div class="charcoal uk-padding-small">
@@ -83,50 +84,28 @@
           <div>
             <table class="uk-table uk-table-small alumni-table uk-margin-remove">
               <tbody>
-                      <tr class="selected"><td>Username # 1<span uk-icon="icon: chevron-right; ratio: 1.5" class="font-white uk-float-right"></span></td></tr>
-                      <tr><td>Username # 2<span uk-icon="icon: chevron-right; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                      <tr><td>Username # 3<span uk-icon="icon: chevron-right; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                      <tr><td>Username # 4<span uk-icon="icon: chevron-right; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                      <tr><td>Username # 5<span uk-icon="icon: chevron-right; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                      <tr><td>Username # 6<span uk-icon="icon: chevron-right; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                      <tr><td>Username # 7<span uk-icon="icon: chevron-right; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                      <tr><td>Username # 8<span uk-icon="icon: chevron-right; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                      <tr><td>Username # 9<span uk-icon="icon: chevron-right; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                      <tr><td>Username # 10<span uk-icon="icon: chevron-right; ratio: 1.5" class="font-white uk-float-right"></td></tr>
+                <tr v-bind:class="{ 'selected': user.id == selectedUser.id }" v-for="user in displayUsers" v-on:click="setSelectedUser(user)"><td>{{ user.name }}<span uk-icon="icon: chevron-right; ratio: 1.5" class="font-white uk-float-right" :key="user.id"></td></tr>
               </tbody>
           </table>
           <div class="uk-padding-small black">
           <ul class="uk-pagination uk-flex-center uk-margin-remove">
-          <li><a href="#"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
+          <li><a v-on:click="paginateLeft"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
           <li><div>
-              <select class="uk-select border-charcoal2">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
-                  <option>12</option>
-                  <option>13</option>
-                  <option>14</option>
+              <select class="uk-select border-charcoal2" v-model="pageNumber">
+                  <option v-for="page in Array(pageCount).keys()">{{ page + 1}}</option>
               </select>
           </div></li>
-          <li class="font-white uk-margin-small">of 14</li>
-          <li><a href="#"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
+          <li class="font-white uk-margin-small">of {{ pageCount }}</li>
+          <li><a v-on:click="paginateRight"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
         </ul>
       </div>
     </div>
 
           <div class="uk-padding">
-              <h3 class="tight norwester">Username # 1</h3>
-              <h6 class="tight">Member since <span id="member_date">10/17/2018</span></h6>
+              <h3 class="tight norwester">{{ selectedUser.name }}</h3>
+              <h6 class="tight">Member since <span id="member_date">{{ moment(selectedUser.createdAt).format('MM-DD-YYYY') }}</span></h6>
               <hr></hr>
-              <h4 class="norwester">Permissions <a href"#">(+ Add)</a></h4>
+              <h4 class="norwester">Permissions <a>(+ Add)</a></h4>
               <div uk-alert class="border-slate uk-border-rounded">
                   <button class="uk-alert-close uk-close-large" type="button" uk-close></button>
                   <p>Group Leader</p>
@@ -139,17 +118,10 @@
 
           <div class="uk-padding uk-padding-remove-bottom">
                 <h4 class="norwester">History</h4>
-                    <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top uk-float-left uk-width-1-1">
-                      <h6 class="wide font-black"><span id="change_descr"><strong>Perm Added: Group Leader</strong></span><br>
-                      <span id="user">Alex Trebeck<br> </span><span id="chg_date">2/22/2019</span>, <span id="chg_time">10:32AM</span></h6>
+                  <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top uk-float-left uk-width-1-1" v-for="event in selectedUser.activityHistoryItems">
+                      <h6 class="wide font-black"><span id="change_descr"><strong>{{ event.activityDescription }}</strong></span><br>
+                      <span id="chg_date">{{ moment(event.createdAt).format('MM-DD-YYYY') }}</span>, <span id="chg_time">{{ moment(event.createdAt).format('hh:mm A') }}</span></h6>
                   </div>
-                  <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top uk-float-left uk-width-1-1">
-                    <h6 class="wide font-black"><span id="change_descr"><strong>Perm Removed: DB Admin</strong></span><br>
-                    <span id="user">Roger Rabbit<br> </span><span id="chg_date">12/24/2018</span>, <span id="chg_time">9:03AM</span></h6>
-                </div>
-                <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top uk-float-left uk-width-1-1">
-                  <h6 class="wide font-black"><span id="change_descr"><strong>Annual Membership Purchased</strong></span><br>
-                  <span id="user">Jared Ballard<br></span><span id="chg_date">10/17/2018</span>, <span id="chg_time">4:29PM</span></h6>
               </div>
 
               <a class="uk-button button-lt font-small float-right" href="#history-modal" uk-toggle>View All</a>
@@ -163,24 +135,10 @@
                   </div>
 
                   <div class="uk-modal-body" uk-overflow-auto>
-                    <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top uk-float-left uk-width-1-1">
-                      <h5><span id="change_descr"><strong>Perm Added: Group Leader</strong></span><br>
-                      <span id="user">Alex Trebeck<br> </span><span id="chg_date">2/22/2019</span>, <span id="chg_time">10:32AM</span></h5>
+                    <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top uk-float-left uk-width-1-1" v-for="event in selectedUser.activityHistoryItems">
+                      <h5><span id="change_descr"><strong>{{ event.activityDescription }}</strong></span><br>
+                      <span id="chg_date">{{ moment(event.createdAt).format('MM-DD-YYYY') }}</span>, <span id="chg_time">{{ moment(event.createdAt).format('hh:mm A') }}</span></h5>
                   </div>
-                  <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top uk-float-left uk-width-1-1">
-                    <h5><span id="change_descr"><strong>Perm Removed: DB Admin</strong></span><br>
-                    <span id="user">Roger Rabbit<br> </span><span id="chg_date">12/24/2018</span>, <span id="chg_time">9:03AM</span></h5>
-                </div>
-                <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top uk-float-left uk-width-1-1">
-                  <h5><span id="change_descr"><strong>Annual Membership Purchased</strong></span><br>
-                  <span id="user">Jared Ballard<br></span><span id="chg_date">10/17/2018</span>, <span id="chg_time">4:29PM</span></h5>
-              </div>
-                    <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top uk-float-left uk-width-1-1">
-                    <h5><span id="change_descr"><strong>Annual Membership Purchased</strong></span><br>
-                    <span id="user">Jared Ballard<br></span><span id="chg_date">10/17/2018</span>, <span id="chg_time">4:29PM</span></h5>
-                    </div>
-                  </div>
-
 
                   <div class="uk-modal-footer fog uk-text-left">
                       <button class="uk-button button-lt uk-modal-close" type="button">Close</button>
@@ -191,8 +149,39 @@
 </div>
 </div>
 </div>
-
+</div>
 <div class="uk-margin-large"></div>
-
+<script type="text/javascript">
+  var app = new Vue({
+    el: '#app',
+    data: {
+      pageNumber: 1,
+      pageSize: 10,
+      users: <%- JSON.stringify(userList) %>,
+      filteredUsers: <%- JSON.stringify(userList) %>,
+      selectedUser: <%- JSON.stringify(userList[0]) || {} %>
+    },
+    computed: {
+      displayUsers: function() {
+        var startEl = (this.pageNumber - 1) * this.pageSize;
+        return this.filteredUsers.slice(startEl, startEl + this.pageSize);
+      },
+      pageCount: function() {
+        return Math.ceil(this.filteredUsers.length / this.pageSize);
+      }
+    },
+    methods: {
+      paginateLeft: function() {
+        if (this.pageNumber > 1) this.pageNumber--;
+      },
+      paginateRight: function() {
+        if (this.pageNumber < this.pageCount) this.pageNumber++;
+      },
+      setSelectedUser: function(user) {
+        this.selectedUser = user;
+      }
+    }
+  });
+</script>
 </body>   
 </html>
