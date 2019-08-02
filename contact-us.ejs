@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Us</title>
+  <%- include('header') %>
+</head>
+<body>
+<!-- should the header be here if user isn't logged in?
+<%- include('top-navigation'); %>
+-->
+  <div class="uk-container"></div>
+  <div class="uk-container uk-container-expand uk-margin-large-left uk-margin-large-right uk-position-relative uk-padding-large white border-slate">
+
+  <div class="uk-grid-divider uk-child-width-expand@s" uk-grid>
+  <!-- Contact Info Side -->
+  <div>
+    <h3>Get in Touch</h3>
+    <br>
+    <!-- Address Grid -->
+    <div class="uk-grid-small" uk-grid>
+    <div>
+    <span uk-icon="location"></span>
+    </div>
+    <div>
+      <h5><span id="address_line1">123 E Main Street</span><br>
+      <span id="address_line2">Office 987</span><br>
+      <span id="city">Louisville</span>, <span id="state">KY</span> <span id="zip">40202</span>
+      </h5>
+    </div>
+    </div>
+
+    <!-- Email Grid -->
+    <div class="uk-grid-small" uk-grid>
+    <div>
+      <span uk-icon="mail"></span>
+    </div>
+    <div>
+    <h5><span id="admin_email">admin@ferncreekhs.com</span></h5>
+    </div>
+    </div>
+
+    <!-- Phone Grid -->
+    <div class="uk-grid-small" uk-grid>
+    <div>
+      <span uk-icon="receiver"></span>
+    </div>
+    <div>
+    <h5><span id="admin_phone">(502) 280-7894</span></h5>
+    </div>
+  </div>
+
+  </div>
+    <!-- Contact Form -->
+  <div>
+        <div class="uk-inline uk-width-1-1">
+          <span class="uk-form-icon" uk-icon="icon: user"></span>
+          <input class="uk-input border-charcoal2" placeholder="Full Name" type="text">
+        </div>
+      <div class="uk-margin">
+        <div class="uk-inline uk-width-1-1">
+          <span class="uk-form-icon" uk-icon="icon: mail"></span>
+          <input class="uk-input border-charcoal2" placeholder="Email Address" type="text">
+        </div>
+    </div>
+    <div class="uk-margin">
+      <div class="uk-inline uk-width-1-1">
+      <textarea class="uk-textarea border-charcoal2" rows="5" placeholder="Your Message"></textarea>
+      </div>
+  </div>
+  <button class="uk-button button-lt">SEND</button>
+</div>
+</div>
+</div>
+<div class="uk-margin-large"></div>
+
+<%- include('footer') %>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Events</title>
+  <%- include('header'); %>
+</head>
+<body>
+  <%- include('top-navigation'); %>
+
+  <!-- Admin Tabs -->
+
+  <div class="link-tab uk-margin-left uk-padding-small uk-margin-right">
+    <h4>
+      <a href="/admin-database" class="uk-padding-small">Alumni</a>&nbsp;&nbsp;&nbsp;
+      <a href="/admin-group" class="uk-padding-small">Groups</a>&nbsp;&nbsp;&nbsp;
+      <a class="tab-active uk-padding-small">Events</a>&nbsp;&nbsp;&nbsp;
+      <a href="/admin-news" class="uk-padding-small">News</a>&nbsp;&nbsp;&nbsp;
+      <a href="/admin-security" class="uk-padding-small">Security</a>&nbsp;&nbsp;&nbsp;
+      <a href="/admin-settings" class="uk-padding-small">Settings</a>
+    </h4>
+    <hr class="border-slate"></hr>
+  </div>
+
+
+<!--------------------------->
+<!-- EVENT CALENDAR ADMIN -->
+<!--------------------------->
+<div id='calendar' class="uk-padding-small link-dk"></div>
+<!-- FullCalendar API and Scripts -->
+<link href='fullcalendar/packages/core/main.css' rel='stylesheet' />
+<script src='fullcalendar/packages/core/main.js'></script>
+<script src='fullcalendar/packages/interaction/main.min.js'></script>
+<script src='fullcalendar/packages/moment/main.min.js'></script>
+<link href='fullcalendar/packages/list/main.css' rel='stylesheet' />
+<script src='fullcalendar/packages/list/main.js'></script>
+<script src='fullcalendar/packages/rrule/main.min.js'></script>
+<script src='fullcalendar/vendor/rrule.js'></script>
+<link href='fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+<script src='fullcalendar/packages/daygrid/main.js'></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+var calendarEl = document.getElementById('calendar');
+
+var calendar = new FullCalendar.Calendar(calendarEl, {
+plugins: [ 'dayGrid', 'moment', 'list', 'interaction', 'rrule' ],
+timeZone: 'UTC',
+defaultView: 'listMonth',
+defaultDate: '2019-05-07',
+header: {
+  left: 'title',
+  right: 'listMonth,dayGridMonth,addEventButton',
+},
+customButtons: {
+  addEventButton: {
+    text: 'Add',
+    click: function() {UIkit.modal(eventContent).show();}
+  }
+},
+footer: {
+  center: 'prev,next today',
+},
+
+events: [
+  {
+    title: 'All Day Event',
+    start: '2019-07-01'
+  },
+  {
+    title: 'Long Event',
+    start: '2019-05-07',
+    end: '2019-07-10'
+  },
+  {
+    groupId: '999',
+    title: 'Repeating Event',
+    start: '2019-07-09T16:00:00'
+  },
+  {
+    groupId: '999',
+    title: 'Repeating Event',
+    start: '2019-07-16T16:00:00'
+  },
+  {
+    title: 'Conference',
+    start: '2019-07-11',
+    end: '2019-07-13'
+  },
+]
+});
+
+calendar.render();
+});
+
+</script>
+
+<!-- Add Event Modal -->
+<div id="eventContent" uk-modal>
+<div class="uk-modal-dialog">
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <div class="uk-modal-header fog">
+        <h2 class="uk-modal-title">Create an Event</h2>
+    </div>
+
+  <div class="uk-modal-body" uk-overflow-auto>
+    <label class="uk-form-label" for="form-stacked-text">Event Title</label><br>
+    <input type="text" id="form-stacked-text" class="uk-input">
+    <div class="uk-margin"></div>
+    <label class="uk-form-label" for="form-stacked-text">Event Description</label><br>
+    <textarea class="uk-textarea" rows="4"></textarea>
+  <div class="uk-grid-small uk-child-width-expand uk-margin-medium" uk-grid>
+  <div>
+  <label class="uk-form-label" for="form-stacked-text">Start Date</label><br>
+  <div class="uk-inline">
+    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+    <input type="date" id="form-stacked-text" class="uk-input" placeholder="mm/dd/yyyy">
+    </div>
+  </div>
+  <div>
+  <label class="uk-form-label" for="form-stacked-text">Start Time</label><br>
+  <div class="uk-inline">
+    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: clock"></span>
+    <input type="time" id="form-stacked-text" class="uk-input" placeholder="12:00">
+    </div>
+  </div>
+  <div>
+  <br>
+  <div class="uk-form-controls">
+        <select class="uk-select uk-width-auto" id="form-horizontal-select">
+            <option>AM</option>
+            <option>PM</option>
+        </select>
+    </div>
+  </div>
+</div>
+<div class="uk-grid-small uk-child-width-expand uk-margin-medium" uk-grid>
+<div>
+<label class="uk-form-label" for="form-stacked-text">End Date</label><br>
+<div class="uk-inline">
+  <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+  <input type="date" id="form-stacked-text" class="uk-input" placeholder="mm/dd/yyyy">
+  </div>
+</div>
+<div>
+<label class="uk-form-label" for="form-stacked-text">End Time</label><br>
+<div class="uk-inline">
+  <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: clock"></span>
+  <input type="time" id="form-stacked-text" class="uk-input" placeholder="12:00">
+  </div>
+</div>
+<div>
+<br>
+<div class="uk-form-controls">
+      <select class="uk-select uk-width-auto" id="form-horizontal-select">
+          <option>AM</option>
+          <option>PM</option>
+      </select>
+  </div>
+</div>
+</div>
+    </div>
+
+    <div class="uk-modal-footer fog uk-text-left">
+        <button class="uk-button button-lt uk-modal-close" type="button">Save</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="uk-margin-large"></div>
+<%- include('footer'); %>
+
+</body>
+</html>

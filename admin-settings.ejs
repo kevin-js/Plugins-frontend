@@ -10,8 +10,14 @@
 
   <!-- Admin Tabs -->
   <div class="link-tab uk-margin-left uk-margin-right">
-    <h4><a href="#" class="tab-active uk-padding-small">Settings</a>&nbsp;&nbsp;&nbsp;
-    <a href="/admin-database">Database</a></h4>
+    <h4>
+      <a href="/admin-database" class="uk-padding-small">Alumni</a>&nbsp;&nbsp;&nbsp;
+      <a href="/admin-group" class="uk-padding-small">Groups</a>&nbsp;&nbsp;&nbsp;
+      <a href="/admin-event" class="uk-padding-small">Events</a>&nbsp;&nbsp;&nbsp;
+      <a href="/admin-news" class="uk-padding-small">News</a>&nbsp;&nbsp;&nbsp;
+      <a href="/admin-security" class="uk-padding-small">Security</a>&nbsp;&nbsp;&nbsp;
+      <a class="tab-active uk-padding-small">Settings</a>
+    </h4>
     <hr class="border-slate"></hr>
   </div>
 
@@ -152,6 +158,7 @@
 </div>
 <div class="uk-margin-large"></div>
 <%- include('footer'); %>
+
 <script type="text/javascript">
   var app = new Vue({
     el: '#app',

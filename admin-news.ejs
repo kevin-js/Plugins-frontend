@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin News</title>
+  <%- include('header'); %>
+</head>
+<body>
+  <%- include('top-navigation'); %>
+  
+  <!-- Admin Tabs -->
+  <div class="link-tab uk-margin-left uk-padding-small uk-margin-right">
+    <h4>
+      <a href="/admin-database" class="uk-padding-small">Alumni</a>&nbsp;&nbsp;&nbsp;
+      <a href="/admin-group" class="uk-padding-small">Groups</a>&nbsp;&nbsp;&nbsp;
+      <a href="/admin-event" class="uk-padding-small">Events</a>&nbsp;&nbsp;&nbsp;
+      <a class="tab-active uk-padding-small">News</a>&nbsp;&nbsp;&nbsp;
+      <a href="/admin-security" class="uk-padding-small">Security</a>&nbsp;&nbsp;&nbsp;
+      <a href="/admin-settings" class="uk-padding-small">Settings</a>
+    </h4>
+    <hr class="border-slate"></hr>
+  </div>
+
+  <div class="uk-card uk-card-default uk-margin-medium-top uk-margin-right uk-margin-left">
+      <div class="uk-card-header container-top">
+          <div class="uk-grid-small uk-flex-middle" uk-grid>
+          <h4 class="norwester font-white">News</h4>
+          </div>
+      </div>
+      <div class="uk-card-body white uk-margin-remove uk-overflow-auto">
+        <h6>Coming Soon!</h6>
+      </div>
+  </div>
+  <div class="uk-margin-large"></div>
+  <%- include('footer'); %>
+</body>
+</html>
