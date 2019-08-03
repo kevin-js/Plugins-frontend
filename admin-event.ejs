@@ -6,9 +6,8 @@
 </head>
 <body>
   <%- include('top-navigation'); %>
-
+  <div id="app">
   <!-- Admin Tabs -->
-
   <div class="link-tab uk-margin-left uk-padding-small uk-margin-right">
     <h4>
       <a href="/admin-database" class="uk-padding-small">Alumni</a>&nbsp;&nbsp;&nbsp;
@@ -60,32 +59,7 @@ footer: {
   center: 'prev,next today',
 },
 
-events: [
-  {
-    title: 'All Day Event',
-    start: '2019-07-01'
-  },
-  {
-    title: 'Long Event',
-    start: '2019-05-07',
-    end: '2019-07-10'
-  },
-  {
-    groupId: '999',
-    title: 'Repeating Event',
-    start: '2019-07-09T16:00:00'
-  },
-  {
-    groupId: '999',
-    title: 'Repeating Event',
-    start: '2019-07-16T16:00:00'
-  },
-  {
-    title: 'Conference',
-    start: '2019-07-11',
-    end: '2019-07-13'
-  },
-]
+events: <%- JSON.stringify(events) %>
 });
 
 calendar.render();
@@ -95,7 +69,7 @@ calendar.render();
 
 <!-- Add Event Modal -->
 <div id="eventContent" uk-modal>
-<div class="uk-modal-dialog">
+<div id="create-event-modal" class="uk-modal-dialog">
     <button class="uk-modal-close-default" type="button" uk-close></button>
     <div class="uk-modal-header fog">
         <h2 class="uk-modal-title">Create an Event</h2>
@@ -103,23 +77,23 @@ calendar.render();
 
   <div class="uk-modal-body" uk-overflow-auto>
     <label class="uk-form-label" for="form-stacked-text">Event Title</label><br>
-    <input type="text" id="form-stacked-text" class="uk-input">
+    <input type="text" id="form-stacked-text" class="uk-input" v-model="newEventTitle">
     <div class="uk-margin"></div>
     <label class="uk-form-label" for="form-stacked-text">Event Description</label><br>
-    <textarea class="uk-textarea" rows="4"></textarea>
+    <textarea class="uk-textarea" rows="4" v-model="newEventDescription"></textarea>
   <div class="uk-grid-small uk-child-width-expand uk-margin-medium" uk-grid>
   <div>
   <label class="uk-form-label" for="form-stacked-text">Start Date</label><br>
   <div class="uk-inline">
     <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
-    <input type="date" id="form-stacked-text" class="uk-input" placeholder="mm/dd/yyyy">
+    <input type="date" id="form-stacked-text" class="uk-input" placeholder="mm/dd/yyyy" v-model="newEventStartDate">
     </div>
   </div>
   <div>
   <label class="uk-form-label" for="form-stacked-text">Start Time</label><br>
   <div class="uk-inline">
     <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: clock"></span>
-    <input type="time" id="form-stacked-text" class="uk-input" placeholder="12:00">
+    <input type="time" id="form-stacked-text" class="uk-input" placeholder="12:00" v-model="newEventStartTime">
     </div>
   </div>
   <div>
@@ -137,14 +111,14 @@ calendar.render();
 <label class="uk-form-label" for="form-stacked-text">End Date</label><br>
 <div class="uk-inline">
   <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
-  <input type="date" id="form-stacked-text" class="uk-input" placeholder="mm/dd/yyyy">
+  <input type="date" id="form-stacked-text" class="uk-input" placeholder="mm/dd/yyyy" v-model="newEventEndDate">
   </div>
 </div>
 <div>
 <label class="uk-form-label" for="form-stacked-text">End Time</label><br>
 <div class="uk-inline">
   <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: clock"></span>
-  <input type="time" id="form-stacked-text" class="uk-input" placeholder="12:00">
+  <input type="time" id="form-stacked-text" class="uk-input" placeholder="12:00" v-model="newEventEndTime">
   </div>
 </div>
 <div>
@@ -160,7 +134,7 @@ calendar.render();
     </div>
 
     <div class="uk-modal-footer fog uk-text-left">
-        <button class="uk-button button-lt uk-modal-close" type="button">Save</button>
+        <button class="uk-button button-lt" type="button" v-on:click="createEvent">Save</button>
     </div>
   </div>
 </div>
@@ -168,6 +142,45 @@ calendar.render();
 
 <div class="uk-margin-large"></div>
 <%- include('footer'); %>
+</div>
+<script type="text/javascript"> 
+  var app = new Vue({
+    el: '#app',
+    data: {
+      newEventTitle: '',
+      newEventDescription: '',
+      newEventStartDate: null,
+      newEventStartTime: null,
+      newEventEndDate: null,
+      newEventEndTime: null
+    },
+    methods: {
+      createEvent: function() {
+        var errMsg = '';
 
+        if (!this.newEventTitle) errMsg += 'Event Title cannot be empty\n';
+        if (!this.newEventDescription) errMsg += 'Event Description cannot be empty\n';
+        if (!this.newEventStartTime || !this.newEventStartDate) errMsg += 'Event must have a start time\n';
+        if (!this.newEventEndTime || !this.newEventEndDate) errMsg += 'Event must have an end time\n';
+
+        if (errMsg) alert(errMsg);
+        else {
+          axios.post('/api/event', {
+            title: this.newEventTitle,
+            description: this.newEventDescription,
+            start: new Date(),
+            end: new Date()
+          })
+            .then(function(data) {
+              UIkit.modal('#create-event-modal').hide();
+            })
+            .catch(function(err) {
+              alert('There was an error creating your event. Please try again');
+            });
+        }
+      }
+    }
+  });
+</script>
 </body>
 </html>
