@@ -2,12 +2,12 @@
 /* CSS Document */
 
 html, body {
-	width: 100%;
-	height: auto;
-	margin: 0;
-	padding: 0;
-	overflow-x: hidden;
-	font-size: 22px;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-size: 22px;
   line-height: 28px;
   background-color: #ffffff;
 }
@@ -32,35 +32,35 @@ html, body {
 h1 {font-size: 3.0em; line-height: 1em; font-family: 'Norwester', Fallback, sans-serif;}
 h2 {font-size: 2.6em; line-height: 1em; font-family: 'Norwester', Fallback, sans-serif;}
 h3 {font-size: 2.2em; line-height: 1em; font-family: 'Lato', sans-serif;}
-h4 {font-size: 1.5em; line-height: 1em;	font-family: 'Lato', sans-serif;}
-h5, p, label {font-size: 1.1em; line-height: 1.4em;	font-family: 'Lato', sans-serif;}
-h6 {font-size: 0.9em; line-height: 1.2em;	font-family: 'Lato', sans-serif; color: #999999; font-style: italic;}
+h4 {font-size: 1.5em; line-height: 1em; font-family: 'Lato', sans-serif;}
+h5, p, label {font-size: 1.1em; line-height: 1.4em; font-family: 'Lato', sans-serif;}
+h6 {font-size: 0.9em; line-height: 1.2em; font-family: 'Lato', sans-serif; color: #999999; font-style: italic;}
 
 a, li {
-	font-family:'Lato', sans-serif !important;
-	font-size: 1.1em !important;
-	color: #A6884D !important;
-	text-decoration: none;
+  font-family:'Lato', sans-serif !important;
+  font-size: 1.1em !important;
+  color: #A6884D !important;
+  text-decoration: none;
   font-weight: 400;
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .font-small {font-size: 14px !important;}
 
 .profile-label {
-	font-size: 1em;
-	line-height: 1em;
-	font-family: 'Norwester', Fallback, sans-serif;
-	color: #999999 !important;
+  font-size: 1em;
+  line-height: 1em;
+  font-family: 'Norwester', Fallback, sans-serif;
+  color: #999999 !important;
 }
 
 .profile-field {
-	font-size: 1.1em;
-	line-height: 1.5em;
-	font-family: 'Lato', sans-serif;
-	color: #2B2A27 !important;
-	font-weight: 600;
-	margin-bottom: 24px;
+  font-size: 1.1em;
+  line-height: 1.5em;
+  font-family: 'Lato', sans-serif;
+  color: #2B2A27 !important;
+  font-weight: 600;
+  margin-bottom: 24px;
 }
 
 .button-lt {
@@ -107,18 +107,18 @@ a, li {
 }
 
 a:hover {
-	font-weight: 600;
+  font-weight: 600;
   text-decoration: underline;
 }
 
 .norwester {font-family: 'Norwester', Fallback, sans-serif;}
 
 .tight {
-	line-height: 0.5em !important;
+  line-height: 0.5em !important;
 }
 
 .wide {
-	line-height: 1.6em !important;
+  line-height: 1.6em !important;
 }
 
 .line {line-height: 1.8em !important;}
@@ -126,7 +126,7 @@ a:hover {
 .font-med {font-size: 1.2em; line-height: 1.5em; color: #2B2A27;}
 
 .uk-container-small {
-	max-width: 1020px;
+  max-width: 1020px;
 }
 
 /* TEXT COLORS */
@@ -164,8 +164,8 @@ a:hover {
 .table-border {border-bottom: 1px solid #AFAFB7 !important;}
 
 #logo {
-	width: 30%;
-	height: auto;
+  width: 30%;
+  height: auto;
 }
 
 @media only screen and (max-width: 600px) {
@@ -179,10 +179,10 @@ a:hover {
 }
 
 .container-top {
-	background-color: #2B2A27;
-	border: 1px solid #2B2A27;
-	border-radius: 8px 8px 0 0;
-	padding: 15px 30px !important;
+  background-color: #2B2A27;
+  border: 1px solid #2B2A27;
+  border-radius: 8px 8px 0 0;
+  padding: 15px 30px !important;
 }
 
 .link-dk a {color: #575654 !important;}
@@ -193,8 +193,8 @@ a:hover {
 .link-tab a:hover {color: #2b2a27 !important; text-decoration: none !important;}
 
 .tab-active {
-	color: #A6884D !important;
-	border-bottom: 8px solid #A6884D !important;
+  color: #A6884D !important;
+  border-bottom: 8px solid #A6884D !important;
 }
 
 /* Active */
@@ -208,7 +208,7 @@ a:hover {
 
 /* Active */
 .uk-tab > .uk-active > a {
-	color: #2b2a27 !important;
+  color: #2b2a27 !important;
   border-color: #A6884D !important;
 }
 
@@ -221,14 +221,14 @@ a:hover {
 }
 
 .alumni-table .selected {
-	background-color: #2b2a27 !important;
-	color: #ffffff !important;
-	font-weight: 700 !important;
+  background-color: #2b2a27 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
 }
 
 .alumni-table td:hover {
-	background-color: #AFAFB7 !important;
-	transition: 0.3s;
+  background-color: #AFAFB7 !important;
+  transition: 0.3s;
 }
 
 #calendar {

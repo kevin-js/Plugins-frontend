@@ -20,14 +20,1339 @@
     <hr class="border-slate"></hr>
   </div>
 
-  <div class="uk-card uk-card-default uk-margin-medium-top uk-margin-right uk-margin-left">
-      <div class="uk-card-header container-top">
-          <div class="uk-grid-small uk-flex-middle" uk-grid>
-          <h4 class="norwester font-white">News</h4>
+  <!-- Success Alert  -->
+      <div class="uk-margin uk-margin-right uk-margin-left uk-hidden">
+      <div class="uk-alert-success uk-width-1-1" uk-alert>
+          <button class="uk-alert-close" type="button" uk-close></button>
+          <h5>Your record was deleted successfully <span uk-icon="happy"></span></h5>
+      </div>
+    </div>
+    <!-- End Alert -->
+
+      <div class="uk-card uk-card-default uk-margin-small-top uk-margin-right uk-margin-left">
+          <div class="uk-card-header container-top uk-clearfix">
+              <div class="uk-grid-small uk-flex-middle uk-float-left" uk-grid>
+              <h4 class="norwester font-white"><i class="fa fa-filter"></i> &nbsp; Filters</h4>
+              </div>
+              <div class="uk-inline uk-float-right uk-margin-small">
+              <h5 class="font-white tight"><a href="#" class="font-white">Clear Filters</a> &nbsp;|&nbsp; <a href="#" class="font-white">Export</a></h5>
+            </div>
+          </div>
+          <div class="uk-card-body white uk-margin-remove">
+
+              <form class="uk-form-stacked">
+                <div class="uk-inline uk-margin-bottom uk-width-1-6@m">
+                  <label class="uk-form-label">Date Created</label>
+                  <div class="uk-inline">
+                    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+                    <input class="uk-input border-charcoal2" type="text" placeholder="mm/dd/yyyy">
+                  </div>
+                </div>
+                <span class="uk-inline">&nbsp; _ &nbsp;</span>
+                <div class="uk-inline uk-margin-bottom uk-margin-right uk-width-1-6@m">
+                  <label class="uk-form-label"> &nbsp; </label>
+                  <div class="uk-inline">
+                    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+                    <input class="uk-input border-charcoal2" type="text" placeholder="mm/dd/yyyy">
+                  </div>
+                </div>
+
+              <div class="uk-inline uk-margin-bottom uk-width-1-6@m">
+                <label class="uk-form-label">Date Sent</label>
+                <div class="uk-inline">
+                  <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+                  <input class="uk-input border-charcoal2" type="text" placeholder="mm/dd/yyyy">
+                </div>
+              </div>
+              <span class="uk-inline">&nbsp; _ &nbsp;</span>
+              <div class="uk-inline uk-margin-bottom uk-margin-right uk-width-1-6@m">
+                <label class="uk-form-label"> &nbsp; </label>
+                <div class="uk-inline">
+                  <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+                  <input class="uk-input border-charcoal2" type="text" placeholder="mm/dd/yyyy">
+                </div>
+              </div>
+
+              <div class="uk-inline uk-margin-bottom uk-margin-right uk-width-1-3@m">
+              <label class="uk-form-label">Subject</label>
+              <input class="uk-input border-charcoal2" type="text">
+              </div>
+
+              <div class="uk-inline uk-margin-bottom uk-margin-right uk-width-1-5@m">
+              <label class="uk-form-label">Type</label>
+              <select class="uk-select border-charcoal2">
+                <option> All </option>
+                <option>Announcement</option>
+                <option>Newsletter</option>
+                <option>Event</option>
+                <option>Simple</option>
+              </select>
+              </div>
+
+              <div class="uk-inline uk-margin-bottom uk-margin-right uk-width-1-5@m">
+              <label class="uk-form-label">Status</label>
+              <select class="uk-select border-charcoal2">
+                <option> All </option>
+                <option>Draft</option>
+                <option>Scheduled</option>
+                <option>Sent</option>
+              </select>
+              </div>
+
+              <div class="uk-inline uk-margin-bottom uk-margin-right uk-width-1-6@m">
+              <label class="uk-form-label"> &nbsp; </label>
+              <button class="uk-button button-lt">Apply Filters</button>
+            </div>
+
+              </form>
+            </div>
+          </div>
+
+
+
+          <div class="uk-margin-large-top uk-margin-left uk-margin-right uk-clearfix">
+          <h4 class="uk-position-relative uk-margin-right uk-float-left norwester">Results</h4>
+          <div class="uk-position-relative uk-float-right"><a class="uk-button button-lt" href="#modal-group-1" uk-toggle>Create</a></div>
+        </div>
+
+          <div class="uk-card uk-card-default uk-margin-right uk-margin-left">
+            <div class="uk-card-header container-top uk-clearfix">
+              <p class="font-white float-left uk-inline"> Showing <span id="table_start">1</span> - <span id="table_end">10</span> of <span id="table_total">187</span></p>
+
+              <div class="uk-float-right uk-visible@m">
+                <select class="uk-select border-charcoal2 uk-inline uk-width-small">
+                    <option>10 per page</option>
+                    <option>50 per page</option>
+                    <option>100 per Page </option>
+                </select>
+            </div>
+          </div>
+              <div class="uk-overflow-auto uk-height-xxlarge">
+                <table class="uk-table uk-table-small uk-table-middle uk-margin-remove">
+                  <thead class="uk-card-header charcoal">
+                    <tr>
+                      <th class="uk-table-shrink uk-text-nowrap font-white border-none">Created</th>
+                      <th class="uk-table-shrink uk-text-nowrap font-white border-none">Sent</th>
+                      <th class="font-white border-none">Subject</th>
+                      <th class="uk-table-shrink uk-text-nowrap font-white border-none">Type</th>
+                      <th class="uk-table-shrink uk-text-nowrap font-white border-none">Status</th>
+                      <th class="uk-table-shrink uk-text-nowrap font-white border-none">Opens</th>
+                      <th class="uk-table-shrink uk-text-nowrap font-white border-none">Clicks</th>
+                      <th class="uk-table-shrink uk-text-nowrap font-white border-none">Bounces</th>
+                      <th class="font-white border-none"></th>
+                    </tr>
+                </thead>
+
+              <div class="uk-card-body white uk-padding-remove">
+
+                  <tbody>
+                    <tr>
+                      <td class="table-border border-none font-small">
+                        08/01/2019
+                      </td>
+
+                    <td class="table-border border-none font-small">
+                    - -
+                    </td>
+
+                    <td class="table-border border-none font-small">
+                    <span>Subject Line Number One (Ex of a long subject)</span>
+                    </td>
+
+                    <td class="table-border border-none font-small">
+                      <p>Announcement</p>
+                    </td>
+
+                    <td class="table-border border-none font-small">
+                      <p>Draft</p>
+                    </td>
+
+                    <td class="table-border border-none font-small uk-text-center ">
+                      <p id="opens">-</p>
+                    </td>
+
+                    <td class="table-border border-none font-small uk-text-center ">
+                      <p id="clicks">-</p>
+                    </td>
+
+                    <td class="table-border border-none font-small uk-text-center ">
+                      <p id="bounces">-</p>
+                    </td>
+
+                    <td class="uk-text-right">
+                      <a href="" class="uk-icon-link" uk-icon="pencil" uk-tooltip="title: EDIT"></a>&nbsp;
+                      <a href="" class="uk-icon-link" uk-icon="copy" uk-tooltip="title: COPY"></a>&nbsp;
+                      <a href="" class="uk-icon-link" uk-icon="image" uk-tooltip="title: VIEW"></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="table-border border-none font-small">
+                      08/01/2019
+                    </td>
+
+                  <td class="table-border border-none font-small">
+                    08/02/2019
+                  </td>
+
+                  <td class="table-border border-none font-small">
+                  <span>Subject Line Number One (Ex of a long subject)</span>
+                  </td>
+
+                  <td class="table-border border-none font-small">
+                    <p>Event</p>
+                  </td>
+
+                  <td class="table-border border-none font-small">
+                    <p>Sent</p>
+                  </td>
+
+                  <td class="table-border border-none font-small uk-text-center ">
+                    <p id="opens">20</p>
+                  </td>
+
+                  <td class="table-border border-none font-small uk-text-center ">
+                    <p id="clicks">10</p>
+                  </td>
+
+                  <td class="table-border border-none font-small uk-text-center ">
+                    <p id="bounces">2</p>
+                  </td>
+
+                  <td class="uk-text-right">
+                    <a href="" class="uk-icon-link" uk-icon="copy" uk-tooltip="title: COPY"></a>&nbsp;
+                    <a href="" class="uk-icon-link" uk-icon="image" uk-tooltip="title: VIEW"></a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="table-border border-none font-small">
+                    08/01/2019
+                  </td>
+
+                <td class="table-border border-none font-small">
+                - -
+                </td>
+
+                <td class="table-border border-none font-small">
+                <span>Subject Line Number One (Ex of a long subject)</span>
+                </td>
+
+                <td class="table-border border-none font-small">
+                  <p>Announcement</p>
+                </td>
+
+                <td class="table-border border-none font-small">
+                  <p>Draft</p>
+                </td>
+
+                <td class="table-border border-none font-small uk-text-center ">
+                  <p id="opens">-</p>
+                </td>
+
+                <td class="table-border border-none font-small uk-text-center ">
+                  <p id="clicks">-</p>
+                </td>
+
+                <td class="table-border border-none font-small uk-text-center ">
+                  <p id="bounces">-</p>
+                </td>
+
+                <td class="uk-text-right">
+                  <a href="" class="uk-icon-link" uk-icon="pencil" uk-tooltip="title: EDIT"></a>&nbsp;
+                  <a href="" class="uk-icon-link" uk-icon="copy" uk-tooltip="title: COPY"></a>&nbsp;
+                  <a href="" class="uk-icon-link" uk-icon="image" uk-tooltip="title: VIEW"></a>
+                </td>
+              </tr>
+              <tr>
+                <td class="table-border border-none font-small">
+                  08/01/2019
+                </td>
+
+              <td class="table-border border-none font-small">
+                08/02/2019
+              </td>
+
+              <td class="table-border border-none font-small">
+              <span>Subject Line Number One (Ex of a long subject)</span>
+              </td>
+
+              <td class="table-border border-none font-small">
+                <p>Event</p>
+              </td>
+
+              <td class="table-border border-none font-small">
+                <p>Sent</p>
+              </td>
+
+              <td class="table-border border-none font-small uk-text-center ">
+                <p id="opens">20</p>
+              </td>
+
+              <td class="table-border border-none font-small uk-text-center ">
+                <p id="clicks">10</p>
+              </td>
+
+              <td class="table-border border-none font-small uk-text-center ">
+                <p id="bounces">2</p>
+              </td>
+
+              <td class="uk-text-right">
+                <a href="" class="uk-icon-link" uk-icon="copy" uk-tooltip="title: COPY"></a>&nbsp;
+                <a href="" class="uk-icon-link" uk-icon="image" uk-tooltip="title: VIEW"></a>
+              </td>
+            </tr>
+            <tr>
+              <td class="table-border border-none font-small">
+                08/01/2019
+              </td>
+
+            <td class="table-border border-none font-small">
+            - -
+            </td>
+
+            <td class="table-border border-none font-small">
+            <span>Subject Line Number One (Ex of a long subject)</span>
+            </td>
+
+            <td class="table-border border-none font-small">
+              <p>Announcement</p>
+            </td>
+
+            <td class="table-border border-none font-small">
+              <p>Draft</p>
+            </td>
+
+            <td class="table-border border-none font-small uk-text-center ">
+              <p id="opens">-</p>
+            </td>
+
+            <td class="table-border border-none font-small uk-text-center ">
+              <p id="clicks">-</p>
+            </td>
+
+            <td class="table-border border-none font-small uk-text-center ">
+              <p id="bounces">-</p>
+            </td>
+
+            <td class="uk-text-right">
+              <a href="" class="uk-icon-link" uk-icon="pencil" uk-tooltip="title: EDIT"></a>&nbsp;
+              <a href="" class="uk-icon-link" uk-icon="copy" uk-tooltip="title: COPY"></a>&nbsp;
+              <a href="" class="uk-icon-link" uk-icon="image" uk-tooltip="title: VIEW"></a>
+            </td>
+          </tr>
+          <tr>
+            <td class="table-border border-none font-small">
+              08/01/2019
+            </td>
+
+          <td class="table-border border-none font-small">
+            08/02/2019
+          </td>
+
+          <td class="table-border border-none font-small">
+          <span>Subject Line Number One (Ex of a long subject)</span>
+          </td>
+
+          <td class="table-border border-none font-small">
+            <p>Event</p>
+          </td>
+
+          <td class="table-border border-none font-small">
+            <p>Sent</p>
+          </td>
+
+          <td class="table-border border-none font-small uk-text-center ">
+            <p id="opens">20</p>
+          </td>
+
+          <td class="table-border border-none font-small uk-text-center ">
+            <p id="clicks">10</p>
+          </td>
+
+          <td class="table-border border-none font-small uk-text-center ">
+            <p id="bounces">2</p>
+          </td>
+
+          <td class="uk-text-right">
+            <a href="" class="uk-icon-link" uk-icon="copy" uk-tooltip="title: COPY"></a>&nbsp;
+            <a href="" class="uk-icon-link" uk-icon="image" uk-tooltip="title: VIEW"></a>
+          </td>
+        </tr>
+        <tr>
+          <td class="table-border border-none font-small">
+            08/01/2019
+          </td>
+
+        <td class="table-border border-none font-small">
+        - -
+        </td>
+
+        <td class="table-border border-none font-small">
+        <span>Subject Line Number One (Ex of a long subject)</span>
+        </td>
+
+        <td class="table-border border-none font-small">
+          <p>Announcement</p>
+        </td>
+
+        <td class="table-border border-none font-small">
+          <p>Draft</p>
+        </td>
+
+        <td class="table-border border-none font-small uk-text-center ">
+          <p id="opens">-</p>
+        </td>
+
+        <td class="table-border border-none font-small uk-text-center ">
+          <p id="clicks">-</p>
+        </td>
+
+        <td class="table-border border-none font-small uk-text-center ">
+          <p id="bounces">-</p>
+        </td>
+
+        <td class="uk-text-right">
+          <a href="" class="uk-icon-link" uk-icon="pencil" uk-tooltip="title: EDIT"></a>&nbsp;
+          <a href="" class="uk-icon-link" uk-icon="copy" uk-tooltip="title: COPY"></a>&nbsp;
+          <a href="" class="uk-icon-link" uk-icon="image" uk-tooltip="title: VIEW"></a>
+        </td>
+      </tr>
+      <tr>
+        <td class="table-border border-none font-small">
+          08/01/2019
+        </td>
+
+      <td class="table-border border-none font-small">
+        08/02/2019
+      </td>
+
+      <td class="table-border border-none font-small">
+      <span>Subject Line Number One (Ex of a long subject)</span>
+      </td>
+
+      <td class="table-border border-none font-small">
+        <p>Event</p>
+      </td>
+
+      <td class="table-border border-none font-small">
+        <p>Sent</p>
+      </td>
+
+      <td class="table-border border-none font-small uk-text-center ">
+        <p id="opens">20</p>
+      </td>
+
+      <td class="table-border border-none font-small uk-text-center ">
+        <p id="clicks">10</p>
+      </td>
+
+      <td class="table-border border-none font-small uk-text-center ">
+        <p id="bounces">2</p>
+      </td>
+
+      <td class="uk-text-right">
+        <a href="" class="uk-icon-link" uk-icon="copy" uk-tooltip="title: COPY"></a>&nbsp;
+        <a href="" class="uk-icon-link" uk-icon="image" uk-tooltip="title: VIEW"></a>
+      </td>
+    </tr>
+    <tr>
+      <td class="table-border border-none font-small">
+        08/01/2019
+      </td>
+
+    <td class="table-border border-none font-small">
+    - -
+    </td>
+
+    <td class="table-border border-none font-small">
+    <span>Subject Line Number One (Ex of a long subject)</span>
+    </td>
+
+    <td class="table-border border-none font-small">
+      <p>Newsletter</p>
+    </td>
+
+    <td class="table-border border-none font-small">
+      <p>Draft</p>
+    </td>
+
+    <td class="table-border border-none font-small uk-text-center ">
+      <p id="opens">-</p>
+    </td>
+
+    <td class="table-border border-none font-small uk-text-center ">
+      <p id="clicks">-</p>
+    </td>
+
+    <td class="table-border border-none font-small uk-text-center ">
+      <p id="bounces">-</p>
+    </td>
+
+    <td class="uk-text-right">
+      <a href="" class="uk-icon-link" uk-icon="pencil" uk-tooltip="title: EDIT"></a>&nbsp;
+      <a href="" class="uk-icon-link" uk-icon="copy" uk-tooltip="title: COPY"></a>&nbsp;
+      <a href="" class="uk-icon-link" uk-icon="image" uk-tooltip="title: VIEW"></a>
+    </td>
+  </tr>
+  <tr>
+    <td class="table-border border-none font-small">
+      08/01/2019
+    </td>
+
+  <td class="table-border border-none font-small">
+    08/02/2019
+  </td>
+
+  <td class="table-border border-none font-small">
+  <span>Subject Line Number One (Ex of a long subject)</span>
+  </td>
+
+  <td class="table-border border-none font-small">
+    <p>Event</p>
+  </td>
+
+  <td class="table-border border-none font-small">
+    <p>Sent</p>
+  </td>
+
+  <td class="table-border border-none font-small uk-text-center ">
+    <p id="opens">20</p>
+  </td>
+
+  <td class="table-border border-none font-small uk-text-center ">
+    <p id="clicks">10</p>
+  </td>
+
+  <td class="table-border border-none font-small uk-text-center ">
+    <p id="bounces">2</p>
+  </td>
+
+  <td class="uk-text-right">
+    <a href="" class="uk-icon-link" uk-icon="copy" uk-tooltip="title: COPY"></a>&nbsp;
+    <a href="" class="uk-icon-link" uk-icon="image" uk-tooltip="title: VIEW"></a>
+  </td>
+</tr>
+                  </tbody>
+                </table>
+                <div class="uk-padding-small black">
+                <ul class="uk-pagination uk-flex-center uk-margin-remove">
+                <li><a href="#"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
+                <li><div>
+                    <select class="uk-select border-charcoal2">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                    </select>
+                </div></li>
+                <li class="font-white uk-margin-small">of 19</li>
+                <li><a href="#"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        </div>
+
+  <div class="uk-margin-large"></div>
+
+
+
+
+  <!-- Add alumni to database Modal -->
+  <div id="modal-new-alum" class="uk-modal-full" uk-modal>
+    <div class="uk-modal-dialog fog uk-padding" uk-overflow-auto uk-height-viewport>
+        <button class="uk-modal-close-full uk-close-large fog" type="button" uk-close></button>
+      <h3 class="norwester font-black uk-text-left uk-padding">Add Alumnist to Database</h3>
+      <div class="uk-container border-charcoal white uk-margin">
+
+        <div class="uk-grid-match uk-child-width-1-3@m uk-flex-top uk-padding" uk-grid>
+          <div>
+          <!-- Far Left Section -->
+                <label class="profile-label">Name</label>
+                <input id="name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="Leslie Cole">
+                <label class="profile-label">Grad Year &nbsp;<span uk-icon="info" uk-tooltip="Only an administrator can edit your graduation year. If yours is incorrect, please contact an Alumni Association official to have it corrected."></label><br>
+                <input id="grad_year" class="uk-input uk-form-width-small border-charcoal2" type="text" value="1956" disabled>
+          </div>
+
+          <!-- Far Left Section -->
+            <div>
+              <label class="profile-label">Nicknames</label>
+              <input id="nickname" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="Les, Lee, Rogers">
+              <span class="profile-label">Email</span>
+              <input id="email" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="leslie_cole@gmail.com">
+              <span class="profile-label">Home Phone</span>
+              <input id="home_phone" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="(123) 456-7890">
+              <span class="profile-label">Cell Phone</span>
+              <input id="cell_phone" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="(987) 654-3210">
+              <span class="profile-label">Birthday</span>
+              <input id="dob" class="uk-input uk-width-small border-charcoal2 uk-margin-bottom" type="text" value="mm/dd/yyyy">
+            </div>
+
+            <div>
+              <span class="profile-label">Marital Status</span>
+              <select class="uk-select border-charcoal2 uk-margin-bottom">
+                <option>Single</option>
+                <option>Married</option>
+                <option>Divorced</option>
+                <option>Widowed</option>
+                <option>Unspecified</option>
+              </select>
+
+              <span class="profile-label">Address</span>
+              <span>
+              <input id="address_line1" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="123 Main Street"><br>
+              <input id="address_line2" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="Apartment #12"><br>
+              <input id="city" class="uk-input uk-width-1-3 border-charcoal2 uk-margin-bottom" type="text" value="Louisville">, <select class="uk-select uk-width-1-4 border-charcoal2 uk-margin-bottom">
+                  <option value="AL">AL</option>
+                  <option value="AK">AK</option>
+                  <option value="AZ">AZ</option>
+                  <option value="AR">AR</option>
+                  <option value="CA">CA</option>
+                  <option value="CO">CO</option>
+                  <option value="CT">CT</option>
+                  <option value="DE">DE</option>
+                  <option value="DC">DC</option>
+                  <option value="FL">FL</option>
+                  <option value="GA">GA</option>
+                  <option value="HI">HI</option>
+                  <option value="ID">ID</option>
+                  <option value="IL">IL</option>
+                  <option value="IN">IN</option>
+                  <option value="IA">IA</option>
+                  <option value="KS">KS</option>
+                  <option value="KY">KY</option>
+                  <option value="LA">LA</option>
+                  <option value="ME">ME</option>
+                  <option value="MD">MD</option>
+                  <option value="MA">MA</option>
+                  <option value="MI">MI</option>
+                  <option value="MN">MN</option>
+                  <option value="MS">MS</option>
+                  <option value="MO">MO</option>
+                  <option value="MT">MT</option>
+                  <option value="NE">NE</option>
+                  <option value="NV">NV</option>
+                  <option value="NH">NH</option>
+                  <option value="NJ">NJ</option>
+                  <option value="NM">NM</option>
+                  <option value="NY">NY</option>
+                  <option value="NC">NC</option>
+                  <option value="ND">ND</option>
+                  <option value="OH">OH</option>
+                  <option value="OK">OK</option>
+                  <option value="OR">OR</option>
+                  <option value="PA">PA</option>
+                  <option value="RI">RI</option>
+                  <option value="SC">SC</option>
+                  <option value="SD">SD</option>
+                  <option value="TN">TN</option>
+                  <option value="TX">TX</option>
+                  <option value="UT">UT</option>
+                  <option value="VT">VT</option>
+                  <option value="VA">VA</option>
+                  <option value="WA">WA</option>
+                  <option value="WV">WV</option>
+                  <option value="WI">WI</option>
+                  <option value="WY">WY</option>
+                </select>
+              <input id="zip" class="uk-input uk-width-1-4 border-charcoal2 uk-margin-bottom" type="text" value="47129">
+            </span>
+            </div>
+            </div>
+            <div class="uk-position-relative uk-margin uk-margin-right uk-float-left"><button class="uk-button button-dk">Save</button></div>
+            <div class="uk-position-relative uk-margin uk-float-left"><button class="uk-button button-lt">Cancel</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!--Confirm Delete Modal-->
+  <div id="confirm-delete" uk-modal>
+  <div class="uk-modal-dialog">
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <div class="uk-modal-header fog">
+          <h2 class="uk-modal-title">Confirm Delete</h2>
+      </div>
+
+      <div class="uk-modal-body fog">
+      <h5><strong>Are you sure you want to delete this record from your database?</strong></h5>
+      <h6>This action cannot be undone.</h6>
+      </div>
+
+      <div class="uk-modal-footer fog uk-text-left">
+          <button class="uk-button button-dk uk-modal-close" type="button">Delete</button>
+          <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <!-- End Confirm Delete Modal -->
+
+  <!-- STEP 1 -->
+  <div id="modal-group-1" class="uk-modal-full" uk-modal>
+      <div class="uk-modal-dialog">
+          <button class="uk-modal-close-default" type="button" uk-close></button>
+
+          <div class="uk-modal-header">
+          <h3 class="norwester uk-margin-top uk-text-center">News Wizard </h3>
+          <div class="uk-grid" uk-grid>
+
+          <div class="uk-width-1-4"></div>
+
+          <div class="uk-width-1-2">
+          <div class="uk-grid-small" uk-grid>
+            <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">1</span></div>
+            <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle fog font-hint">2</span></div>
+            <div><span class="uk-label uk-border-circle fog font-hint">3</span></div>
+          </div>
+          </div>
+          <div class="uk-width-1-4"></div>
+          </div>
+        </div>
+
+          <div class="uk-modal-body" uk-overflow-auto>
+          <h4>1: Select Recipients</h4>
+
+          <div class="uk-card uk-card-default uk-margin-small-top uk-margin-right uk-margin-left">
+              <div class="uk-card-header container-top uk-clearfix">
+                  <div class="uk-grid-small uk-flex-middle uk-float-left" uk-grid>
+                  <h4 class="norwester font-white"><i class="fa fa-filter"></i> &nbsp; Filters</h4>
+                  </div>
+                  <div class="uk-inline uk-float-right uk-margin-small">
+                  <h5 class="font-white tight"><a href="#" class="font-white">Clear Filters</a> &nbsp;|&nbsp; <a href="#" class="font-white">Export</a></h5>
+                </div>
+              </div>
+              <div class="uk-card-body white uk-margin-remove">
+
+                  <form class="uk-form-stacked">
+
+                  <div class="uk-inline uk-margin-bottom uk-width-1-6@m">
+                  <label class="uk-form-label"> Name</label>
+                  <input class="uk-input border-charcoal2" type="text">
+                  </div>
+
+                  <div class="uk-inline uk-margin-bottom uk-width-small">
+                  <label class="uk-form-label">Grad Year</label>
+                  <select class="uk-select border-charcoal2">
+                    <option> All </option>
+                    <option>  2019  </option>
+                    <option>  2018  </option>
+                    <option>  2017  </option>
+                    <option>  2016  </option>
+                    <option>  2015  </option>
+                    <option>  2914  </option>
+                    <option>  2013  </option>
+                    <option>  2012  </option>
+                    <option>  2011  </option>
+                    <option>  2010  </option>
+                    <option>  2009  </option>
+                    <option>  2008  </option>
+                    <option>  2007  </option>
+                    <option>  2006  </option>
+                    <option>  2005  </option>
+                    <option>  2004  </option>
+                    <option>  2003  </option>
+                    <option>  2002  </option>
+                    <option>  2001  </option>
+                    <option>  2000  </option>
+                    <option>  1999  </option>
+                    <option>  1998  </option>
+                    <option>  1997  </option>
+                    <option>  1996  </option>
+                    <option>  1995  </option>
+                    <option>  1994  </option>
+                    <option>  1993  </option>
+                    <option>  1992  </option>
+                    <option>  1991  </option>
+                    <option>  1990  </option>
+                    <option>  1989  </option>
+                    <option>  1988  </option>
+                    <option>  1987  </option>
+                    <option>  1986  </option>
+                    <option>  1985  </option>
+                    <option>  1984  </option>
+                    <option>  1983  </option>
+                    <option>  1982  </option>
+                    <option>  1981  </option>
+                    <option>  1980  </option>
+                    <option>  1979  </option>
+                    <option>  1978  </option>
+                    <option>  1977  </option>
+                    <option>  1976  </option>
+                    <option>  1975  </option>
+                    <option>  1974  </option>
+                    <option>  1973  </option>
+                    <option>  1972  </option>
+                    <option>  1971  </option>
+                    <option>  1970  </option>
+                    <option>  1969  </option>
+                    <option>  1968  </option>
+                    <option>  1967  </option>
+                    <option>  1966  </option>
+                    <option>  1965  </option>
+                    <option>  1964  </option>
+                    <option>  1963  </option>
+                    <option>  1962  </option>
+                    <option>  1961  </option>
+                    <option>  1960  </option>
+                    <option>  1959  </option>
+                    <option>  1958  </option>
+                    <option>  1957  </option>
+                    <option>  1956  </option>
+                    <option>  1955  </option>
+                    <option>  1954  </option>
+                    <option>  1953  </option>
+                    <option>  1952  </option>
+                    <option>  1951  </option>
+                    <option>  1950  </option>
+                    <option>  1949  </option>
+                    <option>  1948  </option>
+                    <option>  1947  </option>
+                    <option>  1946  </option>
+                    <option>  1945  </option>
+                    <option>  1944  </option>
+                    <option>  1943  </option>
+                    <option>  1942  </option>
+                    <option>  1941  </option>
+                    <option>  1940  </option>
+                    <option>  1939  </option>
+                    <option>  1938  </option>
+                    <option>  1937  </option>
+                    <option>  1936  </option>
+                    <option>  1935  </option>
+                    <option>  1934  </option>
+                    <option>  1933  </option>
+                    <option>  1932  </option>
+                    <option>  1931  </option>
+                    <option>  1930  </option>
+                    <option>  1929  </option>
+                    <option>  1928  </option>
+                    <option>  1927  </option>
+                    <option>  1926  </option>
+                    <option>  1925  </option>
+                    <option>  1924  </option>
+                    <option>  1923  </option>
+                    <option>  1922  </option>
+                    <option>  1921  </option>
+                    <option>  1920  </option>
+                  </select>
+                  </div>
+
+                  <div class="uk-inline uk-margin-bottom uk-width-1-6@m">
+                  <label class="uk-form-label">Membership</label>
+                  <select class="uk-select border-charcoal2">
+                    <option> All </option>
+                    <option>Free</option>
+                    <option>Annual</option>
+                    <option>Lifetime</option>
+                    <option>Lifetime > 50 </option>
+                  </select>
+                  </div>
+
+                  <div class="uk-inline uk-margin-bottom uk-width-1-6@m">
+                  <label class="uk-form-label">Permissions</label>
+                  <select class="uk-select border-charcoal2">
+                    <option> All </option>
+                    <option>Admin</option>
+                    <option>Group Leader</option>
+                    <option>Paid Member</option>
+                    <option>Free Member</option>
+                  </select>
+                  </div>
+
+                  <div class="uk-inline uk-margin-bottom uk-width-1-6@m">
+                  <label class="uk-form-label">City</label>
+                  <input class="uk-input border-charcoal2" type="text">
+                  </div>
+
+                  <div class="uk-inline uk-margin-bottom">
+                  <label class="uk-form-label">State</label>
+                  <select class="uk-select border-charcoal2">
+                      <option value="All">All</option>
+                      <option value="AL">AL</option>
+                      <option value="AK">AK</option>
+                      <option value="AZ">AZ</option>
+                      <option value="AR">AR</option>
+                      <option value="CA">CA</option>
+                      <option value="CO">CO</option>
+                      <option value="CT">CT</option>
+                      <option value="DE">DE</option>
+                      <option value="DC">DC</option>
+                      <option value="FL">FL</option>
+                      <option value="GA">GA</option>
+                      <option value="HI">HI</option>
+                      <option value="ID">ID</option>
+                      <option value="IL">IL</option>
+                      <option value="IN">IN</option>
+                      <option value="IA">IA</option>
+                      <option value="KS">KS</option>
+                      <option value="KY">KY</option>
+                      <option value="LA">LA</option>
+                      <option value="ME">ME</option>
+                      <option value="MD">MD</option>
+                      <option value="MA">MA</option>
+                      <option value="MI">MI</option>
+                      <option value="MN">MN</option>
+                      <option value="MS">MS</option>
+                      <option value="MO">MO</option>
+                      <option value="MT">MT</option>
+                      <option value="NE">NE</option>
+                      <option value="NV">NV</option>
+                      <option value="NH">NH</option>
+                      <option value="NJ">NJ</option>
+                      <option value="NM">NM</option>
+                      <option value="NY">NY</option>
+                      <option value="NC">NC</option>
+                      <option value="ND">ND</option>
+                      <option value="OH">OH</option>
+                      <option value="OK">OK</option>
+                      <option value="OR">OR</option>
+                      <option value="PA">PA</option>
+                      <option value="RI">RI</option>
+                      <option value="SC">SC</option>
+                      <option value="SD">SD</option>
+                      <option value="TN">TN</option>
+                      <option value="TX">TX</option>
+                      <option value="UT">UT</option>
+                      <option value="VT">VT</option>
+                      <option value="VA">VA</option>
+                      <option value="WA">WA</option>
+                      <option value="WV">WV</option>
+                      <option value="WI">WI</option>
+                      <option value="WY">WY</option>
+                    </select>
+                  </div>
+
+                  <div class="uk-inline uk-margin-bottom">
+                  <label class="uk-form-label">Hall of Fame</label>
+                  <select class="uk-select border-charcoal2">
+                  <OPTION>All </option>
+                  <OPTION>Winner</option>
+                  <OPTION>Non-Winner</option>
+                  </select>
+                  </div>
+
+                  <div class="uk-inline uk-margin-bottom">
+                  <label class="uk-form-label">Groups</label>
+                  <select class="uk-select border-charcoal2">
+                  <OPTION>All </option>
+                  <OPTION>Band</option>
+                  <OPTION>Choir</option>
+                  <OPTION>Student Council</option>
+                  </select>
+                  </div>
+
+                  <div class="uk-inline uk-margin-bottom">
+                  <label class="uk-form-label">Event</label>
+                  <select class="uk-select border-charcoal2">
+                  <OPTION>All </option>
+                  <OPTION>1956 Reunion</option>
+                  <OPTION>Choir Brunch</option>
+                  <OPTION>Student Council Retreat</option>
+                  </select>
+                  </div>
+
+                  <div class="uk-inline uk-margin-bottom">
+                  <label class="uk-form-label">&nbsp;</label>
+                  <button class="uk-button button-lt">Apply Filters</button>
+                </div>
+
+                  </form>
+                </div>
+              </div>
+
+
+
+              <div class="uk-card uk-card-default uk-margin-large uk-margin-right uk-margin-left">
+                <div class="uk-card-header container-top uk-clearfix">
+                  <p class="font-white float-left uk-inline"> Showing <span id="table_start">1</span> - <span id="table_end">10</span> of <span id="table_total">18</span></p>
+
+                  <div class="uk-float-right uk-visible@m">
+                    <select class="uk-select border-charcoal2 uk-inline uk-width-small">
+                        <option>10 per page</option>
+                        <option>50 per page</option>
+                        <option>100 per Page </option>
+                    </select>
+                </div>
+              </div>
+                  <div class="uk-overflow-auto uk-height-xxlarge">
+                    <table class="uk-table uk-table-small uk-margin-remove">
+                      <thead class="uk-card-header charcoal">
+                        <tr>
+                            <th class="uk-table-shrink font-white border-none"><input class="uk-checkbox" type="checkbox" uk-tooltip="title: Select All"></th>
+                            <th class="uk-text-nowrap font-white border-none">Name</th>
+                            <th class="uk-table-shrink uk-text-nowrap font-white border-none">Grad Year</th>
+                            <th class="uk-table-shrink uk-text-nowrap font-white border-none">Membership Type</th>
+                            <th class="font-white border-none">Permissions</th>
+
+                        </tr>
+                    </thead>
+
+                  <div class="uk-card-body white uk-padding-remove">
+
+                      <tbody
+                        <tr>
+                          <td><input class="uk-checkbox" type="checkbox"></td>
+                          <td><span id="alum_name">Roger Rabbit</td>
+                          <td><span id="alum_grad_yr">1956</td>
+                          <td><span id="alum_name">PAID</td>
+                          <td><span id="alum_name"><input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Group Leader" value="Group Leader" disabled>
+                          <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled></td>
+                        </tr>
+                        <tr>
+                          <td><input class="uk-checkbox" type="checkbox"></td>
+                          <td><span id="alum_name">Roger Rabbit</td>
+                          <td><span id="alum_grad_yr">1956</td>
+                          <td><span id="alum_name">PAID</td>
+                          <td><span id="alum_name"><input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Group Leader" value="Group Leader" disabled>
+                          <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled></td>
+                        </tr>
+                        <tr>
+                          <td><input class="uk-checkbox" type="checkbox"></td>
+                          <td><span id="alum_name">Roger Rabbit</td>
+                          <td><span id="alum_grad_yr">1956</td>
+                          <td><span id="alum_name">PAID</td>
+                          <td><span id="alum_name"><input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Group Leader" value="Group Leader" disabled>
+                          <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled></td>
+                        </tr>
+                        <tr>
+                          <td><input class="uk-checkbox" type="checkbox"></td>
+                          <td><span id="alum_name">Roger Rabbit</td>
+                          <td><span id="alum_grad_yr">1956</td>
+                          <td><span id="alum_name">PAID</td>
+                          <td><span id="alum_name"><input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Group Leader" value="Group Leader" disabled>
+                          <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled></td>
+                        </tr>
+                        <tr>
+                          <td><input class="uk-checkbox" type="checkbox"></td>
+                          <td><span id="alum_name">Roger Rabbit</td>
+                          <td><span id="alum_grad_yr">1956</td>
+                          <td><span id="alum_name">PAID</td>
+                          <td><span id="alum_name"><input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Group Leader" value="Group Leader" disabled>
+                          <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled></td>
+                        </tr>
+                        <tr>
+                          <td><input class="uk-checkbox" type="checkbox"></td>
+                          <td><span id="alum_name">Roger Rabbit</td>
+                          <td><span id="alum_grad_yr">1956</td>
+                          <td><span id="alum_name">PAID</td>
+                          <td><span id="alum_name"><input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Group Leader" value="Group Leader" disabled>
+                          <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled></td>
+                        </tr>
+                        <tr>
+                          <td><input class="uk-checkbox" type="checkbox"></td>
+                          <td><span id="alum_name">Roger Rabbit</td>
+                          <td><span id="alum_grad_yr">1956</td>
+                          <td><span id="alum_name">PAID</td>
+                          <td><span id="alum_name"><input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Group Leader" value="Group Leader" disabled>
+                          <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled></td>
+                        </tr>
+                        <tr>
+                          <td><input class="uk-checkbox" type="checkbox"></td>
+                          <td><span id="alum_name">Roger Rabbit</td>
+                          <td><span id="alum_grad_yr">1956</td>
+                          <td><span id="alum_name">PAID</td>
+                          <td><span id="alum_name"><input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Group Leader" value="Group Leader" disabled>
+                          <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled></td>
+                        </tr>
+                        <tr>
+                          <td><input class="uk-checkbox" type="checkbox"></td>
+                          <td><span id="alum_name">Roger Rabbit</td>
+                          <td><span id="alum_grad_yr">1956</td>
+                          <td><span id="alum_name">PAID</td>
+                          <td><span id="alum_name"><input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Group Leader" value="Group Leader" disabled>
+                          <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled></td>
+                        </tr>
+                        <tr>
+                          <td><input class="uk-checkbox" type="checkbox"></td>
+                          <td><span id="alum_name">Roger Rabbit</td>
+                          <td><span id="alum_grad_yr">1956</td>
+                          <td><span id="alum_name">PAID</td>
+                          <td><span id="alum_name"><input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Group Leader" value="Group Leader" disabled>
+                          <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="uk-padding-small black">
+                    <ul class="uk-pagination uk-flex-center uk-margin-remove">
+                    <li><a href="#"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
+                    <li><div>
+                        <select class="uk-select border-charcoal2">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                            <option>11</option>
+                            <option>12</option>
+                            <option>13</option>
+                            <option>14</option>
+                            <option>15</option>
+                            <option>16</option>
+                            <option>17</option>
+                            <option>18</option>
+                            <option>19</option>
+                        </select>
+                    </div></li>
+                    <li class="font-white uk-margin-small">of 19</li>
+                    <li><a href="#"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+              <div class="uk-margin-large"></div>
+            </div>
+
+
+
+
+          </div>
+          <div class="uk-modal-footer uk-position-bottom">
+            <div class="uk-grid uk-child-width-1-4" uk-grid>
+
+            <div><button class="uk-button uk-button-default" type="button" disabled>&#8249; Back</button></div>
+
+            <div><button class="uk-button button-lt uk-modal-close" type="button">Cancel</button></div>
+
+            <div><button class="uk-button button-lt uk-modal-close uk-float-right" type="button"><span uk-icon="future"></span> &nbsp; Save</button></div>
+
+            <div>  <a href="#modal-group-2" class="uk-button button-dk uk-float-right" uk-toggle>Next &#8250;</a></div>
+
+            </div>
           </div>
       </div>
-      <div class="uk-card-body white uk-margin-remove uk-overflow-auto">
-        <h6>Coming Soon!</h6>
+  </div>
+
+
+
+  <!-- STEP 2 -->
+  <div id="modal-group-2" class="uk-modal-full" uk-modal>
+      <div class="uk-modal-dialog">
+          <button class="uk-modal-close-default" type="button" uk-close></button>
+
+          <div class="uk-modal-header">
+          <h3 class="norwester uk-margin-top uk-text-center">News Wizard </h3>
+          <div class="uk-grid" uk-grid>
+
+          <div class="uk-width-1-4"></div>
+
+          <div class="uk-width-1-2">
+          <div class="uk-grid-small" uk-grid>
+            <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">1</span></div>
+            <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">2</span></div>
+            <div><span class="uk-label uk-border-circle fog font-hint">3</span></div>
+          </div>
+          </div>
+          <div class="uk-width-1-4"></div>
+          </div>
+        </div>
+
+          <div class="uk-modal-body" uk-overflow-auto>
+          <h4>2: Provide Email Content</h4>
+          <h5>Select a type:</h5>
+          <form class="uk-form-stacked uk-margin-bottom">
+          <div class="uk-form-controls">
+              <label><input class="uk-radio" type="radio" name="radio1" uk-toggle="target: .simple" checked> &nbsp; <strong>Simple </strong>(Text only)</label><br>
+              <label><input class="uk-radio" type="radio" name="radio1" uk-toggle="target: #announcement"> &nbsp; <strong>Announcement</strong> (One image with a header and body text)</label><br>
+              <label><input class="uk-radio" type="radio" name="radio1" uk-toggle="target: #news"> &nbsp; <strong>Newsletter</strong> (Multiple images with text)</label><br>
+          </div>
+          </form>
+
+          <!-- SIMPLE -->
+          <form class="uk-form-stacked uk-margin-large">
+            <h5>Title/Header</h5>
+            <input class="uk-input border-charcoal2 uk-margin-bottom" id="form-stacked-text" type="text">
+
+            <h5>Email Body</h5>
+            <textarea class="uk-textarea" rows="5" placeholder="Enter the primary text of the email here"></textarea>
+          </form>
+
+          <!-- ANNOUNCEMENT -->
+          <form class="uk-form-stacked uk-margin-large simple" id="announcement" hidden>
+
+            <h5>Image</h5>
+            <div class="uk-width-1-1 uk-margin-bottom uk-margin-top">
+                <img src="http://placehold.it/600x300">
+            </div>
+            <div class="uk-margin" uk-margin>
+                <div uk-form-custom="target: true">
+                    <input type="file">
+                    <input class="uk-input uk-form-width-medium" type="text" placeholder="fern_creek_logo.png" disabled>
+                </div>
+                <button class="uk-button uk-button-default">Upload</button>
+            </div>
+          </form>
+
+          <!-- Newsletter-->
+          <form class="uk-form-stacked uk-margin announcement simple" id="news" hidden>
+
+            <hr>
+            <h6>The following are optional</h6>
+            <h5>Second Image</h5>
+            <div class="uk-width-1-1 uk-margin-bottom uk-margin-top">
+                <img src="http://placehold.it/75x75">
+            </div>
+            <div class="uk-margin" uk-margin>
+                <div uk-form-custom="target: true">
+                    <input type="file">
+                    <input class="uk-input uk-form-width-medium" type="text" placeholder="fern_creek_logo.png" disabled>
+                </div>
+                <button class="uk-button uk-button-default">Upload</button>
+            </div>
+            <h5>Second Title</h5>
+            <input class="uk-input border-charcoal2 uk-margin-bottom" id="form-stacked-text" type="text">
+            <h5>Second Set of Text</h5>
+            <textarea class="uk-textarea" rows="5" placeholder="Enter the primary text of the email here"></textarea>
+
+            <hr>
+            <h5>Third Image</h5>
+            <div class="uk-width-1-1 uk-margin-bottom uk-margin-top">
+                <img src="http://placehold.it/75x75">
+            </div>
+            <div class="uk-margin" uk-margin>
+                <div uk-form-custom="target: true">
+                    <input type="file">
+                    <input class="uk-input uk-form-width-medium" type="text" placeholder="fern_creek_logo.png" disabled>
+                </div>
+                <button class="uk-button uk-button-default">Upload</button>
+            </div>
+            <h5>Third Title</h5>
+            <input class="uk-input border-charcoal2 uk-margin-bottom" id="form-stacked-text" type="text">
+            <h5>Third Set of Text</h5>
+            <textarea class="uk-textarea" rows="5" placeholder="Enter the primary text of the email here"></textarea>
+
+            <hr>
+            <h5>Fourth Image</h5>
+            <div class="uk-width-1-1 uk-margin-bottom uk-margin-top">
+                <img src="http://placehold.it/75x75">
+            </div>
+            <div class="uk-margin" uk-margin>
+                <div uk-form-custom="target: true">
+                    <input type="file">
+                    <input class="uk-input uk-form-width-medium" type="text" placeholder="fern_creek_logo.png" disabled>
+                </div>
+                <button class="uk-button uk-button-default">Upload</button>
+            </div>
+            <h5>Fourth Title</h5>
+            <input class="uk-input border-charcoal2 uk-margin-bottom" id="form-stacked-text" type="text">
+            <h5>Fourth Set of Text</h5>
+            <textarea class="uk-textarea" rows="5" placeholder="Enter the primary text of the email here"></textarea>
+          </form>
+
+
+          </div>
+
+          <div class="uk-modal-footer">
+            <div class="uk-grid uk-child-width-1-4" uk-grid>
+
+            <div><a href="#modal-group-1" class="uk-button button-dk" uk-toggle>&#8249; Back</a></div>
+
+            <div><button class="uk-button button-lt uk-modal-close" type="button">Cancel</button></div>
+
+            <div><button class="uk-button button-lt uk-modal-close uk-float-right" type="button"><span uk-icon="future"></span> &nbsp; Save</button></div>
+
+            <div><a href="#modal-group-3" class="uk-button button-dk uk-float-right" uk-toggle>Next &#8250;</a></div>
+
+            </div>
+          </div>
+      </div>
+  </div>
+
+
+  <!-- STEP 3 -->
+  <div id="modal-group-3" class="uk-modal-full" uk-modal>
+      <div class="uk-modal-dialog">
+          <button class="uk-modal-close-default" type="button" uk-close></button>
+
+          <div class="uk-modal-header">
+          <h3 class="norwester uk-margin-top uk-text-center">News Wizard </h3>
+          <div class="uk-grid" uk-grid>
+
+          <div class="uk-width-1-4"></div>
+
+          <div class="uk-width-1-2">
+          <div class="uk-grid-small" uk-grid>
+            <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">1</span></div>
+            <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">2</span></div>
+            <div><span class="uk-label uk-border-circle  font-white gold">3</span></div>
+          </div>
+          </div>
+          <div class="uk-width-1-4"></div>
+          </div>
+        </div>
+
+          <div class="uk-modal-body" uk-overflow-auto>
+          <h4>3: Test, Send, or Schedule</h4>
+
+          <h4>Test</h4>
+          <label class="profile-label">Send a test email to:</label>
+          <h6 class="uk-margin-remove">Separate email addresses by commas ','</h6>
+            <div class="uk-inline uk-width-1-1 uk-margin-small">
+              <span class="uk-form-icon" uk-icon="icon: mail"></span>
+              <input class="uk-input border-charcoal2" type="text">
+            </div>
+            <label class="uk-form-label">&nbsp;</label><button class="uk-button uk-button-primary" type="button">TEST</button>
+            <hr class="border-slate">
+            <h4>Send Immediately</h4>
+            <button class="uk-button-large uk-button-danger uk-modal-close" type="button">SEND NOW</button>
+          <hr class="border-slate">
+          <h4>Schedule for Later</h4>
+
+          <div class="uk-grid-small" uk-grid>
+          <div class="uk-width-1-3">
+          <h5>Date:</h5>
+          <div class="uk-inline uk-width-auto">
+            <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+            <input class="uk-input border-charcoal2" type="text" placeholder="mm/dd/yyyy">
+          </div>
+        </div>
+
+        <div class="uk-inline uk-width-1-3">
+          <h5>Time:</h5>
+          <div class="uk-inline uk-width-small">
+            <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: clock"></span>
+            <input class="uk-input border-charcoal2" type="text" placeholder="HH:MM">
+          </div>
+          <label class="uk-form-label">&nbsp;</label>
+          <select class="uk-inline uk-width-small uk-select border-charcoal2">
+            <option>AM</option>
+            <option>PM</option>
+          </select>
+        </div>
+        </div>
+        <button class="uk-button-large uk-button-danger uk-modal-close uk-margin-top" type="button">SCHEDULE</button>
+        </div>
+          <div class="uk-modal-footer">
+            <div class="uk-grid uk-child-width-1-4" uk-grid>
+
+            <div><a href="#modal-group-2" class="uk-button button-dk" uk-toggle>&#8249; Back</a></div>
+
+            <div><button class="uk-button button-lt uk-modal-close" type="button">Cancel</button></div>
+
+            <div><button class="uk-button button-lt uk-modal-close uk-float-right" type="button"><span uk-icon="future"></span> &nbsp; Save</button></div>
+
+            <div><button class="uk-button uk-button-default uk-float-right" type="button" disabled>Next &#8250;</a></div>
+
+            </div>
+          </div>
       </div>
   </div>
   <div class="uk-margin-large"></div>
