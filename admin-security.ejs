@@ -242,7 +242,7 @@
         pageSize: 10,
         users: <%- JSON.stringify(userList) %>,
         filteredUsers: <%- JSON.stringify(userList) %>,
-        selectedUser: <%- JSON.stringify(userList[0]) || {} %>
+        selectedUser: <%- JSON.stringify(userList[0]) || JSON.stringify({}) %>
       },
       computed: {
         displayUsers: function() {
