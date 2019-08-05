@@ -14,8 +14,6 @@
     };
   </script>
   <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
-  <!-- Utility functions -->
-  <script src="/js/functions.js"></script>
 </head>
 <body>    
   <!-- Sign Up -->
@@ -62,5 +60,47 @@
     <h4>Already a member? &nbsp;<button class="uk-button button-lt uk-button-small"><a href="/sign-in">Sign In</a></button></h4>
   </div>
   <%- include('footer'); %>
+  <script type="text/javascript">
+    function createAccount() {
+      axios.post('/api/createAccount', {
+        email: $('#email-input').val(),
+        password: $('#password-input').val()
+      })
+      .then(function(data) {
+        window.location.pathname = data.redirect ? data.redirect : '/profile-info';
+      })
+      .catch(function(err) {
+        alert('There was an error creating your account. Please try again');
+      });
+    }
+    
+    function validateAndCreateAccount() {
+      if (!$('#email-input').val()) {
+        alert('email field is blank');
+      } else if (!$('#password-input').val()) {
+        alert('password field is blank');
+      } else if ($('#confirm-password').val() !== $('#password-input').val()) {
+        alert('passwords do not match');
+      } else {
+        createAccount();
+      }
+    }
+
+    function facebookLogin() {
+      FB.login(function(response) {
+        if (response.authResponse) {
+          axios.post('/api/login-with-facebook', response.authResponse)
+            .then(function(data) {
+              window.location.pathname = data.redirect ? data.redirect : '/profile';
+            })
+            .catch(function(err) {
+              alert('There was an error logging in. Please try again');
+            });
+        }
+      }, {
+        scope: 'email,user_birthday'
+      });
+    }
+  </script>
 </body>
 </html>

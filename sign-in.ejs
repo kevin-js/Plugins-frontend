@@ -15,8 +15,6 @@
     };
   </script>
   <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
-  <!-- Utility functions -->
-  <script src="/js/functions.js"></script>
 </head>
 <body>
 
@@ -57,5 +55,35 @@
 <h4 class="uk-inline uk-margin-right uk-margin-top">Not a member? </h4> <a class="uk-button button-lt uk-inline" href="/">Create An Account</a>
 </div>
 <%- include('footer'); %>
+<script type="text/javascript">
+  function login() {
+    axios.post('/api/login', {
+      email: $('#email-input').val(),
+      password: $('#password-input').val()
+    })
+    .then(function(data) {
+      window.location.pathname = data.redirect ? data.redirect : '/profile';
+    })
+    .catch(function(err) {
+      alert('Invalid credentials. Please try again');
+    });
+  }
+
+  function facebookLogin() {
+    FB.login(function(response) {
+      if (response.authResponse) {
+        axios.post('/api/login-with-facebook', response.authResponse)
+          .then(function(data) {
+            window.location.pathname = data.redirect ? data.redirect : '/profile';
+          })
+          .catch(function(err) {
+            alert('There was an error logging in. Please try again');
+          });
+      }
+    }, {
+      scope: 'email,user_birthday'
+    });
+  }
+</script>
 </body>
 </html>

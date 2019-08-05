@@ -321,7 +321,7 @@
         </form>
 
         <p class="uk-text-left">
-            <button class="uk-button button-dk" type="button" onclick="changePassword()">Save</button>
+            <button class="uk-button button-dk" type="button" v-on:click="changePassword">Save</button>
             <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
         </p>
     </div>
@@ -364,35 +364,30 @@
           .catch(function(err) {
             
           });
+      },
+      changePassword: function() {
+        if (!$('#new-password-field').val().match(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
+          alert('New password does not satisfy the security requirements.');
+        } else if ($('#new-password-field').val() != $('#confirm-password-field').val()) {
+          alert('Warning: passwords do not match');
+        } else {
+          axios.post('/api/change-password', {
+            currentPassword: $('#current-password-field').val(),
+            newPassword: $('#new-password-field').val()
+          })
+          .then(function(data) {
+            $('#current-password-field').val('');
+            $('#new-password-field').val('');
+            $('#confirm-password-field').val('');
+            UIkit.modal('#pw-modal').hide();
+          })
+          .catch(function(err) {
+            alert('There was an error changing your password. Please try again');
+          });
+        }
       }
     }
   });
-
-  function changePassword() {
-    if (!$('#new-password-field').val().match(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
-      alert('New password does not satisfy the security requirements.');
-    } else if ($('#new-password-field').val() != $('#confirm-password-field').val()) {
-      alert('Warning: passwords do not match');
-    } else {
-      $.ajax({
-      url: '/api/change-password',
-      type: 'POST',
-      data: {
-        currentPassword: $('#current-password-field').val(),
-        newPassword: $('#new-password-field').val()
-      },
-      success: function(data) {
-        $('#current-password-field').val('');
-        $('#new-password-field').val('');
-        $('#confirm-password-field').val('');
-        UIkit.modal('#pw-modal').hide();
-      },
-      error: function(err) {
-        alert(JSON.stringify(err));
-      }
-    });
-    }
-  }
 </script>
 </body>
 </html>
