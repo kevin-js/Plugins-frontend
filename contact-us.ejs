@@ -5,75 +5,114 @@
   <%- include('header') %>
 </head>
 <body>
-<!-- should the header be here if user isn't logged in?
-<%- include('top-navigation'); %>
--->
+  <% if (isLoggedIn) { %> 
+    <%- include('top-navigation'); %>
+  <% } else { %>
+    <div class="uk-padding uk-position-relative uk-position-small uk-position-top-center uk-text-center">
+      <a href="/">
+        <h1 id="alumni_name" class="tight">Fern Creek</h1>
+        <h3 class="norwester tight">Alumni Association</h3>
+      </a>
+    </div>
+  <% } %>
+  <div class="uk-margin-large"></div>
   <div class="uk-container"></div>
-  <div class="uk-container uk-container-expand uk-margin-large-left uk-margin-large-right uk-position-relative uk-padding-large white border-slate">
+    <div class="uk-container uk-container-expand uk-margin-large-left uk-margin-large-right uk-position-relative uk-padding-large white border-slate">
 
-  <div class="uk-grid-divider uk-child-width-expand@s" uk-grid>
-  <!-- Contact Info Side -->
-  <div>
-    <h3>Get in Touch</h3>
-    <br>
-    <!-- Address Grid -->
-    <div class="uk-grid-small" uk-grid>
-    <div>
-    <span uk-icon="location"></span>
-    </div>
-    <div>
-      <h5><span id="address_line1">123 E Main Street</span><br>
-      <span id="address_line2">Office 987</span><br>
-      <span id="city">Louisville</span>, <span id="state">KY</span> <span id="zip">40202</span>
-      </h5>
-    </div>
-    </div>
+    <div class="uk-grid-divider uk-child-width-expand@s" uk-grid>
+      <!-- Contact Info Side -->
+      <div>
+        <h3>Get in Touch</h3>
+        <br>
+        <!-- Address Grid -->
+        <div class="uk-grid-small" uk-grid>
+          <div>
+            <span uk-icon="location"></span>
+          </div>
+          <div>
+            <h5><span id="address_line1">123 E Main Street</span><br>
+              <span id="address_line2">Office 987</span><br>
+              <span id="city">Louisville</span>, <span id="state">KY</span> <span id="zip">40202</span>
+            </h5>
+          </div>
+        </div>
 
-    <!-- Email Grid -->
-    <div class="uk-grid-small" uk-grid>
-    <div>
-      <span uk-icon="mail"></span>
-    </div>
-    <div>
-    <h5><span id="admin_email">admin@ferncreekhs.com</span></h5>
-    </div>
-    </div>
+        <!-- Email Grid -->
+        <div class="uk-grid-small" uk-grid>
+          <div>
+            <span uk-icon="mail"></span>
+          </div>
+          <div>
+            <h5><span id="admin_email">admin@ferncreekhs.com</span></h5>
+          </div>
+        </div>
 
-    <!-- Phone Grid -->
-    <div class="uk-grid-small" uk-grid>
-    <div>
-      <span uk-icon="receiver"></span>
-    </div>
-    <div>
-    <h5><span id="admin_phone">(502) 280-7894</span></h5>
-    </div>
-  </div>
+        <!-- Phone Grid -->
+        <div class="uk-grid-small" uk-grid>
+          <div>
+            <span uk-icon="receiver"></span>
+          </div>
+          <div>
+            <h5><span id="admin_phone">(502) 280-7894</span></h5>
+          </div>
+        </div>
+      </div>
 
-  </div>
-    <!-- Contact Form -->
-  <div>
+      <!-- Contact Form -->
+      <div>
         <div class="uk-inline uk-width-1-1">
           <span class="uk-form-icon" uk-icon="icon: user"></span>
-          <input class="uk-input border-charcoal2" placeholder="Full Name" type="text">
+          <% if (user.name) { %>
+            <input id="name" class="uk-input border-charcoal2" placeholder="Full Name" type="text" value="<%= user.name %>">
+          <% } else { %>
+            <input id="name" class="uk-input border-charcoal2" placeholder="Full Name" type="text">
+          <% } %>
         </div>
-      <div class="uk-margin">
-        <div class="uk-inline uk-width-1-1">
-          <span class="uk-form-icon" uk-icon="icon: mail"></span>
-          <input class="uk-input border-charcoal2" placeholder="Email Address" type="text">
+        <div class="uk-margin">
+          <div class="uk-inline uk-width-1-1">
+            <span class="uk-form-icon" uk-icon="icon: mail"></span>
+            <% if (user.email) { %>
+              <input id="email" class="uk-input border-charcoal2" placeholder="Email Address" type="text" value="<%= user.email %>">
+            <% } else { %>
+              <input id="email" class="uk-input border-charcoal2" placeholder="Email Address" type="text">
+            <% } %>
+          </div>
         </div>
-    </div>
-    <div class="uk-margin">
-      <div class="uk-inline uk-width-1-1">
-      <textarea class="uk-textarea border-charcoal2" rows="5" placeholder="Your Message"></textarea>
+        <div class="uk-margin">
+          <div class="uk-inline uk-width-1-1">
+            <textarea id="message" class="uk-textarea border-charcoal2" rows="5" placeholder="Your Message"></textarea>
+          </div>
+        </div>
+        <button class="uk-button button-lt" onclick="sendMessage()">SEND</button>
       </div>
+    </div>
   </div>
-  <button class="uk-button button-lt">SEND</button>
-</div>
-</div>
-</div>
-<div class="uk-margin-large"></div>
+  <div class="uk-margin-large"></div>
 
-<%- include('footer') %>
+  <%- include('footer') %>
 
+  <script type="text/javascript">
+    function sendMessage() {
+      var errMsg = '';
+      if (!$('#name').val()) errMsg += 'Please enter a name.\n';
+      if (!$('#email').val()) errMsg += 'Please enter an email address.\n';
+      if (!$('#message').val()) errMsg += 'Please enter a message.\n';
+      if (errMsg) alert(errMsg);
+      else {
+        axios.post('/api/contact-admin', {
+          name: $('#name').val(),
+          email: $('#email').val(),
+          message: $('#message').val()
+        })
+          .then(function(data) {
+            alert('Your message was successfully sent. Please wait for an administrator to contact you directly.');
+          })
+          .catch(function(err) {
+            alert(err);
+            alert('There was an error processing your request. Please try again');
+          });
+      }
+    }
+  </script>
 </body>
 </html>
