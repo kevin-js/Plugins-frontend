@@ -7,180 +7,180 @@
 <body>
   <%- include('top-navigation'); %>
   <div id="app">
-  <!-- Admin Tabs -->
-  <div class="link-tab uk-margin-left uk-padding-small uk-margin-right">
-    <h4>
-      <a href="/admin-database" class="uk-padding-small">Alumni</a>&nbsp;&nbsp;&nbsp;
-      <a href="/admin-group" class="uk-padding-small">Groups</a>&nbsp;&nbsp;&nbsp;
-      <a class="tab-active uk-padding-small">Events</a>&nbsp;&nbsp;&nbsp;
-      <a href="/admin-news" class="uk-padding-small">News</a>&nbsp;&nbsp;&nbsp;
-      <a href="/admin-security" class="uk-padding-small">Security</a>&nbsp;&nbsp;&nbsp;
-      <a href="/admin-settings" class="uk-padding-small">Settings</a>
-    </h4>
-    <hr class="border-slate"></hr>
-  </div>
-
-
-<!--------------------------->
-<!-- EVENT CALENDAR ADMIN -->
-<!--------------------------->
-<div id='calendar' class="uk-padding-small link-dk"></div>
-<!-- FullCalendar API and Scripts -->
-<link href='fullcalendar/packages/core/main.css' rel='stylesheet' />
-<script src='fullcalendar/packages/core/main.js'></script>
-<script src='fullcalendar/packages/interaction/main.min.js'></script>
-<script src='fullcalendar/packages/moment/main.min.js'></script>
-<link href='fullcalendar/packages/list/main.css' rel='stylesheet' />
-<script src='fullcalendar/packages/list/main.js'></script>
-<script src='fullcalendar/packages/rrule/main.min.js'></script>
-<script src='fullcalendar/vendor/rrule.js'></script>
-<link href='fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
-<script src='fullcalendar/packages/daygrid/main.js'></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-var calendarEl = document.getElementById('calendar');
-
-var calendar = new FullCalendar.Calendar(calendarEl, {
-plugins: [ 'dayGrid', 'moment', 'list', 'interaction', 'rrule' ],
-timeZone: 'UTC',
-defaultView: 'listMonth',
-defaultDate: '2019-05-07',
-header: {
-  left: 'title',
-  right: 'listMonth,dayGridMonth,addEventButton',
-},
-customButtons: {
-  addEventButton: {
-    text: 'Add',
-    click: function() {UIkit.modal(eventContent).show();}
-  }
-},
-footer: {
-  center: 'prev,next today',
-},
-
-events: <%- JSON.stringify(events) %>
-});
-
-calendar.render();
-});
-
-</script>
-
-<!-- Add Event Modal -->
-<div id="eventContent" uk-modal>
-<div id="create-event-modal" class="uk-modal-dialog">
-    <button class="uk-modal-close-default" type="button" uk-close></button>
-    <div class="uk-modal-header fog">
-        <h2 class="uk-modal-title">Create an Event</h2>
+    <!-- Admin Tabs -->
+    <div class="link-tab uk-margin-left uk-padding-small uk-margin-right">
+      <h4>
+        <a href="/admin-database" class="uk-padding-small">Alumni</a>&nbsp;&nbsp;&nbsp;
+        <a href="/admin-group" class="uk-padding-small">Groups</a>&nbsp;&nbsp;&nbsp;
+        <a class="tab-active uk-padding-small">Events</a>&nbsp;&nbsp;&nbsp;
+        <a href="/admin-news" class="uk-padding-small">News</a>&nbsp;&nbsp;&nbsp;
+        <a href="/admin-security" class="uk-padding-small">Security</a>&nbsp;&nbsp;&nbsp;
+        <a href="/admin-settings" class="uk-padding-small">Settings</a>
+      </h4>
+      <hr class="border-slate"></hr>
     </div>
 
-  <div class="uk-modal-body" uk-overflow-auto>
-    <label class="uk-form-label" for="form-stacked-text">Event Title</label><br>
-    <input type="text" id="form-stacked-text" class="uk-input" v-model="newEventTitle">
-    <div class="uk-margin"></div>
-    <label class="uk-form-label" for="form-stacked-text">Event Description</label><br>
-    <textarea class="uk-textarea" rows="4" v-model="newEventDescription"></textarea>
-  <div class="uk-grid-small uk-child-width-expand uk-margin-medium" uk-grid>
-  <div>
-  <label class="uk-form-label" for="form-stacked-text">Start Date</label><br>
-  <div class="uk-inline">
-    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
-    <input type="date" id="form-stacked-text" class="uk-input" placeholder="mm/dd/yyyy" v-model="newEventStartDate">
-    </div>
-  </div>
-  <div>
-  <label class="uk-form-label" for="form-stacked-text">Start Time</label><br>
-  <div class="uk-inline">
-    <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: clock"></span>
-    <input type="time" id="form-stacked-text" class="uk-input" placeholder="12:00" v-model="newEventStartTime">
-    </div>
-  </div>
-  <div>
-  <br>
-  <div class="uk-form-controls">
-        <select class="uk-select uk-width-auto" id="form-horizontal-select">
-            <option>AM</option>
-            <option>PM</option>
-        </select>
-    </div>
-  </div>
-</div>
-<div class="uk-grid-small uk-child-width-expand uk-margin-medium" uk-grid>
-<div>
-<label class="uk-form-label" for="form-stacked-text">End Date</label><br>
-<div class="uk-inline">
-  <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
-  <input type="date" id="form-stacked-text" class="uk-input" placeholder="mm/dd/yyyy" v-model="newEventEndDate">
-  </div>
-</div>
-<div>
-<label class="uk-form-label" for="form-stacked-text">End Time</label><br>
-<div class="uk-inline">
-  <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: clock"></span>
-  <input type="time" id="form-stacked-text" class="uk-input" placeholder="12:00" v-model="newEventEndTime">
-  </div>
-</div>
-<div>
-<br>
-<div class="uk-form-controls">
-      <select class="uk-select uk-width-auto" id="form-horizontal-select">
-          <option>AM</option>
-          <option>PM</option>
-      </select>
-  </div>
-</div>
-</div>
+
+    <!--------------------------->
+    <!-- EVENT CALENDAR ADMIN -->
+    <!--------------------------->
+    <div id='calendar' class="uk-padding-small link-dk"></div>
+    <!-- FullCalendar API and Scripts -->
+    <link href='fullcalendar/packages/core/main.css' rel='stylesheet' />
+    <script src='fullcalendar/packages/core/main.js'></script>
+    <script src='fullcalendar/packages/interaction/main.min.js'></script>
+    <script src='fullcalendar/packages/moment/main.min.js'></script>
+    <link href='fullcalendar/packages/list/main.css' rel='stylesheet' />
+    <script src='fullcalendar/packages/list/main.js'></script>
+    <script src='fullcalendar/packages/rrule/main.min.js'></script>
+    <script src='fullcalendar/vendor/rrule.js'></script>
+    <link href='fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+    <script src='fullcalendar/packages/daygrid/main.js'></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'dayGrid', 'moment', 'list', 'interaction', 'rrule' ],
+      timeZone: 'local',
+      defaultView: 'listMonth',
+      defaultDate: new Date(),
+      header: {
+        left: 'title',
+        right: 'listMonth,dayGridMonth,addEventButton',
+      },
+      customButtons: {
+        addEventButton: {
+          text: 'Add',
+          click: function() {UIkit.modal(eventContent).show();}
+        }
+      },
+      footer: {
+        center: 'prev,next today',
+      },
+
+      events: <%- JSON.stringify(events) %>
+      });
+
+      calendar.render();
+      });
+    </script>
+
+    <!-- Add Event Modal -->
+    <div id="eventContent" uk-modal>
+      <div id="create-event-modal" class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header fog">
+            <h2 class="uk-modal-title">Create an Event</h2>
+        </div>
+
+        <div class="uk-modal-body" uk-overflow-auto>
+          <label class="uk-form-label" for="form-stacked-text">Event Title</label><br>
+          <input type="text" id="form-stacked-text" class="uk-input" v-model="newEventTitle">
+          <div class="uk-margin"></div>
+          <label class="uk-form-label" for="form-stacked-text">Event Description</label><br>
+          <textarea class="uk-textarea" rows="4" v-model="newEventDescription"></textarea>
+          <div class="uk-grid-small uk-child-width-expand uk-margin-medium" uk-grid>
+            <div>
+              <label class="uk-form-label" for="form-stacked-text">Start Date</label><br>
+              <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+                <input type="date" id="form-stacked-text" class="uk-input" placeholder="mm/dd/yyyy" v-model="newEventStartDate">
+              </div>
+            </div>
+            <div>
+              <label class="uk-form-label" for="form-stacked-text">Start Time</label><br>
+              <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: clock"></span>
+                <input type="time" id="form-stacked-text" class="uk-input" placeholder="12:00" v-model="newEventStartTime">
+              </div>
+            </div>
+            <div>
+              <br>
+                <!-- <div class="uk-form-controls">
+                      <select class="uk-select uk-width-auto" id="form-horizontal-select">
+                          <option>AM</option>
+                          <option>PM</option>
+                      </select>
+                  </div> -->
+            </div>
+          </div>
+          <div class="uk-grid-small uk-child-width-expand uk-margin-medium" uk-grid>
+            <div>
+              <label class="uk-form-label" for="form-stacked-text">End Date</label><br>
+              <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+                <input type="date" id="form-stacked-text" class="uk-input" placeholder="mm/dd/yyyy" v-model="newEventEndDate">
+              </div>
+            </div>
+            <div>
+              <label class="uk-form-label" for="form-stacked-text">End Time</label><br>
+              <div class="uk-inline">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: clock"></span>
+                <input type="time" id="form-stacked-text" class="uk-input" placeholder="12:00" v-model="newEventEndTime">
+              </div>
+            </div>
+            <div>
+              <br>
+              <div class="uk-form-controls">
+                <!-- <select class="uk-select uk-width-auto" id="form-horizontal-select">
+                    <option>AM</option>
+                    <option>PM</option>
+                </select> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="uk-modal-footer fog uk-text-left">
+          <button class="uk-button button-lt" type="button" v-on:click="createEvent">Save</button>
+        </div>
+      </div>
     </div>
 
-    <div class="uk-modal-footer fog uk-text-left">
-        <button class="uk-button button-lt" type="button" v-on:click="createEvent">Save</button>
-    </div>
+
+    <div class="uk-margin-large"></div>
+    <%- include('footer'); %>
   </div>
-</div>
+  <script type="text/javascript"> 
+    var app = new Vue({
+      el: '#app',
+      data: {
+        newEventTitle: '',
+        newEventDescription: '',
+        newEventStartDate: null,
+        newEventStartTime: null,
+        newEventEndDate: null,
+        newEventEndTime: null
+      },
+      methods: {
+        createEvent: function() {
+          var errMsg = '';
 
+          if (!this.newEventTitle) errMsg += 'Event Title cannot be empty\n';
+          if (!this.newEventDescription) errMsg += 'Event Description cannot be empty\n';
+          if (!this.newEventStartTime || !this.newEventStartDate) errMsg += 'Event must have a start time\n';
+          if (!this.newEventEndTime || !this.newEventEndDate) errMsg += 'Event must have an end time\n';
 
-<div class="uk-margin-large"></div>
-<%- include('footer'); %>
-</div>
-<script type="text/javascript"> 
-  var app = new Vue({
-    el: '#app',
-    data: {
-      newEventTitle: '',
-      newEventDescription: '',
-      newEventStartDate: null,
-      newEventStartTime: null,
-      newEventEndDate: null,
-      newEventEndTime: null
-    },
-    methods: {
-      createEvent: function() {
-        var errMsg = '';
-
-        if (!this.newEventTitle) errMsg += 'Event Title cannot be empty\n';
-        if (!this.newEventDescription) errMsg += 'Event Description cannot be empty\n';
-        if (!this.newEventStartTime || !this.newEventStartDate) errMsg += 'Event must have a start time\n';
-        if (!this.newEventEndTime || !this.newEventEndDate) errMsg += 'Event must have an end time\n';
-
-        if (errMsg) alert(errMsg);
-        else {
-          axios.post('/api/event', {
-            title: this.newEventTitle,
-            description: this.newEventDescription,
-            start: new Date(),
-            end: new Date()
-          })
-            .then(function(data) {
-              UIkit.modal('#create-event-modal').hide();
+          if (errMsg) alert(errMsg);
+          else {
+            var tz = moment.tz.guess();
+            axios.post('/api/event', {
+              title: this.newEventTitle,
+              description: this.newEventDescription,
+              start: moment(this.newEventStartDate + ' ' + this.newEventStartTime, 'YYYY-MM-DD HH:mm').tz(tz).toDate(),
+              end: moment(this.newEventEndDate + ' ' + this.newEventEndTime, 'YYYY-MM-DD HH:mm').tz(tz).toDate()
             })
-            .catch(function(err) {
-              alert('There was an error creating your event. Please try again');
-            });
+              .then(function(data) {
+                UIkit.modal('#eventContent').hide();
+              })
+              .catch(function(err) {
+                alert('There was an error creating your event. Please try again');
+              });
+          }
         }
       }
-    }
-  });
-</script>
+    });
+  </script>
 </body>
 </html>

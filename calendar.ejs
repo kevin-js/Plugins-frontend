@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       var calendar = new FullCalendar.Calendar(calendarEl, {
         plugins: [ 'dayGrid', 'moment', 'list', 'interaction', 'rrule' ],
-        timeZone: 'UTC',
+        timeZone: 'local',
         defaultView: 'listMonth',
         defaultDate: new Date(),
         header: {
