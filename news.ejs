@@ -6,47 +6,48 @@
 </head>
 <body>
   <%- include('top-navigation'); %>      
-      <div class="uk-hidden@m">
-      <br><br><br><br><br><br>
-      </div>
+  <div class="uk-hidden@m">
+    <br><br><br><br><br><br>
+  </div>
 
   <div class="uk-grid-small uk-padding" uk-grid>
-      <div class="uk-width-1-1@s uk-width-medium@m uk-margin-bottom">
-                <h4 class="norwester"><i class="fa fa-filter"></i> &nbsp;Filters</h4>
-                <hr class="table-border"></hr>
-                <ul  class="uk-padding-small" uk-accordion="multiple: true">
-                  <li>
-                      <a class="uk-accordion-title" href="#">Date</a>
-                      <div class="uk-accordion-content">
-                        <ul uk-accordion class="uk-margin-left">
-                            <li>
-                                <a class="uk-accordion-title font-black" href="#">&nbsp;2019</a>
-                                <div class="uk-accordion-content uk-margin-left">
-                                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;May</label><br>
-                                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;April</label><br>
-                                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;March</label><br>
-                                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;February</label><br>
-                                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;January</label>
-                                </div>
-                            </li>
-                            <li>
-                                <a class="uk-accordion-title font-black" href="#"> 2018</a>
-                                <div class="uk-accordion-content uk-margin-left">
-                                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;December</label><br>
-                                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;November</label>
-                                </div>
-                            </li>
-                          </ul>
-                  </li>
-                  <li>
-                      <a class="uk-accordion-title" href="#">Type</a>
-                      <div class="uk-accordion-content uk-margin-left">
-                        <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;Newsletter</label><br>
-                        <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;Announcement</label>
-                      </div>
-                  </li>
-                </ul>
-          </div>
+    <div class="uk-width-1-1@s uk-width-medium@m uk-margin-bottom">
+      <h4 class="norwester"><i class="fa fa-filter"></i> &nbsp;Filters</h4>
+      <hr class="table-border"></hr>
+      <ul class="uk-padding-small" uk-accordion="multiple: true">
+        <li>
+          <a class="uk-accordion-title" href="#">Date</a>
+          <div class="uk-accordion-content">
+            <ul uk-accordion class="uk-margin-left">
+              <li>
+                <a class="uk-accordion-title font-black" href="#">&nbsp;2019</a>
+                <div class="uk-accordion-content uk-margin-left">
+                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;May</label><br>
+                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;April</label><br>
+                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;March</label><br>
+                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;February</label><br>
+                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;January</label>
+                </div>
+              </li>
+              <li>
+                <a class="uk-accordion-title font-black" href="#"> 2018</a>
+                <div class="uk-accordion-content uk-margin-left">
+                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;December</label><br>
+                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;November</label>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="uk-accordion-title" href="#">Type</a>
+            <div class="uk-accordion-content uk-margin-left">
+              <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;Newsletter</label><br>
+              <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;Announcement</label><br>
+              <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;Event</label>
+            </div>
+          </li>
+        </ul>
+      </div>
 
       <div  class="uk-width-expand">
         <h4 class="norwester"><i class="fa fa-newspaper-o"></i> &nbsp;News</h4>
@@ -60,7 +61,7 @@
                       <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">May 01, 2019</time></p>
                     </div>
                     <div class="uk-card-media-bottom uk-height-medium uk-cover-container">
-                        <img src="/news/1.png" uk-cover>
+                        <img src="news/1.png" uk-cover>
                     </div>
                     <div class="uk-clearfix uk-position-bottom white2">
                     <h6 class="uk-padding-small font-charcoal">
@@ -77,7 +78,7 @@
                       <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">April 01, 2019</time></p>
                     </div>
                     <div class="uk-card-media-bottom uk-height-medium uk-cover-container">
-                        <img src="/news/2.png" uk-cover>
+                        <img src="news/2.png" uk-cover>
                     </div>
                     <div class="uk-clearfix uk-position-bottom white2">
                     <h6 class="uk-padding-small font-charcoal">
@@ -94,7 +95,7 @@
                       <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">March 02, 2019</time></p>
                     </div>
                     <div class="uk-card-media-bottom uk-height-medium uk-cover-container">
-                        <img src="/news/3.png" uk-cover>
+                        <img src="news/3.png" uk-cover>
                     </div>
                     <div class="uk-clearfix uk-position-bottom white2">
                     <h6 class="uk-padding-small font-charcoal">
@@ -126,7 +127,7 @@
                       <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">April 01, 2019</time></p>
                     </div>
                     <div class="uk-card-media-bottom uk-height-medium uk-cover-container">
-                        <img src="/news/1.png" uk-cover>
+                        <img src="news/1.png" uk-cover>
                     </div>
                     <div class="uk-clearfix uk-position-bottom white2">
                     <h6 class="uk-padding-small font-charcoal">
@@ -143,7 +144,7 @@
                       <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">April 08, 2019</time></p>
                     </div>
                     <div class="uk-card-media-bottom uk-height-medium uk-cover-container">
-                        <img src="/news/2.png" uk-cover>
+                        <img src="news/2.png" uk-cover>
                     </div>
                     <div class="uk-clearfix uk-position-bottom white2">
                     <h6 class="uk-padding-small font-charcoal">
@@ -160,7 +161,7 @@
                       <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">March 02, 2019</time></p>
                     </div>
                     <div class="uk-card-media-bottom uk-height-medium uk-cover-container">
-                        <img src="/news/3.png" uk-cover>
+                        <img src="news/3.png" uk-cover>
                     </div>
                     <div class="uk-clearfix uk-position-bottom white2">
                     <h6 class="uk-padding-small font-charcoal">
@@ -187,6 +188,8 @@
             </div>
       </div>
   </div>
+</div>
+</div>
 
   <div class="uk-margin-large"></div>
   <%- include('footer'); %>

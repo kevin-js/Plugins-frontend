@@ -7,87 +7,67 @@
 <body>
   <%- include('top-navigation'); %>
 
-<div class="uk-hidden@m">
-<br><br><br><br><br><br>
-</div>
-
-<div id='calendar' class="uk-padding-small link-dk"></div>
-<!-- FullCalendar API and Scripts -->
-<link href='/fullcalendar/packages/core/main.css' rel='stylesheet' />
-<script src='/fullcalendar/packages/core/main.js'></script>
-<script src='/fullcalendar/packages/interaction/main.min.js'></script>
-<script src='/fullcalendar/packages/moment/main.min.js'></script>
-<link href='/fullcalendar/packages/list/main.css' rel='stylesheet' />
-<script src='/fullcalendar/packages/list/main.js'></script>
-<script src='/fullcalendar/packages/rrule/main.min.js'></script>
-<script src='/fullcalendar/vendor/rrule.js'></script>
-<link href='/fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
-<script src='/fullcalendar/packages/daygrid/main.js'></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  var calendarEl = document.getElementById('calendar');
-  $.ajax({
-    url: '/api/events',
-    type: 'GET',
-    data: {
-      date: new Date()
-    },
-    success: function(data) {
-      if (data) {
-        if (!Array.isArray(data)) {
-          data = [data];
-        }
-      } else {
-        data = []
-      }
-      
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: [ 'dayGrid', 'moment', 'list', 'interaction', 'rrule' ],
-        timeZone: 'local',
-        defaultView: 'listMonth',
-        defaultDate: new Date(),
-        header: {
-          left: 'title',
-          right: 'listMonth,dayGridMonth',
-        },
-        footer: {
-          center: 'prev,next today'
-        },
-
-        events: data
-        });
-
-        calendar.render();
-    },
-    error: function() {
-      alert('there was an issue loading the events calendar. Please refresh the page and try again.');
-    }
-  });
-});
-
-</script>
-<a class="uk-button uk-button-default uk-hidden" href="#eventContent" uk-toggle>Add Event</a>
-
-<!-- Add Event Modal -->
-<div id="eventContent" uk-modal>
-<div class="uk-modal-dialog">
-    <button class="uk-modal-close-default" type="button" uk-close></button>
-    <div class="uk-modal-header fog">
-        <h2 class="uk-modal-title">Create an Event</h2>
-    </div>
-
-    <div class="uk-modal-body" uk-overflow-auto>
-
-    </div>
-
-    <div class="uk-modal-footer fog uk-text-left">
-        <button class="uk-button button-lt uk-modal-close" type="button">Close</button>
-    </div>
+  <div class="uk-hidden@m">
+  <br><br><br><br><br><br>
   </div>
-</div>
 
+  <div id='calendar' class="uk-padding-small link-dk"></div>
+  <!-- FullCalendar API and Scripts -->
+  <link href='/fullcalendar/packages/core/main.css' rel='stylesheet' />
+  <script src='/fullcalendar/packages/core/main.js'></script>
+  <script src='/fullcalendar/packages/interaction/main.min.js'></script>
+  <script src='/fullcalendar/packages/moment/main.min.js'></script>
+  <link href='/fullcalendar/packages/list/main.css' rel='stylesheet' />
+  <script src='/fullcalendar/packages/list/main.js'></script>
+  <script src='/fullcalendar/packages/rrule/main.min.js'></script>
+  <script src='/fullcalendar/vendor/rrule.js'></script>
+  <link href='/fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+  <script src='/fullcalendar/packages/daygrid/main.js'></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      $.ajax({
+        url: '/api/events',
+        type: 'GET',
+        data: {
+          date: new Date()
+        },
+        success: function(data) {
+          if (data) {
+            if (!Array.isArray(data)) {
+              data = [data];
+            }
+          } else {
+            data = []
+          }
+          
+          var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: [ 'dayGrid', 'moment', 'list', 'interaction', 'rrule' ],
+            timeZone: 'local',
+            defaultView: 'listMonth',
+            defaultDate: new Date(),
+            header: {
+              left: 'title',
+              right: 'listMonth,dayGridMonth',
+            },
+            footer: {
+              center: 'prev,next today'
+            },
 
-<div class="uk-margin-large"></div>
-<%- include('footer'); %>
+            events: data
+            });
+
+            calendar.render();
+        },
+        error: function() {
+          alert('there was an issue loading the events calendar. Please refresh the page and try again.');
+        }
+      });
+    });
+  </script>
+  <a class="uk-button uk-button-default uk-hidden" href="#eventContent" uk-toggle>Add Event</a>
+
+  <div class="uk-margin-large"></div>
+  <%- include('footer'); %>
 </body>
 </html>

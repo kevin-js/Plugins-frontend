@@ -62,7 +62,7 @@
   <%- include('footer'); %>
   <script type="text/javascript">
     function createAccount() {
-      axios.post('/api/createAccount', {
+      axios.post('/api/create-account', {
         email: $('#email-input').val(),
         password: $('#password-input').val()
       })
