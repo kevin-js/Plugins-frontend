@@ -30,9 +30,22 @@
             <span uk-icon="location"></span>
           </div>
           <div>
-            <h5><span id="address_line1">123 E Main Street</span><br>
-              <span id="address_line2">Office 987</span><br>
-              <span id="city">Louisville</span>, <span id="state">KY</span> <span id="zip">40202</span>
+            <h5>
+              <% if (siteAdminConfig.address_line_1) { %> 
+                <span id="address_line1"><%= siteAdminConfig.address_line_1 %></span><br>
+              <% } %> 
+              <% if (siteAdminConfig.address_line_2) { %> 
+                <span id="address_line2"><%= siteAdminConfig.address_line_2 %></span><br>
+              <% } %> 
+              <% if (siteAdminConfig.city) { %> 
+                <span id="city"><%= siteAdminConfig.city %></span>,
+              <% } %> 
+              <% if (siteAdminConfig.state) { %> 
+                <span id="state"><%= siteAdminConfig.state %></span> 
+              <% } %>
+              <% if (siteAdminConfig.zip_code) { %> 
+                <span id="zip"><%= siteAdminConfig.zip_code %></span>
+              <% }%>
             </h5>
           </div>
         </div>
@@ -43,7 +56,9 @@
             <span uk-icon="mail"></span>
           </div>
           <div>
-            <h5><span id="admin_email">admin@ferncreekhs.com</span></h5>
+            <% if (siteAdminConfig.primary_email) { %> 
+              <h5><span id="admin_email"><%= siteAdminConfig.primary_email %></span></h5>
+            <% } %>
           </div>
         </div>
 
@@ -53,7 +68,9 @@
             <span uk-icon="receiver"></span>
           </div>
           <div>
-            <h5><span id="admin_phone">(502) 280-7894</span></h5>
+            <% if (siteAdminConfig.phone_number) { %> 
+              <h5><span id="admin_phone"><%= siteAdminConfig.phone_number %></span></h5>
+            <% } %>
           </div>
         </div>
       </div>
