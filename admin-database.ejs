@@ -171,8 +171,7 @@
             <label class="uk-form-label">Roles</label>
             <select class="uk-select border-charcoal2" v-model="searchRoles">
               <option value="" default>All</option>
-              <option>Admin</option>
-              <option>Group Leader</option>
+              <option v-for="role in roleOptions">{{ role.name }}</option>
             </select>
           </div>
 
@@ -271,6 +270,7 @@
             <label class="uk-form-label">Groups</label>
             <select class="uk-select border-charcoal2" v-model="searchGroups">
               <option value="" default>All</option>
+              <option v-for="group in groupOptions">{{ group.group_name }}</option>
             </select>
           </div>
 
@@ -309,7 +309,7 @@
               <th class="uk-table-shrink font-white border-none">Email<br>Membership</th>
               <th class="uk-table-shrink uk-text-nowrap font-white border-none">Home Phone<br>Cell Phone</th>
               <th class="uk-table-shrink uk-text-nowrap font-white border-none">Address<br><br></th>
-              <th class="uk-table-shrink font-white border-none">Permissions<br><br></th>
+              <th class="uk-table-shrink font-white border-none">Roles<br><br></th>
               <th class="uk-table-shrink font-white border-none">Groups<br><br></th>
               <th class="uk-table-shrink font-white border-none"><br><br></th>
             </tr>
@@ -339,8 +339,10 @@
 
                 <!-- todo: what permissions are these? -->
                 <td class="table-border border-none">
-                    <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Group Leader" value="Group Leader" disabled>
-                    <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" placeholder="Annual Member" value="Annual Member" disabled>
+                    <div v-for="userRole in user.roles">
+                      <input class="uk-input uk-form-small font-small uk-form-width-small" type="text" v-bind:placeholder="userRole.name" disabled>
+                    </div>
+                    
                 </td>
 
                 <td class="table-border border-none">
@@ -531,6 +533,8 @@
         searchGroups: '',
         pageNumber: 1,
         pageSize: 10,
+        groupOptions: <%- JSON.stringify(groups) %>,
+        roleOptions: <%- JSON.stringify(roles) %>,
         users: <%- JSON.stringify(userList) %>,
         filteredUsers: <%- JSON.stringify(userList) %>,
         selectedUserGroups: [],
@@ -613,9 +617,15 @@
               case 'non-winner':
                 return !user.isHallOfFame;  
             }
+          })
+          .filter(function(user) {
+            return self.searchRoles ? user.roles.some(function(role) { return role.name == self.searchRoles; }) : true;
+          })
+          .filter(function(user) {
+            return self.searchGroups ? user.groups.some(function(group) { return group.group_name == self.searchGroups; }) : true;
           });
 
-          // todo: permissions, address, groups filter
+          // todo: address filter
         },
         setSelectedUser: function(user) {
           this.selectedUser = user;

@@ -208,10 +208,13 @@
 
           <div class="uk-width-1-2@m">
             <span class="profile-label">Announcements</span>
-            <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top">
-            <h6><span id="announcement_title">Class Reunion!</span><br>
-            <span class="font-med" id="announcement_details">It’s been 50 years since you graduated, and we’re celebrating with a party!</span><br>
-            <a class="line" href="">Learn More</a></h6>
+            <div v-if="announcements.length == 0">
+              <i>No announcements to display.</i>
+            </div>
+            <div class="uk-divider-vertical uk-padding-small uk-padding-remove-top" v-for="announcement in announcements">
+              <h6><span id="announcement_title">{{ announcement.headline }}</span><br>
+              <span class="font-med" id="announcement_details">{{ announcement.content }}</span><br>
+              <a class="line" href="">Learn More</a></h6>
             </div>
           </div>
 
@@ -334,6 +337,7 @@
     el: '#app',
     data: {
       memories: <%- JSON.stringify(memories) %>,
+      announcements: <%- JSON.stringify(announcements) %>,
       newMemoryDescription: ''
     },
     methods: {
