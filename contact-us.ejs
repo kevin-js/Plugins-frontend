@@ -125,8 +125,9 @@
             alert('Your message was successfully sent. Please wait for an administrator to contact you directly.');
           })
           .catch(function(err) {
-            alert(err);
-            alert('There was an error processing your request. Please try again');
+            var msg;
+            if (err && err.response && err.response.data && err.response.data.message) msg = err.response.data.message;
+            alert(msg || 'There was an error processing your request. Please try again');
           });
       }
     }

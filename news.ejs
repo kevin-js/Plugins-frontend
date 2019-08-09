@@ -5,38 +5,40 @@
   <%- include('header'); %>
 </head>
 <body>
-  <%- include('top-navigation'); %>      
-  <div class="uk-hidden@m">
-    <br><br><br><br><br><br>
-  </div>
+  <div id="app">
+    <%- include('top-navigation'); %>      
+    <div class="uk-hidden@m">
+      <br><br><br><br><br><br>
+    </div>
 
-  <div class="uk-grid-small uk-padding" uk-grid>
-    <div class="uk-width-1-1@s uk-width-medium@m uk-margin-bottom">
-      <h4 class="norwester"><i class="fa fa-filter"></i> &nbsp;Filters</h4>
-      <hr class="table-border"></hr>
-      <ul class="uk-padding-small" uk-accordion="multiple: true">
-        <li>
-          <a class="uk-accordion-title" href="#">Date</a>
-          <div class="uk-accordion-content">
-            <ul uk-accordion class="uk-margin-left">
-              <li>
-                <a class="uk-accordion-title font-black" href="#">&nbsp;2019</a>
-                <div class="uk-accordion-content uk-margin-left">
-                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;May</label><br>
-                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;April</label><br>
-                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;March</label><br>
-                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;February</label><br>
-                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;January</label>
-                </div>
-              </li>
-              <li>
-                <a class="uk-accordion-title font-black" href="#"> 2018</a>
-                <div class="uk-accordion-content uk-margin-left">
-                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;December</label><br>
-                  <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;November</label>
-                </div>
-              </li>
-            </ul>
+    <div class="uk-grid-small uk-padding" uk-grid>
+      <div class="uk-width-1-1@s uk-width-medium@m uk-margin-bottom">
+        <h4 class="norwester"><i class="fa fa-filter"></i> &nbsp;Filters</h4>
+        <hr class="table-border"></hr>
+        <ul class="uk-padding-small" uk-accordion="multiple: true">
+          <li>
+            <a class="uk-accordion-title" href="#">Date</a>
+            <div class="uk-accordion-content">
+              <ul uk-accordion class="uk-margin-left">
+                <li>
+                  <a class="uk-accordion-title font-black" href="#">&nbsp;2019</a>
+                  <div class="uk-accordion-content uk-margin-left">
+                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;May</label><br>
+                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;April</label><br>
+                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;March</label><br>
+                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;February</label><br>
+                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;January</label>
+                  </div>
+                </li>
+                <li>
+                  <a class="uk-accordion-title font-black" href="#"> 2018</a>
+                  <div class="uk-accordion-content uk-margin-left">
+                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;December</label><br>
+                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;November</label>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </li>
           <li>
             <a class="uk-accordion-title" href="#">Type</a>
@@ -54,144 +56,45 @@
         <hr class="table-border"></hr>
 
         <div class="uk-child-width-1-2@m uk-margin uk-grid uk-grid-match" uk-grid>
-            <div>
-                <div class="uk-card uk-card-default">
-                    <div class="uk-card-body">
-                      <h4 class="uk-card-title" id="news_title">May 2019 Newsletter</h4>
-                      <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">May 01, 2019</time></p>
-                    </div>
-                    <div class="uk-card-media-bottom uk-height-medium uk-cover-container">
-                        <img src="news/1.png" uk-cover>
-                    </div>
-                    <div class="uk-clearfix uk-position-bottom white2">
-                    <h6 class="uk-padding-small font-charcoal">
-                    <span class="uk-position-relative uk-float-left uk-inline">Newsletter</span>
-                    <span class="uk-position-relative uk-float-right uk-inline"><i class="fa fa-eye"></i> &nbsp;0</span>
-                    </h6>
-                    </div>
-                </div>
+          <div v-if="newsItems.length == 0">
+            <i>There are currently no news items to display.</i>
+          </div>
+          <div v-for="item in newsItems">
+            <div class="uk-card uk-card-default">
+              <div class="uk-card-body">
+                <h4 class="uk-card-title" id="news_title">{{ item.headline }}</h4>
+                <p class="uk-text-meta uk-margin-remove-top">{{ item.publish_date }}</p>
+                <p id="announcement_details" v-if="item.item_type == 'Announcement' ">{{ item.content }}</p>
+              </div>
+
+              <div class="uk-card-media-bottom uk-height-medium uk-cover-container" v-if="item.item_type == 'Newsletter' ">
+                  <img v-bind:src="'/api/photo/' + item.image_ref" uk-cover>
+              </div>
+              <div class="uk-clearfix uk-position-bottom white2">
+                <h6 class="uk-padding-small font-charcoal">
+                    <span class="uk-position-relative uk-float-left uk-inline">{{ item.item_type }}</span>
+                  <span class="uk-position-relative uk-float-right uk-inline"><i class="fa fa-eye"></i> &nbsp;{{ item.view_count }}</span>
+                </h6>
+              </div>
             </div>
-            <div>
-                <div class="uk-card uk-card-default">
-                    <div class="uk-card-body">
-                      <h4 class="uk-card-title" id="news_title">April 2019 Newsletter</h4>
-                      <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">April 01, 2019</time></p>
-                    </div>
-                    <div class="uk-card-media-bottom uk-height-medium uk-cover-container">
-                        <img src="news/2.png" uk-cover>
-                    </div>
-                    <div class="uk-clearfix uk-position-bottom white2">
-                    <h6 class="uk-padding-small font-charcoal">
-                    <span class="uk-position-relative uk-float-left uk-inline">Newsletter</span>
-                    <span class="uk-position-relative uk-float-right uk-inline"><i class="fa fa-eye"></i> &nbsp;0</span>
-                    </h6>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="uk-card uk-card-default">
-                    <div class="uk-card-body">
-                      <h4 class="uk-card-title" id="news_title">March 2019 Newsletter</h4>
-                      <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">March 02, 2019</time></p>
-                    </div>
-                    <div class="uk-card-media-bottom uk-height-medium uk-cover-container">
-                        <img src="news/3.png" uk-cover>
-                    </div>
-                    <div class="uk-clearfix uk-position-bottom white2">
-                    <h6 class="uk-padding-small font-charcoal">
-                    <span class="uk-position-relative uk-float-left uk-inline">Newsletter</span>
-                    <span class="uk-position-relative uk-float-right uk-inline"><i class="fa fa-eye"></i> &nbsp;0</span>
-                    </h6>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="uk-card uk-card-default">
-                    <div class="uk-card-body">
-                      <h4 class="uk-card-title" id="news_title">Class Reunion, class of 1969!</h4>
-                      <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">February 28, 2019</time></p>
-                    <p id="announcement_details">It’s been 50 years since you graduated, and we’re celebrating with a party! Please join the planning committee, we need help to pull off one great bash!</p>
-                    </div>
-                    <div class="uk-clearfix uk-position-bottom white2">
-                    <h6 class="uk-padding-small font-charcoal">
-                    <span class="uk-position-relative uk-float-left uk-inline">Announcement</span>
-                    <span class="uk-position-relative uk-float-right uk-inline"><i class="fa fa-eye"></i> &nbsp;0</span>
-                    </h6>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="uk-card uk-card-default">
-                    <div class="uk-card-body">
-                      <h4 class="uk-card-title" id="news_title">29 Motivational Quotes For Business And Other Work …</h4>
-                      <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">April 01, 2019</time></p>
-                    </div>
-                    <div class="uk-card-media-bottom uk-height-medium uk-cover-container">
-                        <img src="news/1.png" uk-cover>
-                    </div>
-                    <div class="uk-clearfix uk-position-bottom white2">
-                    <h6 class="uk-padding-small font-charcoal">
-                    <span class="uk-position-relative uk-float-left uk-inline">Newsletter</span>
-                    <span class="uk-position-relative uk-float-right uk-inline"><i class="fa fa-eye"></i> &nbsp;0</span>
-                    </h6>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="uk-card uk-card-default">
-                    <div class="uk-card-body">
-                      <h4 class="uk-card-title" id="news_title">Fear Of Driving And Automatic Negative Thoughts</h4>
-                      <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">April 08, 2019</time></p>
-                    </div>
-                    <div class="uk-card-media-bottom uk-height-medium uk-cover-container">
-                        <img src="news/2.png" uk-cover>
-                    </div>
-                    <div class="uk-clearfix uk-position-bottom white2">
-                    <h6 class="uk-padding-small font-charcoal">
-                    <span class="uk-position-relative uk-float-left uk-inline">Newsletter</span>
-                    <span class="uk-position-relative uk-float-right uk-inline"><i class="fa fa-eye"></i> &nbsp;0</span>
-                    </h6>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="uk-card uk-card-default">
-                    <div class="uk-card-body">
-                      <h4 class="uk-card-title" id="news_title">29 Motivational Quotes For Business And Other Work …</h4>
-                      <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">March 02, 2019</time></p>
-                    </div>
-                    <div class="uk-card-media-bottom uk-height-medium uk-cover-container">
-                        <img src="news/3.png" uk-cover>
-                    </div>
-                    <div class="uk-clearfix uk-position-bottom white2">
-                    <h6 class="uk-padding-small font-charcoal">
-                    <span class="uk-position-relative uk-float-left uk-inline">Newsletter</span>
-                    <span class="uk-position-relative uk-float-right uk-inline"><i class="fa fa-eye"></i> &nbsp;0</span>
-                    </h6>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="uk-card uk-card-default">
-                    <div class="uk-card-body">
-                      <h4 class="uk-card-title" id="news_title">Class Reunion, class of 1969!</h4>
-                      <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">February 28, 2019</time></p>
-                    <p id="announcement_details">It’s been 50 years since you graduated, and we’re celebrating with a party! Please join the planning committee, we need help to pull off one great bash!</p>
-                    </div>
-                    <div class="uk-clearfix uk-position-bottom white2">
-                    <h6 class="uk-padding-small font-charcoal">
-                    <span class="uk-position-relative uk-float-left uk-inline">Announcement</span>
-                    <span class="uk-position-relative uk-float-right uk-inline"><i class="fa fa-eye"></i> &nbsp;0</span>
-                    </h6>
-                    </div>
-                </div>
-            </div>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
-</div>
-</div>
 
   <div class="uk-margin-large"></div>
   <%- include('footer'); %>
+  <script type="text/javascript">
+    var app = new Vue({
+      el: '#app',
+      data: {
+        newsItems: <%- JSON.stringify(newsItems) %>
+      },
+      methods: {
+
+      }
+    });
+  </script>
 </body>
 </html>

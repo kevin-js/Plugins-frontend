@@ -168,8 +168,8 @@
           </div>
 
           <div class="uk-inline uk-margin-bottom uk-width-1-6@m">
-            <label class="uk-form-label">Permissions</label>
-            <select class="uk-select border-charcoal2" v-model="searchPermissions">
+            <label class="uk-form-label">Roles</label>
+            <select class="uk-select border-charcoal2" v-model="searchRoles">
               <option value="" default>All</option>
               <option>Admin</option>
               <option>Group Leader</option>
@@ -521,7 +521,7 @@
         searchEmailAddress: '',
         searchPhoneNumber: '',
         searchMembership: '',
-        searchPermissions: '',
+        searchRoles: '',
         searchAddress: '',
         searchCity: '',
         searchState: '',
@@ -558,7 +558,7 @@
           this.searchEmailAddress = '';
           this.searchPhoneNumber = '';
           this.searchMembership = '';
-          this.searchPermissions = '';
+          this.searchRoles = '';
           this.searchAddress = '';
           this.searchCity = '';
           this.searchState = '';
