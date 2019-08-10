@@ -17,24 +17,13 @@
         <hr class="table-border"></hr>
         <ul class="uk-padding-small" uk-accordion="multiple: true">
           <li>
-            <a class="uk-accordion-title" href="#">Date</a>
+            <a class="uk-accordion-title">Date</a>
             <div class="uk-accordion-content">
               <ul uk-accordion class="uk-margin-left">
-                <li>
-                  <a class="uk-accordion-title font-black" href="#">&nbsp;2019</a>
+                <li v-for="year in Object.keys(filters)">
+                  <a class="uk-accordion-title font-black" href="#">&nbsp;{{ year }}</a>
                   <div class="uk-accordion-content uk-margin-left">
-                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;May</label><br>
-                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;April</label><br>
-                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;March</label><br>
-                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;February</label><br>
-                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;January</label>
-                  </div>
-                </li>
-                <li>
-                  <a class="uk-accordion-title font-black" href="#"> 2018</a>
-                  <div class="uk-accordion-content uk-margin-left">
-                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;December</label><br>
-                    <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;November</label>
+                    <label class="font-charcoal" v-for="month in Object.keys(filters[year])"><input class="uk-checkbox" type="checkbox" v-model="filters[year][month]"> &nbsp;{{ month }}</label><br>
                   </div>
                 </li>
               </ul>
@@ -43,9 +32,8 @@
           <li>
             <a class="uk-accordion-title" href="#">Type</a>
             <div class="uk-accordion-content uk-margin-left">
-              <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;Newsletter</label><br>
-              <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;Announcement</label><br>
-              <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" checked> &nbsp;Event</label>
+              <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" v-model="showNewsletters"> &nbsp;Newsletter</label><br>
+              <label class="font-charcoal"><input class="uk-checkbox" type="checkbox" v-model="showAnnouncements"> &nbsp;Announcement</label><br>
             </div>
           </li>
         </ul>
@@ -56,10 +44,10 @@
         <hr class="table-border"></hr>
 
         <div class="uk-child-width-1-2@m uk-margin uk-grid uk-grid-match" uk-grid>
-          <div v-if="newsItems.length == 0">
+          <div v-if="filteredNewsItems.length == 0">
             <i>There are currently no news items to display.</i>
           </div>
-          <div v-for="item in newsItems">
+          <div v-for="item in filteredNewsItems">
             <div class="uk-card uk-card-default">
               <div class="uk-card-body">
                 <h4 class="uk-card-title" id="news_title">{{ item.headline }}</h4>
@@ -89,10 +77,50 @@
     var app = new Vue({
       el: '#app',
       data: {
-        newsItems: <%- JSON.stringify(newsItems) %>
+        newsItems: <%- JSON.stringify(newsItems) %>,
+        filteredNewsItems: <%- JSON.stringify(newsItems) %>,
+        filters: {},
+        showAnnouncements: true,
+        showNewsletters: true
+      },
+      created: function() {
+        var tempFilters = {};
+        this.filteredNewsItems.forEach(function(item) {
+          var year = moment(item.publish_date).format('YYYY');
+          var month = moment(item.publish_date).format('MMM');
+          if (!tempFilters[year]) tempFilters[year] = {};
+          tempFilters[year][month] = true;
+        });
+        this.filters = tempFilters;
+      },
+      watch: {
+        filters: {
+          handler: function() {
+            this.reFilter(); 
+          },
+          deep: true
+        },
+        showAnnouncements: function() {
+          this.reFilter();
+        },
+        showNewsletters: function() {
+          this.reFilter();
+        }
       },
       methods: {
-
+        reFilter: function() {
+          var self = this;
+          this.filteredNewsItems = this.newsItems
+          .filter(function(item) {
+            return (self.filters[moment(item.publish_date).format('YYYY')][moment(item.publish_date).format('MMM')]);
+          })
+          .filter(function(item) {
+            return self.showAnnouncements ? true: item.item_type != 'Announcement';
+          })
+          .filter(function(item) {
+            return self.showNewsletters ? true : item.item_type != 'Newsletter';
+          });
+        }
       }
     });
   </script>
