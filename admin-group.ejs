@@ -78,7 +78,7 @@
               <td class="table-border border-none">
                 <span id="member-count">{{ group.users.length }}</span>
               </td>
-              <td class="table-border border-none">{{ group.groupOwner.name }}<a href="#edit-leader" class="uk-icon-link" uk-icon="pencil" uk-toggle v-on:click="setSelectedGroup(group)"></a></td>
+              <td class="table-border border-none"><p v-if="group.groupOwner">{{ group.groupOwner.name }}</p><a href="#edit-leader" class="uk-icon-link" uk-icon="pencil" uk-toggle v-on:click="setSelectedGroup(group)"></a></td>
               <td class="table-border border-none"><a href="#confirm-delete" class="uk-icon-link" uk-icon="trash" uk-toggle v-on:click="setSelectedGroup(group)"></a></td>
             </tr>
           </tbody>
@@ -132,7 +132,7 @@
 
       <div class="uk-modal-body" uk-overflow-auto>
         <label class="uk-form-label" for="form-stacked-text">Current Leader:</label>
-          <div class="uk-form-controls">
+          <div class="uk-form-controls" v-if="selectedGroup">
             <!-- <input class="uk-input uk-form-blank" id="grp_leader" type="text" value="Roger Rabbit"> -->
             <p>{{ selectedGroup.groupOwner.name }}</p>
           </div>

@@ -28,7 +28,7 @@
           <h4 class="norwester font-white"><i class="fa fa-filter"></i> &nbsp; Filters</h4>
         </div>
         <div class="uk-inline uk-float-right uk-margin-small">
-          <h5 class="font-white tight"><a class="font-white" v-on:click="clearFilters">Clear Filters</a> &nbsp;|&nbsp; <a class="font-white" v-on:click="exportCsv()">Export</a></h5>
+          <h5 class="font-white tight"><a class="font-white" v-on:click="clearFilters">Clear Filters</a> &nbsp;|&nbsp; <a class="font-white" v-on:click="exportCsv">Export</a></h5>
         </div>
       </div>
 
@@ -623,9 +623,10 @@
           })
           .filter(function(user) {
             return self.searchGroups ? user.groups.some(function(group) { return group.group_name == self.searchGroups; }) : true;
+          })
+          .filter(function(user) {
+            return self.searchAddress ? (user.address_line_1 + ' ' + user.address_line_2).toLowerCase().indexOf(self.searchAddress.toLowerCase()) !== -1 : true;
           });
-
-          // todo: address filter
         },
         setSelectedUser: function(user) {
           this.selectedUser = user;

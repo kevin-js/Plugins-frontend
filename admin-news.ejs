@@ -114,7 +114,7 @@
 
   <div class="uk-card uk-card-default uk-margin-right uk-margin-left">
     <div class="uk-card-header container-top uk-clearfix">
-      <p class="font-white float-left uk-inline"> Showing <span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.floor( filteredNews.length, pageNumber * pageSize) }}</span> of <span id="table_total">{{ news.length }}</span></p>
+      <p class="font-white float-left uk-inline"> Showing <span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.floor( filteredNews.length, pageNumber * pageSize) }}</span> of <span id="table_total">{{ filteredNews.length }}</span></p>
 
       <div class="uk-float-right uk-visible@m">
         <select class="uk-select border-charcoal2 uk-inline uk-width-small" v-model="pageSize">
@@ -145,35 +145,35 @@
           <tbody>
             <tr v-for="item in displayNews">
               <td class="table-border border-none font-small">
-                08/01/2019
+                {{ moment(item.createdAt).format('MM-DD-YYYY') }}
               </td>
 
               <td class="table-border border-none font-small">
-              - -
+              {{ moment(item.publish_date).format('MM-DD-YYYY') || '--' }}
               </td>
 
               <td class="table-border border-none font-small">
-              <span>Subject Line Number One (Ex of a long subject)</span>
+              <span>{{ item.headline || '--' }}</span>
               </td>
 
               <td class="table-border border-none font-small">
-                <p>Announcement</p>
+                <p>{{ item.item_type }}</p>
               </td>
 
               <td class="table-border border-none font-small">
-                <p>Draft</p>
+                <p>{{ item.status }}</p>
               </td>
 
               <td class="table-border border-none font-small uk-text-center ">
-                <p id="opens">-</p>
+                <p id="opens">{{ item.view_count }}</p>
               </td>
 
               <td class="table-border border-none font-small uk-text-center ">
-                <p id="clicks">-</p>
+                <p id="clicks">{{ item.click_count }}</p>
               </td>
 
               <td class="table-border border-none font-small uk-text-center ">
-                <p id="bounces">-</p>
+                <p id="bounces">{{ item.bounce_count }}</p>
               </td>
 
               <td class="uk-text-right">
@@ -191,7 +191,7 @@
             <li>
               <div>
                 <select class="uk-select border-charcoal2" v-model="pageNumber">
-                  <option v-for="key in Array(pageCount).keys()">{{ key }}</option>
+                  <option v-for="key in Array(pageCount).keys()">{{ key + 1 }}</option>
                 </select>
               </div>
             </li>
@@ -364,7 +364,7 @@
                   <h4 class="norwester font-white"><i class="fa fa-filter"></i> &nbsp; Filters</h4>
                   </div>
                   <div class="uk-inline uk-float-right uk-margin-small">
-                  <h5 class="font-white tight"><a href="#" class="font-white">Clear Filters</a> &nbsp;|&nbsp; <a href="#" class="font-white">Export</a></h5>
+                  <h5 class="font-white tight"><a class="font-white">Clear Filters</a>
                 </div>
               </div>
               <div class="uk-card-body white uk-margin-remove">
@@ -1035,17 +1035,109 @@
           var self = this;
           this.filteredNews = this.news
             .filter(function(newsItem) {
-              return self.searchSubject ? newsItem.headline.toLowerCase().indexOf(self.searchSubject.toLowerCase()) !== -1 : true;
+              try {
+                return self.searchDateCreatedStart && self.searchDateCreatedEnd ? (newsItem.createdAt >= self.searchDateCreatedStart && newsItem.createdAt <= self.searchDateCreatedEnd) : true;
+              } catch {
+                return false;
+              }
+            })
+            .filter(function(newsItem) {
+              try {
+                return self.searchDateSentStart && self.searchDateSentEnd ? (newsItem.publish_date >= self.searchDateSentStart && newsItem.publish_date <= self.searchDateSentEnd) : true;
+              } catch {
+                return false;
+              }
+            })
+            .filter(function(newsItem) {
+              try {
+                return self.searchSubject ? newsItem.headline.toLowerCase().indexOf(self.searchSubject.toLowerCase()) !== -1 : true;
+              } catch {
+                return false;
+              }
             })
             .filter(function(newsItem) {
               return self.searchType ? newsItem.item_type.toLowerCase().indexOf(self.searchType.toLowerCase()) !== -1 : true;
             })
             .filter(function(newsItem) {
-              return true;
+              return self.searchStatus ? newsItem.status.toLowerCase().indexOf(self.searchStatus.toLowerCase()) !== -1 : true;
             });
+          console.log(this.filteredNews);
         },
         exportData: function() {
-          alert('todo');
+          function convertToCSV(objArray) {
+            var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+            var str = '';
+
+            for (var i = 0; i < array.length; i++) {
+              var line = '';
+              for (var index in array[i]) {
+                if (line != '') line += ','
+
+                line += array[i][index];
+              }
+
+              str += line + '\r\n';
+            }
+
+            return str;
+          }
+
+          function exportCSVFile(headers, items, fileTitle) {
+            if (headers) {
+              items.unshift(headers);
+            }
+
+            // Convert Object to JSON
+            var jsonObject = JSON.stringify(items);
+            var csv = convertToCSV(jsonObject);
+            var exportedFilename = fileTitle + '.csv' || 'export.csv';
+            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            
+            if (navigator.msSaveBlob) { // IE 10+
+              navigator.msSaveBlob(blob, exportedFilename);
+            } else {
+              var link = document.createElement("a");
+              if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", exportedFilename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }
+            }
+          }
+
+          var headers = {
+            headline: 'headline',
+            content: 'content',
+            item_type: 'item_type',
+            view_count: 'view_count',
+            click_count: 'click_count',
+            bounce_count: 'bounce_count',
+            publish_date: 'publish_date',
+            status: 'status'
+          };
+
+          var formattedNews = [];
+
+          this.filteredNews.forEach(function(newsItem) {
+            formattedNews.push({
+              headline: newsItem.headline,
+              content: newsItem.content,
+              item_type: newsItem.item_type,
+              view_count: newsItem.view_count,
+              click_count: newsItem.click_count,
+              bounce_count: newsItem.bounce_count,
+              publish_date: newsItem.publish_date,
+              status: newsItem.status
+            });
+          });
+
+          var downloadedFilename = 'news-items';
+          exportCSVFile(headers, formattedNews, downloadedFilename);
         }
       }
     });
