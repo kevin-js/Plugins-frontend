@@ -96,12 +96,12 @@
             <h4 class="norwester font-white">Membership</h4>
         </div>
         <div class="uk-card-body white">
-          <span class="profile-label uk-float-left">Type</span> <a class="uk-float-right" href="/membership-types">View Benefits &nbsp;<i class="fa fa-external-link"></i></a>
+          <span class="profile-label uk-float-left">Type</span> <a class="uk-float-right" href="/membership-options">View Benefits &nbsp;<i class="fa fa-external-link"></i></a>
           <br>
           <span id="nickname" class="profile-field">
             <span uk-icon="check"></span> &nbsp;<% if (user.membership && user.membership.membership_type === 'lifetime_50_plus') { %> Lifetime <% } else if (user.membership && user.membership.membership_type) { %><%= user.membership.membership_type.charAt(0).toUpperCase() + user.membership.membership_type.slice(1) %><% } %>
           </span>
-            <a href="/membership-options">&nbsp;(Edit)</a>
+            <a href="/membership-types">&nbsp;(Edit)</a>
             <br><br>
           <% if (user.membership && user.membership.membership_type !== 'free') { %>
           <span class="profile-label">Payment Method</span><br>
