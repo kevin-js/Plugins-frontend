@@ -54,7 +54,13 @@
               center: 'prev,next today'
             },
 
-            events: data
+            events: data,
+            eventClick: function(info) {
+              info.jsEvent.preventDefault();
+              if (info.event.id) {
+                window.location.href = '/event-details?event_id=' + info.event.id;
+              }
+            }
             });
 
             calendar.render();

@@ -7,455 +7,282 @@
 <body>
   <%- include('top-navigation'); %>
 
-      <div class="uk-margin-left">
-      <a href="event_details.html"> <span uk-icon="arrow-left"></span>Back to Event Details</a>
-      </div><br>
+  <div class="uk-margin-left">
+    <a onclick="window.history.back()"> <span uk-icon="arrow-left"></span>Back to Event Details</a>
+  </div>
+  <br>
 
-      <!-- Success Alert  -->
-      <div class="uk-margin uk-margin-right uk-margin-left uk-hidden">
-      <div class="uk-alert-success uk-width-1-1" uk-alert>
-          <button class="uk-alert-close" type="button" uk-close></button>
-          <h5>Your record was deleted successfully <span uk-icon="happy"></span></h5>
-      </div>
+  <!-- Success Alert  -->
+  <div class="uk-margin uk-margin-right uk-margin-left uk-hidden">
+    <div class="uk-alert-success uk-width-1-1" uk-alert>
+      <button class="uk-alert-close" type="button" uk-close></button>
+      <h5>Your record was deleted successfully <span uk-icon="happy"></span></h5>
     </div>
-    <!-- End Alert -->
+  </div>
+  <!-- End Alert -->
 
-          <div class="uk-margin-bottom uk-margin-left uk-margin-right uk-clearfix">
-          <h4 class="uk-position-relative uk-margin-right uk-float-left">Event Report > <span id="event_title">Event Title</span></h4>
-          <div class="uk-position-relative uk-float-right"><a class="uk-button button-lt uk-margin-right" href="#add_modal" uk-toggle>+ Add</a><a class="uk-button button-lt">Export</a></div>
+  <div id="app">
+    <div class="uk-margin-bottom uk-margin-left uk-margin-right uk-clearfix">
+      <h4 class="uk-position-relative uk-margin-right uk-float-left">Event Report > <span id="event_title">Event Title</span></h4>
+      <div class="uk-position-relative uk-float-right"><a class="uk-button button-lt uk-margin-right" href="#add_modal" uk-toggle>+ Add</a><a class="uk-button button-lt" v-on:click="exportCsv">Export</a></div>
+    </div>
+
+    <div class="uk-card uk-card-default uk-margin-right uk-margin-left">
+      <div class="uk-card-header container-top uk-clearfix">
+        <p class="font-white float-left uk-inline"> Showing <span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.floor( attendees.length, pageNumber * pageSize) }}</span> of <span id="table_total">{{ attendees.length }}</span></p>
+
+        <div class="uk-float-right uk-visible@m">
+          <select class="uk-select border-charcoal2 uk-inline uk-width-small" v-model="pageSize">
+            <option>10</option>
+            <option>50</option>
+            <option>100</option>
+          </select>
+          <span class="font-white">&nbsp;per page</span>
         </div>
-
-          <div class="uk-card uk-card-default uk-margin-right uk-margin-left">
-            <div class="uk-card-header container-top uk-clearfix">
-              <p class="font-white float-left uk-inline"> Showing <span id="table_start">1</span> - <span id="table_end">10</span> of <span id="table_total">187</span></p>
-
-              <div class="uk-float-right uk-visible@m">
-                <select class="uk-select border-charcoal2 uk-inline uk-width-small">
-                    <option>10 per page</option>
-                    <option>50 per page</option>
-                    <option>100 per Page </option>
-                </select>
-            </div>
-          </div>
-              <div class="uk-overflow-auto uk-height-xxlarge">
-                <table class="uk-table uk-table-small uk-table-middle uk-margin-remove">
-                  <thead class="uk-card-header charcoal">
-                    <tr>
-                      <th class="uk-text-nowrap font-white border-none">Name</th>
-                      <th class="uk-text-nowrap font-white border-none">Email</th>
-                      <th class="font-white border-none">Home Phone<br>Cell Phone</th>
-                      <th class="uk-text-nowrap font-white border-none">Address</th>
-                      <th class="uk-table-shrink uk-text-nowrap font-white border-none">Signed Up</th>
-                      <th class="uk-table-shrink uk-text-nowrap font-white border-none">Paid &nbsp;<span uk-icon="info" uk-tooltip="title: Checkmark = Person Paid, C = Person was Comp'd, Empty = Person has NOT Paid"></span></th>
-                      <th class="font-white border-none"></th>
-                    </tr>
-                </thead>
-
-              <div class="uk-card-body white uk-padding-remove">
-
-                  <tbody>
-                    <tr>
-                      <td class="table-border border-none font-small">
-                        Thelma Hardstark
-                      </td>
-
-                    <td class="table-border border-none font-small">
-                    thardstark@gmail.com
-                    </td>
-
-                    <td class="table-border border-none font-small">
-                    H: <span id="home_phone">(812) 999-8888</span><br>
-                    C: <span id="mobile_phone">(502) 999-8888</span>
-                    </td>
-
-                    <td class="table-border border-none font-small">
-                    123 E Main Street, Apt B, Louisville, KY 40302
-                    </td>
-
-                    <td class="table-border border-none font-small">
-                    <span uk-icon="icon: check; ratio: 2"></span>
-                    </td>
-
-                    <td class="table-border border-none font-small uk-text-center ">
-                    <span uk-icon="icon: check; ratio: 2"></span>
-                    </td>
-                    <td class="table-border border-none font-small uk-text-center ">
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="table-border border-none font-small">
-                      Thelma Hardstark
-                    </td>
-
-                  <td class="table-border border-none font-small">
-                  thardstark@gmail.com
-                  </td>
-
-                  <td class="table-border border-none font-small">
-                  H: <span id="home_phone">(812) 999-8888</span><br>
-                  C: <span id="mobile_phone">(502) 999-8888</span>
-                  </td>
-
-                  <td class="table-border border-none font-small">
-                  123 E Main Street, Apt B, Louisville, KY 40302
-                  </td>
-
-                  <td class="table-border border-none font-small">
-                  <span uk-icon="icon: check; ratio: 2"></span>
-                  </td>
-
-                  <td class="table-border border-none font-small uk-text-center ">
-                  </td>
-
-                  <td class="table-border border-none font-small uk-text-center ">
-                  <a href="" class="uk-icon-link" uk-icon="icon: pencil; ratio: 2" uk-tooltip="title: Select this button to comp the person's ticket"></a>
-                  </td>
-
-                </tr>
-                <tr>
-                  <td class="table-border border-none font-small">
-                    Thelma Hardstark
-                  </td>
-
-                <td class="table-border border-none font-small">
-                thardstark@gmail.com
-                </td>
-
-                <td class="table-border border-none font-small">
-                H: <span id="home_phone">(812) 999-8888</span><br>
-                C: <span id="mobile_phone">(502) 999-8888</span>
-                </td>
-
-                <td class="table-border border-none font-small">
-                123 E Main Street, Apt B, Louisville, KY 40302
-                </td>
-
-                <td class="table-border border-none font-small">
-                <span uk-icon="icon: check; ratio: 2"></span>
-                </td>
-
-                <td class="table-border border-none font-small uk-text-center ">
-                <span uk-icon="icon: check; ratio: 2"></span>
-                </td>
-                <td class="table-border border-none font-small uk-text-center ">
-                </td>
-              </tr>
+      </div>
+        <div class="uk-overflow-auto uk-height-xxlarge">
+          <table class="uk-table uk-table-small uk-table-middle uk-margin-remove">
+            <thead class="uk-card-header charcoal">
               <tr>
+                <th class="uk-text-nowrap font-white border-none">Name</th>
+                <th class="uk-text-nowrap font-white border-none">Email</th>
+                <th class="font-white border-none">Home Phone<br>Cell Phone</th>
+                <th class="uk-text-nowrap font-white border-none">Address</th>
+                <th class="uk-table-shrink uk-text-nowrap font-white border-none">Signed Up</th>
+                <th class="uk-table-shrink uk-text-nowrap font-white border-none">Paid &nbsp;<span uk-icon="info" uk-tooltip="title: Checkmark = Person Paid, C = Person was Comp'd, Empty = Person has NOT Paid"></span></th>
+                <th class="font-white border-none"></th>
+              </tr>
+            </thead>
+
+            <div class="uk-card-body white uk-padding-remove">
+
+            <tbody>
+              <tr v-for="attendee in displayAttendees">
+                <td class="table-border border-none font-small">{{ attendee.user.name || '--' }}</td>
+
+                <td class="table-border border-none font-small">{{ attendee.user.email || '--' }}</td>
+
                 <td class="table-border border-none font-small">
-                  Thelma Hardstark
+                H: <span id="home_phone">{{ attendee.user.home_phone || '--' }}</span><br>
+                C: <span id="mobile_phone">{{ attendee.user.cell_phone || '--' }}</span>
                 </td>
 
-              <td class="table-border border-none font-small">
-              thardstark@gmail.com
-              </td>
+                <td class="table-border border-none font-small">
+                {{ [attendee.user.address_line_1, attendee.user.address_line_2, attendee.city, attendee.user.state, attendee.user.zip_code].filter(function(e) { return e; }).join(' ') || '--' }}
+                </td>
 
-              <td class="table-border border-none font-small">
-              H: <span id="home_phone">(812) 999-8888</span><br>
-              C: <span id="mobile_phone">(502) 999-8888</span>
-              </td>
+                <td class="table-border border-none font-small">
+                <span uk-icon="icon: check; ratio: 2"></span>
+                </td>
 
-              <td class="table-border border-none font-small">
-              123 E Main Street, Apt B, Louisville, KY 40302
-              </td>
-
-              <td class="table-border border-none font-small">
-              <span uk-icon="icon: check; ratio: 2"></span>
-              </td>
-
-              <td class="table-border border-none font-small uk-text-center ">
-              <h3 class="font-slate">C</h3>
-              </td>
-
-              <td class="table-border border-none font-small uk-text-center ">
-              </td>
-
-            </tr>
-            <tr>
-              <td class="table-border border-none font-small">
-                Thelma Hardstark
-              </td>
-
-            <td class="table-border border-none font-small">
-            thardstark@gmail.com
-            </td>
-
-            <td class="table-border border-none font-small">
-            H: <span id="home_phone">(812) 999-8888</span><br>
-            C: <span id="mobile_phone">(502) 999-8888</span>
-            </td>
-
-            <td class="table-border border-none font-small">
-            123 E Main Street, Apt B, Louisville, KY 40302
-            </td>
-
-            <td class="table-border border-none font-small">
-            <span uk-icon="icon: check; ratio: 2"></span>
-            </td>
-
-            <td class="table-border border-none font-small uk-text-center ">
-            <span uk-icon="icon: check; ratio: 2"></span>
-            </td>
-            <td class="table-border border-none font-small uk-text-center ">
-            </td>
-          </tr>
-          <tr>
-            <td class="table-border border-none font-small">
-              Thelma Hardstark
-            </td>
-
-          <td class="table-border border-none font-small">
-          thardstark@gmail.com
-          </td>
-
-          <td class="table-border border-none font-small">
-          H: <span id="home_phone">(812) 999-8888</span><br>
-          C: <span id="mobile_phone">(502) 999-8888</span>
-          </td>
-
-          <td class="table-border border-none font-small">
-          123 E Main Street, Apt B, Louisville, KY 40302
-          </td>
-
-          <td class="table-border border-none font-small">
-          <span uk-icon="icon: check; ratio: 2"></span>
-          </td>
-
-          <td class="table-border border-none font-small uk-text-center ">
-          </td>
-
-          <td class="table-border border-none font-small uk-text-center ">
-          <a href="" class="uk-icon-link" uk-icon="icon: pencil; ratio: 2" uk-tooltip="title: Select this button to comp the person's ticket"></a>
-          </td>
-
-        </tr>
-        <tr>
-          <td class="table-border border-none font-small">
-            Thelma Hardstark
-          </td>
-
-        <td class="table-border border-none font-small">
-        thardstark@gmail.com
-        </td>
-
-        <td class="table-border border-none font-small">
-        H: <span id="home_phone">(812) 999-8888</span><br>
-        C: <span id="mobile_phone">(502) 999-8888</span>
-        </td>
-
-        <td class="table-border border-none font-small">
-        123 E Main Street, Apt B, Louisville, KY 40302
-        </td>
-
-        <td class="table-border border-none font-small">
-        <span uk-icon="icon: check; ratio: 2"></span>
-        </td>
-
-        <td class="table-border border-none font-small uk-text-center ">
-        <h3 class="font-slate">C</h3>
-        </td>
-        <td class="table-border border-none font-small uk-text-center ">
-        </td>
-      </tr>
-      <tr>
-        <td class="table-border border-none font-small">
-          Thelma Hardstark
-        </td>
-
-      <td class="table-border border-none font-small">
-      thardstark@gmail.com
-      </td>
-
-      <td class="table-border border-none font-small">
-      H: <span id="home_phone">(812) 999-8888</span><br>
-      C: <span id="mobile_phone">(502) 999-8888</span>
-      </td>
-
-      <td class="table-border border-none font-small">
-      123 E Main Street, Apt B, Louisville, KY 40302
-      </td>
-
-      <td class="table-border border-none font-small">
-      <span uk-icon="icon: check; ratio: 2"></span>
-      </td>
-
-      <td class="table-border border-none font-small uk-text-center ">
-      </td>
-
-      <td class="table-border border-none font-small uk-text-center ">
-      <a href="" class="uk-icon-link" uk-icon="icon: pencil; ratio: 2" uk-tooltip="title: Select this button to comp the person's ticket"></a>
-      </td>
-
-    </tr>
-    <tr>
-      <td class="table-border border-none font-small">
-        Thelma Hardstark
-      </td>
-
-    <td class="table-border border-none font-small">
-    thardstark@gmail.com
-    </td>
-
-    <td class="table-border border-none font-small">
-    H: <span id="home_phone">(812) 999-8888</span><br>
-    C: <span id="mobile_phone">(502) 999-8888</span>
-    </td>
-
-    <td class="table-border border-none font-small">
-    123 E Main Street, Apt B, Louisville, KY 40302
-    </td>
-
-    <td class="table-border border-none font-small">
-    <span uk-icon="icon: check; ratio: 2"></span>
-    </td>
-
-    <td class="table-border border-none font-small uk-text-center ">
-    <span uk-icon="icon: check; ratio: 2"></span>
-    </td>
-    <td class="table-border border-none font-small uk-text-center ">
-    </td>
-  </tr>
-  <tr>
-    <td class="table-border border-none font-small">
-      Thelma Hardstark
-    </td>
-
-  <td class="table-border border-none font-small">
-  thardstark@gmail.com
-  </td>
-
-  <td class="table-border border-none font-small">
-  H: <span id="home_phone">(812) 999-8888</span><br>
-  C: <span id="mobile_phone">(502) 999-8888</span>
-  </td>
-
-  <td class="table-border border-none font-small">
-  123 E Main Street, Apt B, Louisville, KY 40302
-  </td>
-
-  <td class="table-border border-none font-small">
-  <span uk-icon="icon: check; ratio: 2"></span>
-  </td>
-
-  <td class="table-border border-none font-small uk-text-center ">
-  </td>
-
-  <td class="table-border border-none font-small uk-text-center ">
-  <a href="" class="uk-icon-link" uk-icon="icon: pencil; ratio: 2" uk-tooltip="title: Select this button to comp the person's ticket"></a>
-  </td>
-
-</tr>
-                  </tbody>
-                </table>
-                <div class="uk-padding-small black">
-                <ul class="uk-pagination uk-flex-center uk-margin-remove">
-                <li><a href="#"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
-                <li><div>
-                    <select class="uk-select border-charcoal2">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                        <option>15</option>
-                        <option>16</option>
-                        <option>17</option>
-                        <option>18</option>
-                        <option>19</option>
-                    </select>
-                </div></li>
-                <li class="font-white uk-margin-small">of 19</li>
-                <li><a href="#"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
-              </ul>
-            </div>
+                <td class="table-border border-none font-small uk-text-center ">
+                <span uk-icon="icon: check; ratio: 2" v-if="attendee.paid"></span>
+                </td>
+                <td class="table-border border-none font-small uk-text-center ">
+                </td>
+              </tr>        
+            </tbody>
+          </table>
+          <div class="uk-padding-small black">
+          <ul class="uk-pagination uk-flex-center uk-margin-remove">
+          <li><a v-on:click="paginateLeft"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
+          <li><div>
+            <select class="uk-select border-charcoal2" v-model="pageNumber">
+              <option v-for="page in Array(pageCount).keys()">{{ page + 1 }}</option>
+            </select>
+          </div></li>
+          <li class="font-white uk-margin-small">of {{ pageCount }}</li>
+          <li><a v-on:click="paginateRight"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
+        </ul>
+      </div>
           </div>
         </div>
         </div>
-
+  </div>
   <div class="uk-margin-large"></div>
-
-
 
   <!--START Add Attendee Modal-->
   <div id="add_modal" uk-modal>
   <div class="uk-modal-dialog">
-      <button class="uk-modal-close-default" type="button" uk-close></button>
-      <div class="uk-modal-header fog">
-          <h2 class="uk-modal-title">Add an Attendee</h2>
-      </div>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <div class="uk-modal-header fog">
+      <h2 class="uk-modal-title">Add an Attendee</h2>
+    </div>
 
-      <div class="uk-modal-body" uk-overflow-auto>
-        <div class="uk-inline">
-        <label><input class="uk-checkbox" type="checkbox"> &nbsp; Comp Attendee's Ticket Fee</label>
-        </div>
+    <div class="uk-modal-body" uk-overflow-auto>
+      <div class="uk-inline">
+        <label><input class="uk-checkbox" type="checkbox" v-model="compFee"> &nbsp; Comp Attendee's Ticket Fee</label>
+      </div>
 
       <h6>Select an alumni from the list below to add them to the event.</h6>
 
       <div class="uk-card-body white border-charcoal uk-padding-remove uk-margin-remove">
-      <div class="charcoal border-charcoal2 uk-padding-small uk-width-1-1">
-            <div class="uk-form-controls uk-inline uk-margin-right uk-margin-bottom-small">
-              <span class="uk-form-icon" uk-icon="icon: search"></span>
-                <input class="uk-input border-charcoal2" type="text" placeholder="Search by User's Name">
-            </div>
+        <div class="charcoal border-charcoal2 uk-padding-small uk-width-1-1">
+          <div class="uk-form-controls uk-inline uk-margin-right uk-margin-bottom-small">
+            <span class="uk-form-icon" uk-icon="icon: search"></span>
+            <input class="uk-input border-charcoal2" type="text" placeholder="Search by User's Name" v-model="searchQuery">
           </div>
-      <table class="uk-table uk-table-small alumni-table uk-margin-remove">
-        <tbody>
-                <tr><td>Alumni # 1<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></span></td></tr>
-                <tr><td>Alumni # 2<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                <tr><td>Alumni # 3<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                <tr><td>Alumni # 4<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                <tr><td>Alumni # 5<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                <tr><td>Alumni # 6<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                <tr><td>Alumni # 7<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                <tr><td>Alumni # 8<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                <tr><td>Alumni # 9<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-                <tr><td>Alumni # 10<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></td></tr>
-        </tbody>
-    </table>
-    <div class="uk-padding-small black">
-    <ul class="uk-pagination uk-flex-center uk-margin-remove">
-    <li><a href="#"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
-    <li><div>
-        <select class="uk-select border-charcoal2">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-            <option>11</option>
-            <option>12</option>
-            <option>13</option>
-            <option>14</option>
-        </select>
-    </div></li>
-    <li class="font-white uk-margin-small">of 14</li>
-    <li><a href="#"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
-  </ul>
-  </div>
-  </div>
-      </div>
-
-      <div class="uk-modal-footer fog uk-text-left">
-          <button class="uk-button button-dk uk-modal-close" type="button">Add</button>
+        </div>
+        <table class="uk-table uk-table-small alumni-table uk-margin-remove">
+          <tbody>
+            <tr v-for="user in filteredUsers"><td v-bind:class="{ 'selected': user.id == selectedUser.id }" v-on:click="setSelectedUser(user)">{{ user.name }}<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></span></td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
+
+    <div class="uk-modal-footer fog uk-text-left">
+      <button class="uk-button button-dk" type="button" v-on:click="addAttendee">Add</button>
+    </div>
+  </div>
   </div>
   <!-- END Add Attendee Modal -->
 
   <%- include('footer'); %>
+  <script type="text/javascript">
+    var app = new Vue({
+      el: '#app',
+      data: {
+        pageNumber: 1,
+        pageSize: 10,
+        attendees: <%- JSON.stringify(event.attendees || []) %>
+      },
+      computed: {
+        pageCount: function() {
+          return Math.ceil(this.attendees.length / this.pageSize);
+        },
+        displayAttendees: function() {
+          return this.attendees;
+        }
+      },
+      methods: {
+        paginateLeft: function() {
+          if (this.pageNumber > 1) this.pageNumber--;
+        },
+        paginateRight: function() {
+          if (this.pageNumber < this.pageCount) this.pageNumber++;
+        },
+        exportCsv: function() {
+          function convertToCSV(objArray) {
+            var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+            var str = '';
 
+            for (var i = 0; i < array.length; i++) {
+              var line = '';
+              for (var index in array[i]) {
+                if (line != '') line += ','
+
+                line += array[i][index];
+              }
+
+              str += line + '\r\n';
+            }
+
+            return str;
+          }
+
+          function exportCSVFile(headers, items, fileTitle) {
+            if (headers) {
+              items.unshift(headers);
+            }
+
+            // Convert Object to JSON
+            var jsonObject = JSON.stringify(items);
+            var csv = convertToCSV(jsonObject);
+            var exportedFilename = fileTitle + '.csv' || 'export.csv';
+            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            
+            if (navigator.msSaveBlob) { // IE 10+
+              navigator.msSaveBlob(blob, exportedFilename);
+            } else {
+              var link = document.createElement("a");
+              if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", exportedFilename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }
+            }
+          }
+
+          var headers = {
+            name: 'name',
+            email: 'email',
+            home_phone: 'home_phone',
+            cell_phone: 'cell_phone',
+            address_line_1: 'address_line_1',
+            address_line_2: 'address_line_2',
+            city: 'city',
+            state: 'state',
+            zip_code: 'zip_code',
+            paid: 'paid'
+          };
+
+          var formattedAttendees = [];
+
+          this.attendees.forEach(function(attendee) {
+            formattedAttendees.push({
+              name: attendee.user.name,
+              email: attendee.user.email,
+              home_phone: attendee.user.home_phone,
+              cell_phone: attendee.user.cell_phone,
+              address_line_1: attendee.user.address_line_1,
+              address_line_2: attendee.user.address_line_2,
+              city: attendee.user.city,
+              state: attendee.user.state,
+              zip_code: attendee.user.zip_code,
+              paid: attendee.paid
+            });
+          });
+
+          var downloadedFilename = 'attendees';
+          exportCSVFile(headers, formattedAttendees, downloadedFilename);
+        }
+      }
+    });
+
+    var attendeeModal = new Vue({
+      el: '#add_modal',
+      data: {
+        users: <%- JSON.stringify(users || []) %>,
+        searchQuery: '',
+        selectedUser: <%- JSON.stringify({}) %>,
+        compFee: false
+      },
+      computed: {
+        filteredUsers: function() {
+          var self = this;
+          return this.users.filter(function(user) {
+            return user.name ? user.name.toLowerCase().indexOf(self.searchQuery.toLowerCase()) !== -1 : false;
+          });
+        }
+      },
+      methods: {
+        addAttendee: function() {
+          var errMsg;
+          if (!(this.selectedUser && this.selectedUser.id)) alert('No user selected');
+          else {
+            axios.post('/api/add-event-attendee', {
+              eventId: <%= event.id %>,
+              userId: this.selectedUser.id,
+              compFee: this.compFee
+            }).then(function(data) {
+              UIkit.modal('#add_modal').hide();
+              alert('Successfully added user');
+            }).catch(function(err) {
+              alert('There was an issue processing your request. Please try again');
+            });  
+          }
+        },
+        setSelectedUser: function(user) {
+          this.selectedUser = user;
+        }
+      }
+    });
+  </script>
 </body>
 </html>

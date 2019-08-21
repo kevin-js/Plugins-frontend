@@ -59,7 +59,13 @@
         center: 'prev,next today',
       },
 
-      events: <%- JSON.stringify(events) %>
+      events: <%- JSON.stringify(events) %>,
+      eventClick: function(info) {
+          info.jsEvent.preventDefault();
+          if (info.event.id) {
+            window.location.href = '/event-details?event_id=' + info.event.id;
+          }
+        }
       });
 
       calendar.render();
@@ -80,6 +86,12 @@
           <div class="uk-margin"></div>
           <label class="uk-form-label" for="form-stacked-text">Event Description</label><br>
           <textarea class="uk-textarea" rows="4" v-model="newEventDescription"></textarea>
+          <div class="uk-margin"></div>
+          <label class="uk-form-label" for="form-stacked-text" Required>*Location</label><br>
+          <div class="uk-inline uk-width-1-1">
+            <span class="uk-form-icon uk-form-icon" uk-icon="icon: location"></span>
+            <input type="text" id="form-stacked-text" class="uk-input" v-model="newEventLocation">
+          </div>
           <div class="uk-grid-small uk-child-width-expand uk-margin-medium" uk-grid>
             <div>
               <label class="uk-form-label" for="form-stacked-text">Start Date</label><br>
@@ -148,6 +160,7 @@
       data: {
         newEventTitle: '',
         newEventDescription: '',
+        newEventLocation: '',
         newEventStartDate: null,
         newEventStartTime: null,
         newEventEndDate: null,
@@ -159,6 +172,7 @@
 
           if (!this.newEventTitle) errMsg += 'Event Title cannot be empty\n';
           if (!this.newEventDescription) errMsg += 'Event Description cannot be empty\n';
+          if (!this.newEventLocation) errMsg += 'Event Location cannot be empty\n';
           if (!this.newEventStartTime || !this.newEventStartDate) errMsg += 'Event must have a start time\n';
           if (!this.newEventEndTime || !this.newEventEndDate) errMsg += 'Event must have an end time\n';
 
@@ -168,6 +182,7 @@
             axios.post('/api/event', {
               title: this.newEventTitle,
               description: this.newEventDescription,
+              location: this.newEventLocation,
               start: moment(this.newEventStartDate + ' ' + this.newEventStartTime, 'YYYY-MM-DD HH:mm').tz(tz).toDate(),
               end: moment(this.newEventEndDate + ' ' + this.newEventEndTime, 'YYYY-MM-DD HH:mm').tz(tz).toDate()
             })
