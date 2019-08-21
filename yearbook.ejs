@@ -147,7 +147,7 @@
     <a style="text-decoration: none !important;" uk-toggle="target: #profile-preview" v-on:click="renderProfilePreview(user)">
     <div class="uk-card uk-card-default">
         <div class="uk-card-media-top uk-height-large uk-cover-container">
-            <img v-bind:src="'/api/photo/' + user.profilePhotoRef" uk-cover>
+            <img v-bind:src="user.profilePhotoRef ? '/api/photo/' + user.profilePhotoRef : '/profile_photo_placeholder.svg'" uk-cover>
         </div>
         <div class="uk-card-body">
           <div class="uk-card-badge gold font-white icon-padding" uk-tooltip="Hall of Fame Recipient" v-if="user.isHallOfFame"><i class="fa fa-trophy"></i></div>
@@ -214,7 +214,7 @@
     
     <div class="uk-width-1-1 uk-margin" v-if="selectedUser.isPublic">
         <div class="uk-cover-container uk-height-medium">
-          <img v-bind:src="'/api/photo/' + selectedUser.profilePhotoRef" uk-cover>
+          <img v-bind:src="selectedUser.profilePhotoRef ? '/api/photo/' + selectedUser.profilePhotoRef : '/profile_photo_placeholder.svg'" uk-cover>
         </div>
       <hr>
       <span class="profile-label">Email</span><br>

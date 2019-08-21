@@ -504,7 +504,7 @@
               <table class="uk-table uk-table-small uk-margin-remove">
                 <thead class="uk-card-header charcoal">
                   <tr>
-                    <th class="uk-table-shrink font-white border-none"><input class="uk-checkbox" type="checkbox" uk-tooltip="title: Select All"></th>
+                    <th class="uk-table-shrink font-white border-none"><input class="uk-checkbox" type="checkbox" uk-tooltip="title: Select All" v-on:click="selectAll"></th>
                     <th class="uk-text-nowrap font-white border-none">Name</th>
                     <th class="uk-table-shrink uk-text-nowrap font-white border-none">Grad Year</th>
                     <th class="uk-table-shrink uk-text-nowrap font-white border-none">Membership Type</th>
@@ -516,7 +516,7 @@
 
                 <tbody>
                   <tr v-for="user in displayUsers">
-                    <td><input class="uk-checkbox" type="checkbox"></td>
+                    <td><input v-bind:id="'user-' + user.id" class="uk-checkbox" type="checkbox" v-on:click="updateRecipientList(user)"></td>
                     <td><span id="alum_name">{{ user.name }}</span></td>
                     <td><span id="alum_grad_yr">{{ user.graduation_year || '--' }}</span></td>
                     <td>
@@ -553,7 +553,7 @@
 
             <div><a href="#modal-group-1" class="uk-button button-dk" uk-toggle>&#8249; Back</a></div>
             <div><button class="uk-button button-lt uk-modal-close" type="button">Cancel</button></div>
-            <div><button class="uk-button button-lt uk-float-right" type="button" v-on:click="createNewsItem"><span uk-icon="future"></span> &nbsp; Save</button></div>
+            <div><button class="uk-button button-lt uk-float-right" type="button" v-on:click="createNewsItemAndCloseModal"><span uk-icon="future"></span> &nbsp; Save</button></div>
             <div><a href="#modal-group-3" class="uk-button button-dk uk-float-right" uk-toggle>Next &#8250;</a></div>
 
           </div>
@@ -694,7 +694,7 @@
       <div class="uk-modal-footer">
         <div class="uk-grid uk-child-width-1-3" uk-grid>
           <div><button class="uk-button button-lt uk-modal-close" type="button">Cancel</button></div>
-          <div><button class="uk-button button-lt uk-float-right" type="button" v-on:click="createNewsItem"><span uk-icon="future"></span> &nbsp; Save</button></div>
+          <div><button class="uk-button button-lt uk-float-right" type="button" v-on:click="createNewsItemAndCloseModal"><span uk-icon="future"></span> &nbsp; Save</button></div>
           <div><a href="#modal-group-2" class="uk-button button-dk uk-float-right" uk-toggle>Next &#8250;</a></div>
         </div>
       </div>
@@ -732,12 +732,12 @@
           <h6 class="uk-margin-remove">Separate email addresses by commas ','</h6>
           <div class="uk-inline uk-width-1-1 uk-margin-small">
             <span class="uk-form-icon" uk-icon="icon: mail"></span>
-            <input class="uk-input border-charcoal2" type="text">
+            <input class="uk-input border-charcoal2" type="text" v-model="testEmailRecipients">
           </div>
-          <label class="uk-form-label">&nbsp;</label><button class="uk-button uk-button-primary" type="button">TEST</button>
+          <label class="uk-form-label">&nbsp;</label><button class="uk-button uk-button-primary" type="button" v-on:click="sendTestEmail">TEST</button>
           <hr class="border-slate" />
           <h4>Send Immediately</h4>
-          <button class="uk-button-large uk-button-danger uk-modal-close" type="button">SEND NOW</button>
+          <button class="uk-button-large uk-button-danger" type="button" v-on:click="sendEmail">SEND NOW</button>
           <hr class="border-slate" />
           <h4>Schedule for Later</h4>
 
@@ -746,30 +746,24 @@
               <h5>Date:</h5>
               <div class="uk-inline uk-width-auto">
                 <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
-                <input class="uk-input border-charcoal2" type="text" placeholder="mm/dd/yyyy" />
+                <input type="date" id="form-stacked-text" class="uk-input" v-model="emailSendDate">
               </div>
             </div>
             <div class="uk-inline uk-width-1-3">
               <h5>Time:</h5>
               <div class="uk-inline uk-width-small">
                 <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: clock"></span>
-                <input class="uk-input border-charcoal2" type="text" placeholder="HH:MM">
+                <input type="time" id="form-stacked-text" class="uk-input" v-model="emailSendTime">
               </div>
-              <label class="uk-form-label">&nbsp;</label>
-              <select class="uk-inline uk-width-small uk-select border-charcoal2">
-                <option>AM</option>
-                <option>PM</option>
-              </select>
             </div>
           </div>
-          <button class="uk-button-large uk-button-danger uk-modal-close uk-margin-top" type="button">SCHEDULE</button>
+          <button class="uk-button-large uk-button-danger uk-margin-top" type="button">SCHEDULE</button>
         </div>
         <div class="uk-modal-footer">
           <div class="uk-grid uk-child-width-1-4" uk-grid>
             <div><a href="#modal-group-2" class="uk-button button-dk" uk-toggle>&#8249; Back</a></div>
             <div><button class="uk-button button-lt uk-modal-close" type="button">Cancel</button></div>
-            <div><button class="uk-button button-lt uk-float-right" type="button" v-on:click="createNewsItem"><span uk-icon="future"></span> &nbsp; Save</button></div>
-            <div><button class="uk-button uk-button-default uk-float-right" type="button" disabled><a>Next &#8250;</a></div>
+            <div><button class="uk-button button-lt uk-float-right" type="button" v-on:click="createNewsItemAndCloseModal"><span uk-icon="future"></span> &nbsp; Save</button></div>
           </div>
         </div>
       </div>
@@ -952,10 +946,13 @@
         userRoleOptions: <%- JSON.stringify(roles) %>,
         users: <%- JSON.stringify(userList) %>,
         filteredUsers: <%- JSON.stringify(userList) %>,
-        newsType: 'Draft',
+        newsType: 'Email',
         newsHeader: '',
         newsBody: '',
-        newsContent: []
+        newsRecipients: [],
+        testEmailRecipients: '',
+        emailSendDate: null,
+        emailSendTime: null
       },
       computed: {
         displayUsers: function() {
@@ -1031,72 +1028,84 @@
           });
         },
         createNewsItem: function() {
-          var errMsg = '';
-          if (!this.newsHeader) errMsg += 'You must enter a headline for your broadcast\n';
-          if (!this.newsBody) errMsg += 'You must enter a message for your broadcast';
-          if (errMsg) {
-            alert(errMsg);
-            return;
-          } else {
-            var payload = new FormData();
-            payload.append('type', this.newsType);
-            payload.append('headline', this.newsHeader);
-            payload.append('message', this.newsBody);
+          var self = this;
+          return new Promise(function(resolve, reject) {
+            var errMsg = '';
+            if (!self.newsHeader) errMsg += 'You must enter a headline for your broadcast\n';
+            if (!self.newsBody) errMsg += 'You must enter a message for your broadcast';
+            if (errMsg) {
+              alert(errMsg);
+              reject();
+            } else {
+              var payload = new FormData();
+              payload.append('type', self.newsType);
+              payload.append('headline', self.newsHeader);
+              payload.append('message', self.newsBody);
 
-            if (this.newsType === 'Announcement') {
-              payload.content = [];
-              var imageInput = $('#announcement-image').get(0);
-              if (imageInput.files && imageInput.files[0]) {
-                payload.append('image', imageInput.files[0]);
-              }
-              
-            } else if (this.newsType === 'Newsletter') {
-              payload.content = [];
+              if (self.newsType === 'Announcement') {
+                payload.content = [];
+                var imageInput = $('#announcement-image').get(0);
+                if (imageInput.files && imageInput.files[0]) {
+                  payload.append('image', imageInput.files[0]);
+                }
+                
+              } else if (self.newsType === 'Newsletter') {
+                payload.content = [];
 
-              var firstImageInput = $('#newsletter-first-image').get(0);
-              if (firstImageInput.files && firstImageInput.files[0]) {
-                payload.append('image', firstImageInput.files[0]);
-                payload.append('firstImageTitle', $('#newsletter-first-item-title').val());
-                payload.append('firstImageMessage', $('#newsletter-first-item-message').val());
+                var firstImageInput = $('#newsletter-first-image').get(0);
+                if (firstImageInput.files && firstImageInput.files[0]) {
+                  payload.append('image', firstImageInput.files[0]);
+                  payload.append('firstImageTitle', $('#newsletter-first-item-title').val());
+                  payload.append('firstImageMessage', $('#newsletter-first-item-message').val());
+                }
+
+                var secondImageInput = $('#newsletter-second-image').get(0);
+                if (secondImageInput.files && secondImageInput.files[0]) {
+                  payload.append('image', secondImageInput.files[0]);
+                  payload.append('secondImageTitle', $('#newsletter-second-item-title').val());
+                  payload.append('secondImageMessage', $('#newsletter-second-item-message').val());
+                }
+
+                var thirdImageInput = $('#newsletter-third-image').get(0);
+                if (thirdImageInput.files && thirdImageInput.files[0]) {
+                  payload.append('image', thirdImageInput.files[0]);
+                  payload.append('thirdImageTitle', $('#newsletter-third-item-title').val());
+                  payload.append('thirdImageMessage', $('#newsletter-third-item-message').val());
+                }
+
+                var fourthImageInput = $('#newsletter-fourth-image').get(0);
+                if (fourthImageInput.files && fourthImageInput.files[0]) {
+                  payload.append('image', fourthImageInput.files[0]);
+                  payload.append('fourthImageTitle', $('#newsletter-fourth-item-title').val());
+                  payload.append('fourthImageMessage', $('#newsletter-fourth-item-message').val());
+                }
               }
 
-              var secondImageInput = $('#newsletter-second-image').get(0);
-              if (secondImageInput.files && secondImageInput.files[0]) {
-                payload.append('image', secondImageInput.files[0]);
-                payload.append('secondImageTitle', $('#newsletter-second-item-title').val());
-                payload.append('secondImageMessage', $('#newsletter-second-item-message').val());
-              }
+              if (self.newsRecipients) { payload.append('recipientList', JSON.stringify(self.newsRecipients)); }
 
-              var thirdImageInput = $('#newsletter-third-image').get(0);
-              if (thirdImageInput.files && thirdImageInput.files[0]) {
-                payload.append('image', thirdImageInput.files[0]);
-                payload.append('thirdImageTitle', $('#newsletter-third-item-title').val());
-                payload.append('thirdImageMessage', $('#newsletter-third-item-message').val());
-              }
-
-              var fourthImageInput = $('#newsletter-fourth-image').get(0);
-              if (fourthImageInput.files && fourthImageInput.files[0]) {
-                payload.append('image', fourthImageInput.files[0]);
-                payload.append('fourthImageTitle', $('#newsletter-fourth-item-title').val());
-                payload.append('fourthImageMessage', $('#newsletter-fourth-item-message').val());
-              }
+              axios.post('/api/news-item', payload, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              })
+              .then(function(data) {
+                resolve(data);
+              })
+              .catch(function(err) {
+                reject(err);
+              });
             }
-
-            axios.post('/api/news-item', payload, {
-              headers: {
-                'Content-Type': 'multipart/form-data'
-              }
-            })
-            .then(function(data) {
-              alert('Successfully saved news');
-              UIkit.modal('#modal-group-1').hide();
-              UIkit.modal('#modal-group-2').hide();
-              UIkit.modal('#modal-group-3').hide();
-            })
-            .catch(function(err) {
-              alert('There was an issue processing your request. Please try again');
-            });
-          }
+          });
+        },
+        createNewsItemAndCloseModal: function() {
+          this.createNewsItem().then(function() {
+            alert('Successfully saved news');
+            UIkit.modal('#modal-group-1').hide();
+            UIkit.modal('#modal-group-2').hide();
+            UIkit.modal('#modal-group-3').hide();
+          }).catch(function() {
+            alert('There was an issue processing your request. Please try again');
+          });
         },
         userClearFilters: function() {
           this.userSearchName = '';
@@ -1147,6 +1156,49 @@
           } else {
             console.log('FileReader not supported in this browser.');
           }
+        },
+        updateRecipientList: function(user) {
+          this.newsRecipients.includes(user) ? this.newsRecipients.splice(this.newsRecipients.indexOf(user)) : this.newsRecipients.push(user);
+        },
+        selectAll: function() {
+          this.displayUsers.forEach(function(user) {
+            $('#user-' + user.id).click();
+          })
+        },
+        sendTestEmail: function() {
+          if (!this.testEmailRecipients) alert('No recipients specified');
+          else {
+            var self = this;
+            this.createNewsItem().then(function(res) {
+              axios.post('/api/send-test-email', {
+                recipients: self.testEmailRecipients.split(','),
+                news_item_id: res.data.id
+              }).then(function(data) {
+                alert('A test email was sent to the specified recipient list.');
+              }).catch(function(err) {
+                alert('There was an issue processing your request. Please try again');
+              });
+            }).catch(function() {
+              alert('There was an issue processing your request. Please try again');
+            });
+          }
+        },
+        sendEmail: function() {
+          this.createNewsItem().then(function(res) {
+            var self = this;
+            axios.post('/api/send-email', {
+              news_item_id: res.data.id
+            }).then(function(data) {
+              alert('Your email was sent.');
+              UIkit.modal('#modal-group-1').hide();
+              UIkit.modal('#modal-group-2').hide();
+              UIkit.modal('#modal-group-3').hide();
+            }).catch(function(err) {
+              alert('There was an issue processing your request. Please try again');
+            });  
+          }).catch(function() {
+            alert('There was an issue processing your request. Please try again');
+          });
         }
       }
     });
