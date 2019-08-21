@@ -149,7 +149,7 @@
                 </td>
 
                 <td class="table-border border-none font-small">
-                {{ moment(item.publish_date).format('MM-DD-YYYY') || '--' }}
+                {{ moment(item.publish_date).isValid() ? moment(item.publish_date).format('MM-DD-YYYY') : '--' }}
                 </td>
 
                 <td class="table-border border-none font-small">
@@ -206,8 +206,9 @@
   <div class="uk-margin-large"></div>
 
   <div id="event-wizard">
-  <!-- STEP 1 -->
-  <div id="modal-group-1" class="uk-modal-full" uk-modal>
+
+  <!-- STEP 2 -->
+  <div id="modal-group-2" class="uk-modal-full" uk-modal>
     <div class="uk-modal-dialog">
       <button class="uk-modal-close-default" type="button" uk-close></button>
       <div class="uk-modal-header">
@@ -216,8 +217,8 @@
           <div class="uk-width-1-4"></div>
           <div class="uk-width-1-2">
             <div class="uk-grid-small" uk-grid>
-              <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">1</span></div>
-              <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle fog font-hint">2</span></div>
+              <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold ">1</span></div>
+              <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">2</span></div>
               <div><span class="uk-label uk-border-circle fog font-hint">3</span></div>
             </div>
           </div>
@@ -238,7 +239,7 @@
             </div>
           </div>
           <div class="uk-card-body white uk-margin-remove">
-            <form class="uk-form-stacked">
+          <form class="uk-form-stacked">
           <div class="uk-inline uk-margin-bottom uk-width-1-6@m">
             <label class="uk-form-label"> Name</label>
             <input class="uk-input border-charcoal2" type="text" v-model="userSearchName">
@@ -483,9 +484,9 @@
             <button class="uk-button button-lt" v-on:click="redoSearch" type="button">Apply Filters</button>
           </div>
         </form>
-          </div>
-
         </div>
+        </div>
+
           <div class="uk-card uk-card-default uk-margin-large uk-margin-right uk-margin-left">
             <div class="uk-card-header container-top uk-clearfix">
               <p class="font-white float-left uk-inline"> Showing <span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.floor( filteredUsers.length, pageNumber * pageSize) }}</span> of <span id="table_total">{{ filteredUsers.length }}</span></p>
@@ -507,7 +508,7 @@
                     <th class="uk-text-nowrap font-white border-none">Name</th>
                     <th class="uk-table-shrink uk-text-nowrap font-white border-none">Grad Year</th>
                     <th class="uk-table-shrink uk-text-nowrap font-white border-none">Membership Type</th>
-                    <th class="font-white border-none">Permissions</th>
+                    <th class="font-white border-none">Roles</th>
                   </tr>
                 </thead>
 
@@ -519,7 +520,7 @@
                     <td><span id="alum_name">{{ user.name }}</span></td>
                     <td><span id="alum_grad_yr">{{ user.graduation_year || '--' }}</span></td>
                     <td>
-                      <span v-if="user.membership.membership_type === 'Free'">Free</span>
+                      <span v-if="user.membership.membership_type === 'Free' || 'free'">Free</span>
                       <span v-else>Paid</span>
                     </td>
                     <td>
@@ -550,229 +551,233 @@
         <div class="uk-modal-footer uk-position-bottom">
           <div class="uk-grid uk-child-width-1-4" uk-grid>
 
-            <div><button class="uk-button uk-button-default" type="button" disabled>&#8249; Back</button></div>
+            <div><a href="#modal-group-1" class="uk-button button-dk" uk-toggle>&#8249; Back</a></div>
             <div><button class="uk-button button-lt uk-modal-close" type="button">Cancel</button></div>
             <div><button class="uk-button button-lt uk-float-right" type="button" v-on:click="createNewsItem"><span uk-icon="future"></span> &nbsp; Save</button></div>
-            <div><a href="#modal-group-2" class="uk-button button-dk uk-float-right" uk-toggle>Next &#8250;</a></div>
+            <div><a href="#modal-group-3" class="uk-button button-dk uk-float-right" uk-toggle>Next &#8250;</a></div>
 
           </div>
         </div>
       </div>
-    </div>
 
-  <!-- STEP 2 -->
-  <div id="modal-group-2" class="uk-modal-full" uk-modal>
-      <div class="uk-modal-dialog">
-          <button class="uk-modal-close-default" type="button" uk-close></button>
+  <!-- STEP 1 -->
+  <div id="modal-group-1" class="uk-modal-full" uk-modal>
+    <div class="uk-modal-dialog">
+      <button class="uk-modal-close-default" type="button" uk-close></button>
 
-          <div class="uk-modal-header">
-          <h3 class="norwester uk-margin-top uk-text-center">News Wizard </h3>
-          <div class="uk-grid" uk-grid>
-
+      <div class="uk-modal-header">
+        <h3 class="norwester uk-margin-top uk-text-center">News Wizard </h3>
+        <div class="uk-grid" uk-grid>
           <div class="uk-width-1-4"></div>
 
           <div class="uk-width-1-2">
-          <div class="uk-grid-small" uk-grid>
-            <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">1</span></div>
-            <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">2</span></div>
-            <div><span class="uk-label uk-border-circle fog font-hint">3</span></div>
-          </div>
+            <div class="uk-grid-small" uk-grid>
+              <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">1</span></div>
+              <div class="uk-width-expand"><span class="uk-label uk-border-circle fog font-hint">2</span></div>
+              <div><span class="uk-label uk-border-circle fog font-hint">3</span></div>
+            </div>
           </div>
           <div class="uk-width-1-4"></div>
-          </div>
         </div>
-
-          <div class="uk-modal-body" uk-overflow-auto>
-          <h4>2: Provide Email Content</h4>
-          <h5>Select a type:</h5>
-          <form class="uk-form-stacked uk-margin-bottom">
-          <div class="uk-form-controls">
-              <label><input class="uk-radio" type="radio" name="radio1" uk-toggle="target: .simple" checked> &nbsp; <strong>Simple </strong>(Text only)</label><br>
-              <label><input class="uk-radio" type="radio" name="radio1" uk-toggle="target: #announcement"> &nbsp; <strong>Announcement</strong> (One image with a header and body text)</label><br>
-              <label><input class="uk-radio" type="radio" name="radio1" uk-toggle="target: #news"> &nbsp; <strong>Newsletter</strong> (Multiple images with text)</label><br>
-          </div>
-          </form>
-
-          <!-- SIMPLE -->
-          <form class="uk-form-stacked uk-margin-large">
-            <h5>Title/Header</h5>
-            <input class="uk-input border-charcoal2 uk-margin-bottom" id="form-stacked-text" type="text" v-model="emailHeader">
-
-            <h5>Email Body</h5>
-            <textarea class="uk-textarea" rows="5" placeholder="Enter the primary text of the email here" v-model="emailBody"></textarea>
-          </form>
-
-          <!-- ANNOUNCEMENT -->
-          <form class="uk-form-stacked uk-margin-large simple" id="announcement" hidden>
-
-            <h5>Image</h5>
-            <div class="uk-width-1-1 uk-margin-bottom uk-margin-top">
-                <img src="http://placehold.it/600x300">
-            </div>
-            <div class="uk-margin" uk-margin>
-                <div uk-form-custom="target: true">
-                  <input type="file">
-                  <input class="uk-input uk-form-width-medium" type="text" placeholder="fern_creek_logo.png" disabled>
-                </div>
-                <button class="uk-button uk-button-default">Upload</button>
-            </div>
-          </form>
-
-          <!-- Newsletter-->
-          <form class="uk-form-stacked uk-margin announcement simple" id="news" hidden>
-
-            <hr>
-            <h6>The following are optional</h6>
-            <h5>Second Image</h5>
-            <div class="uk-width-1-1 uk-margin-bottom uk-margin-top">
-              <img src="http://placehold.it/75x75">
-            </div>
-            <div class="uk-margin" uk-margin>
-                <div uk-form-custom="target: true">
-                  <input type="file">
-                  <input class="uk-input uk-form-width-medium" type="text" placeholder="fern_creek_logo.png" disabled>
-                </div>
-                <button class="uk-button uk-button-default">Upload</button>
-            </div>
-            <h5>Second Title</h5>
-            <input class="uk-input border-charcoal2 uk-margin-bottom" id="form-stacked-text" type="text">
-            <h5>Second Set of Text</h5>
-            <textarea class="uk-textarea" rows="5" placeholder="Enter the primary text of the email here"></textarea>
-
-            <hr>
-            <h5>Third Image</h5>
-            <div class="uk-width-1-1 uk-margin-bottom uk-margin-top">
-                <img src="http://placehold.it/75x75">
-            </div>
-            <div class="uk-margin" uk-margin>
-                <div uk-form-custom="target: true">
-                    <input type="file">
-                    <input class="uk-input uk-form-width-medium" type="text" placeholder="fern_creek_logo.png" disabled>
-                </div>
-                <button class="uk-button uk-button-default">Upload</button>
-            </div>
-            <h5>Third Title</h5>
-            <input class="uk-input border-charcoal2 uk-margin-bottom" id="form-stacked-text" type="text">
-            <h5>Third Set of Text</h5>
-            <textarea class="uk-textarea" rows="5" placeholder="Enter the primary text of the email here"></textarea>
-
-            <hr>
-            <h5>Fourth Image</h5>
-            <div class="uk-width-1-1 uk-margin-bottom uk-margin-top">
-                <img src="http://placehold.it/75x75">
-            </div>
-            <div class="uk-margin" uk-margin>
-                <div uk-form-custom="target: true">
-                    <input type="file">
-                    <input class="uk-input uk-form-width-medium" type="text" placeholder="fern_creek_logo.png" disabled>
-                </div>
-                <button class="uk-button uk-button-default">Upload</button>
-            </div>
-            <h5>Fourth Title</h5>
-            <input class="uk-input border-charcoal2 uk-margin-bottom" id="form-stacked-text" type="text">
-            <h5>Fourth Set of Text</h5>
-            <textarea class="uk-textarea" rows="5" placeholder="Enter the primary text of the email here"></textarea>
-          </form>
-          </div>
-
-          <div class="uk-modal-footer">
-            <div class="uk-grid uk-child-width-1-4" uk-grid>
-
-            <div><a href="#modal-group-1" class="uk-button button-dk" uk-toggle>&#8249; Back</a></div>
-
-            <div><button class="uk-button button-lt uk-modal-close" type="button">Cancel</button></div>
-
-            <div><button class="uk-button button-lt uk-float-right" type="button" v-on:click="createNewsItem"><span uk-icon="future"></span> &nbsp; Save</button></div>
-
-            <div><a href="#modal-group-3" class="uk-button button-dk uk-float-right" uk-toggle>Next &#8250;</a></div>
-
-            </div>
-          </div>
       </div>
+
+      <div class="uk-modal-body" uk-overflow-auto>
+        <h4>2: Provide Email Content</h4>
+        <h5>Select a type:</h5>
+        <form class="uk-form-stacked uk-margin-bottom">
+          <div class="uk-form-controls">
+            <label><input class="uk-radio" type="radio" name="radio1" checked v-on:click="setNewsType('Email')"> &nbsp; <strong>Simple </strong>(Text only)</label><br>
+            <label><input class="uk-radio" type="radio" name="radio1" v-on:click="setNewsType('Announcement')"> &nbsp; <strong>Announcement</strong> (One image with a header and body text)</label><br>
+            <label><input class="uk-radio" type="radio" name="radio1" v-on:click="setNewsType('Newsletter')"> &nbsp; <strong>Newsletter</strong> (Multiple images with text)</label><br>
+          </div>
+        </form>
+
+        <!-- BASIC -->
+        <form class="uk-form-stacked uk-margin-large">
+          <h5>Title/Header</h5>
+          <input class="uk-input border-charcoal2 uk-margin-bottom" id="form-stacked-text" type="text" v-model="newsHeader">
+
+          <h5>Email Body</h5>
+          <textarea class="uk-textarea" rows="5" placeholder="Enter the primary text of the email here" v-model="newsBody"></textarea>
+        </form>
+
+        <!-- ANNOUNCEMENT -->
+        <form class="uk-form-stacked uk-margin-large uk-hidden simple" id="announcement">
+          <h5>Image</h5>
+          <div class="uk-width-1-1 uk-margin-bottom uk-margin-top">
+            <img id="announcement-img" class="announcement-img-preview" src="http://placehold.it/600x300">
+          </div>
+          <div class="uk-margin" uk-margin>
+            <div uk-form-custom="target: true">
+              <input type="file" id="announcement-image" name="announcement-image" accept="image/*" v-on:change="onImgChange('#announcement-image', '#announcement-img')">
+              <input class="uk-input uk-form-width-medium" type="text" disabled>
+              <button class="uk-button uk-button-default" type="button">Upload</button>
+            </div>
+            
+          </div>
+        </form>
+
+        <!-- Newsletter-->
+        <form class="uk-form-stacked uk-margin uk-hidden announcement simple" id="news">
+          <hr />
+          <h6>The following are optional</h6>
+
+          <h5>First Image</h5>
+          <div class="uk-width-1-1 uk-margin-bottom uk-margin-top">
+            <img id="newsletter-first-img" class="newsletter-img-preview" src="http://placehold.it/75x75">
+          </div>
+          <div class="uk-margin" uk-margin>
+            <div uk-form-custom="target: true">
+              <input type="file" id="newsletter-first-image" name="newsletter-first-image" accept="image/*" v-on:change="onImgChange('#newsletter-first-image', '#newsletter-first-img')">
+              <input class="uk-input uk-form-width-medium" type="text" disabled>
+              <button class="uk-button uk-button-default" type="button">Upload</button>
+            </div>
+          </div>
+          <h5>First Title</h5>
+          <input class="uk-input border-charcoal2 uk-margin-bottom" id="newsletter-first-item-title" type="text">
+          <h5>First Set of Text</h5>
+          <textarea id="newsletter-first-item-message" class="uk-textarea" rows="5" placeholder="Enter the primary text of the email here"></textarea>
+
+          <hr>
+          <h5>Second Image</h5>
+          <div class="uk-width-1-1 uk-margin-bottom uk-margin-top">
+            <img id="newsletter-second-img" class="newsletter-img-preview" src="http://placehold.it/75x75">
+          </div>
+          <div class="uk-margin" uk-margin>
+            <div uk-form-custom="target: true">
+              <input type="file" id="newsletter-second-image" name="newsletter-second-image" accept="image/*" v-on:change="onImgChange('#newsletter-second-image', '#newsletter-second-img')">
+              <input class="uk-input uk-form-width-medium" type="text" disabled>
+              <button class="uk-button uk-button-default" type="button">Upload</button>
+            </div>
+          </div>
+          <h5>Second Title</h5>
+          <input class="uk-input border-charcoal2 uk-margin-bottom" id="newsletter-second-item-title" type="text">
+          <h5>Second Set of Text</h5>
+          <textarea id="newsletter-second-item-message" class="uk-textarea" rows="5" placeholder="Enter the primary text of the email here"></textarea>
+
+          <hr>
+          <h5>Third Image</h5>
+          <div class="uk-width-1-1 uk-margin-bottom uk-margin-top">
+            <img id="newsletter-third-img" class="newsletter-img-preview" src="http://placehold.it/75x75">
+          </div>
+          <div class="uk-margin" uk-margin>
+            <div uk-form-custom="target: true">
+              <input type="file" id="newsletter-third-image" name="newsletter-third-image" accept="image/*" v-on:change="onImgChange('#newsletter-third-image', '#newsletter-third-img')">
+              <input class="uk-input uk-form-width-medium" type="text" disabled>
+              <button class="uk-button uk-button-default" type="button">Upload</button>
+            </div>
+          </div>
+          <h5>Third Title</h5>
+          <input class="uk-input border-charcoal2 uk-margin-bottom" id="newsletter-third-item-title" type="text">
+          <h5>Third Set of Text</h5>
+          <textarea id="newsletter-third-item-message" class="uk-textarea" rows="5" placeholder="Enter the primary text of the email here"></textarea>
+
+          <hr>
+          <h5>Fourth Image</h5>
+          <div class="uk-width-1-1 uk-margin-bottom uk-margin-top">
+            <img id="newsletter-fourth-img" class="newsletter-img-preview" src="http://placehold.it/75x75">
+          </div>
+          <div class="uk-margin" uk-margin>
+            <div uk-form-custom="target: true">
+              <input type="file" id="newsletter-fourth-image" name="newsletter-fourth-image" accept="image/*" v-on:change="onImgChange('#newsletter-fourth-image', '#newsletter-fourth-img')">
+              <input class="uk-input uk-form-width-medium" type="text" disabled>
+              <button class="uk-button uk-button-default" type="button">Upload</button>
+            </div>
+          </div>
+          <h5>Fourth Title</h5>
+          <input class="uk-input border-charcoal2 uk-margin-bottom" id="newsletter-fourth-item-title" type="text">
+          <h5>Fourth Set of Text</h5>
+          <textarea id="newsletter-fourth-item-message" class="uk-textarea" rows="5" placeholder="Enter the primary text of the email here"></textarea>
+        </form>
+      </div>
+
+      <div class="uk-modal-footer">
+        <div class="uk-grid uk-child-width-1-3" uk-grid>
+          <div><button class="uk-button button-lt uk-modal-close" type="button">Cancel</button></div>
+          <div><button class="uk-button button-lt uk-float-right" type="button" v-on:click="createNewsItem"><span uk-icon="future"></span> &nbsp; Save</button></div>
+          <div><a href="#modal-group-2" class="uk-button button-dk uk-float-right" uk-toggle>Next &#8250;</a></div>
+        </div>
+      </div>
+    </div>
   </div>
 
 
   <!-- STEP 3 -->
   <div id="modal-group-3" class="uk-modal-full" uk-modal>
-      <div class="uk-modal-dialog">
-          <button class="uk-modal-close-default" type="button" uk-close></button>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
 
-          <div class="uk-modal-header">
+        <div class="uk-modal-header">
           <h3 class="norwester uk-margin-top uk-text-center">News Wizard </h3>
           <div class="uk-grid" uk-grid>
 
-          <div class="uk-width-1-4"></div>
+            <div class="uk-width-1-4"></div>
 
-          <div class="uk-width-1-2">
-          <div class="uk-grid-small" uk-grid>
-            <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">1</span></div>
-            <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">2</span></div>
-            <div><span class="uk-label uk-border-circle  font-white gold">3</span></div>
-          </div>
-          </div>
-          <div class="uk-width-1-4"></div>
+            <div class="uk-width-1-2">
+              <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">1</span></div>
+                <div class="uk-width-expand" uk-leader><span class="uk-label uk-border-circle font-white gold">2</span></div>
+                <div><span class="uk-label uk-border-circle  font-white gold">3</span></div>
+              </div>
+            </div>
+            <div class="uk-width-1-4"></div>
           </div>
         </div>
 
-          <div class="uk-modal-body" uk-overflow-auto>
+        <div class="uk-modal-body" uk-overflow-auto>
           <h4>3: Test, Send, or Schedule</h4>
 
           <h4>Test</h4>
           <label class="profile-label">Send a test email to:</label>
           <h6 class="uk-margin-remove">Separate email addresses by commas ','</h6>
-            <div class="uk-inline uk-width-1-1 uk-margin-small">
-              <span class="uk-form-icon" uk-icon="icon: mail"></span>
-              <input class="uk-input border-charcoal2" type="text">
-            </div>
-            <label class="uk-form-label">&nbsp;</label><button class="uk-button uk-button-primary" type="button">TEST</button>
-            <hr class="border-slate">
-            <h4>Send Immediately</h4>
-            <button class="uk-button-large uk-button-danger uk-modal-close" type="button">SEND NOW</button>
-          <hr class="border-slate">
+          <div class="uk-inline uk-width-1-1 uk-margin-small">
+            <span class="uk-form-icon" uk-icon="icon: mail"></span>
+            <input class="uk-input border-charcoal2" type="text">
+          </div>
+          <label class="uk-form-label">&nbsp;</label><button class="uk-button uk-button-primary" type="button">TEST</button>
+          <hr class="border-slate" />
+          <h4>Send Immediately</h4>
+          <button class="uk-button-large uk-button-danger uk-modal-close" type="button">SEND NOW</button>
+          <hr class="border-slate" />
           <h4>Schedule for Later</h4>
 
           <div class="uk-grid-small" uk-grid>
-          <div class="uk-width-1-3">
-          <h5>Date:</h5>
-          <div class="uk-inline uk-width-auto">
-            <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
-            <input class="uk-input border-charcoal2" type="text" placeholder="mm/dd/yyyy">
-          </div>
-        </div>
-
-        <div class="uk-inline uk-width-1-3">
-          <h5>Time:</h5>
-          <div class="uk-inline uk-width-small">
-            <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: clock"></span>
-            <input class="uk-input border-charcoal2" type="text" placeholder="HH:MM">
-          </div>
-          <label class="uk-form-label">&nbsp;</label>
-          <select class="uk-inline uk-width-small uk-select border-charcoal2">
-            <option>AM</option>
-            <option>PM</option>
-          </select>
-        </div>
-        </div>
-        <button class="uk-button-large uk-button-danger uk-modal-close uk-margin-top" type="button">SCHEDULE</button>
-        </div>
-          <div class="uk-modal-footer">
-            <div class="uk-grid uk-child-width-1-4" uk-grid>
-
-            <div><a href="#modal-group-2" class="uk-button button-dk" uk-toggle>&#8249; Back</a></div>
-
-            <div><button class="uk-button button-lt uk-modal-close" type="button">Cancel</button></div>
-
-            <div><button class="uk-button button-lt uk-float-right" type="button" v-on:click="createNewsItem"><span uk-icon="future"></span> &nbsp; Save</button></div>
-
-            <div><button class="uk-button uk-button-default uk-float-right" type="button" disabled>Next &#8250;</a></div>
-
+            <div class="uk-width-1-3">
+              <h5>Date:</h5>
+              <div class="uk-inline uk-width-auto">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: calendar"></span>
+                <input class="uk-input border-charcoal2" type="text" placeholder="mm/dd/yyyy" />
+              </div>
+            </div>
+            <div class="uk-inline uk-width-1-3">
+              <h5>Time:</h5>
+              <div class="uk-inline uk-width-small">
+                <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: clock"></span>
+                <input class="uk-input border-charcoal2" type="text" placeholder="HH:MM">
+              </div>
+              <label class="uk-form-label">&nbsp;</label>
+              <select class="uk-inline uk-width-small uk-select border-charcoal2">
+                <option>AM</option>
+                <option>PM</option>
+              </select>
             </div>
           </div>
+          <button class="uk-button-large uk-button-danger uk-modal-close uk-margin-top" type="button">SCHEDULE</button>
+        </div>
+        <div class="uk-modal-footer">
+          <div class="uk-grid uk-child-width-1-4" uk-grid>
+            <div><a href="#modal-group-2" class="uk-button button-dk" uk-toggle>&#8249; Back</a></div>
+            <div><button class="uk-button button-lt uk-modal-close" type="button">Cancel</button></div>
+            <div><button class="uk-button button-lt uk-float-right" type="button" v-on:click="createNewsItem"><span uk-icon="future"></span> &nbsp; Save</button></div>
+            <div><button class="uk-button uk-button-default uk-float-right" type="button" disabled><a>Next &#8250;</a></div>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
   <div class="uk-margin-large"></div>
   <%- include('footer'); %>
-  </div>
+  
   <script type="text/javascript">
     var app = new Vue({
       el: '#app',
@@ -947,9 +952,10 @@
         userRoleOptions: <%- JSON.stringify(roles) %>,
         users: <%- JSON.stringify(userList) %>,
         filteredUsers: <%- JSON.stringify(userList) %>,
-        emailType: '',
-        emailHeader: '',
-        emailBody: '',
+        newsType: 'Draft',
+        newsHeader: '',
+        newsBody: '',
+        newsContent: []
       },
       computed: {
         displayUsers: function() {
@@ -971,31 +977,31 @@
           var self = this;
           this.filteredUsers = this.users
           .filter(function(user) {
-            return self.searchName ? user.name && user.name.toLowerCase().indexOf(self.searchName.toLowerCase()) !== -1 : true;
+            return self.userSearchName ? user.name && user.name.toLowerCase().indexOf(self.userSearchName.toLowerCase()) !== -1 : true;
           })
           .filter(function(user) {
-            return self.searchGradYear ? user.graduation_year == parseInt(self.searchGradYear) : true;
+            return self.userSearchGradYear ? user.graduation_year == parseInt(self.userSearchGradYear) : true;
           })
           .filter(function(user) {
-            return self.searchEmailAddress ? (user.email && user.email.toLowerCase().indexOf(self.searchEmailAddress.toLowerCase()) !== -1) : true;
+            return self.userSearchEmailAddress ? (user.email && user.email.toLowerCase().indexOf(self.userSearchEmailAddress.toLowerCase()) !== -1) : true;
           })
           .filter(function(user) {
-            return self.searchPhoneNumber ? (user.home_phone && user.home_phone.indexOf(self.searchPhoneNumber) !== -1 || user.cell_phone && user.cell_phone.indexOf(self.searchPhoneNumber) !== -1) : true;
+            return self.userSearchPhoneNumber ? (user.home_phone && user.home_phone.indexOf(self.userSearchPhoneNumber) !== -1 || user.cell_phone && user.cell_phone.indexOf(self.userSearchPhoneNumber) !== -1) : true;
           })
           .filter(function(user) {
-            return self.searchMembership ? user.membership.membership_type === self.searchMembership : true;
+            return self.userSearchMembership ? user.membership.membership_type === self.userSearchMembership : true;
           })
           .filter(function(user) {
-            return self.searchCity ? user.city && user.city.toLowerCase().indexOf(self.searchCity.toLowerCase()) !== -1 : true;
+            return self.userSearchCity ? user.city && user.city.toLowerCase().indexOf(self.userSearchCity.toLowerCase()) !== -1 : true;
           })
           .filter(function(user) {
-            return self.searchState ? user.state && user.state.toLowerCase().indexOf(self.searchState.toLowerCase()) !== -1 : true;
+            return self.userSearchState ? user.state && user.state.toLowerCase().indexOf(self.userSearchState.toLowerCase()) !== -1 : true;
           })
           .filter(function(user) {
-            return self.searchZipCode ? user.zip_code && user.zip_code == self.searchZipCode : true;
+            return self.userSearchZipCode ? user.zip_code && user.zip_code == self.userSearchZipCode : true;
           })
           .filter(function(user) {
-            switch (self.searchMortalityStatus) {
+            switch (self.userSearchMortalityStatus) {
               case '':
                 return true;
               case 'alive':
@@ -1005,7 +1011,7 @@
             }
           })
           .filter(function(user) {
-            switch (self.searchHOFStatus) {
+            switch (self.userSearchHOFStatus) {
               case '':
                 return true;
               case 'winner':
@@ -1015,29 +1021,82 @@
             }
           })
           .filter(function(user) {
-            return self.searchRoles ? user.roles.some(function(role) { return role.name == self.searchRoles; }) : true;
+            return self.userSearchRoles ? user.roles.some(function(role) { return role.name == self.userSearchRoles; }) : true;
           })
           .filter(function(user) {
-            return self.searchGroups ? user.groups.some(function(group) { return group.group_name == self.searchGroups; }) : true;
+            return self.userSearchGroups ? user.groups.some(function(group) { return group.group_name == self.userSearchGroups; }) : true;
           })
           .filter(function(user) {
-            return self.searchAddress ? (user.address_line_1 + ' ' + user.address_line_2).toLowerCase().indexOf(self.searchAddress.toLowerCase()) !== -1 : true;
+            return self.userSearchAddress ? (user.address_line_1 + ' ' + user.address_line_2).toLowerCase().indexOf(self.userSearchAddress.toLowerCase()) !== -1 : true;
           });
         },
         createNewsItem: function() {
-          axios.post('api/news-item', {
-            type: this.emailType,
-            headline: this.emailHeader,
-            content: this.emailBody
-          })
-          .then(function(data) {
-            UIkit.modal('#modal-group-1').hide();
-            UIkit.modal('#modal-group-2').hide();
-            UIkit.modal('#modal-group-3').hide();
-          })
-          .catch(function(err) {
-            alert('There was an issue processing your request. Please try again');
-          });
+          var errMsg = '';
+          if (!this.newsHeader) errMsg += 'You must enter a headline for your broadcast\n';
+          if (!this.newsBody) errMsg += 'You must enter a message for your broadcast';
+          if (errMsg) {
+            alert(errMsg);
+            return;
+          } else {
+            var payload = new FormData();
+            payload.append('type', this.newsType);
+            payload.append('headline', this.newsHeader);
+            payload.append('message', this.newsBody);
+
+            if (this.newsType === 'Announcement') {
+              payload.content = [];
+              var imageInput = $('#announcement-image').get(0);
+              if (imageInput.files && imageInput.files[0]) {
+                payload.append('image', imageInput.files[0]);
+              }
+              
+            } else if (this.newsType === 'Newsletter') {
+              payload.content = [];
+
+              var firstImageInput = $('#newsletter-first-image').get(0);
+              if (firstImageInput.files && firstImageInput.files[0]) {
+                payload.append('image', firstImageInput.files[0]);
+                payload.append('firstImageTitle', $('#newsletter-first-item-title').val());
+                payload.append('firstImageMessage', $('#newsletter-first-item-message').val());
+              }
+
+              var secondImageInput = $('#newsletter-second-image').get(0);
+              if (secondImageInput.files && secondImageInput.files[0]) {
+                payload.append('image', secondImageInput.files[0]);
+                payload.append('secondImageTitle', $('#newsletter-second-item-title').val());
+                payload.append('secondImageMessage', $('#newsletter-second-item-message').val());
+              }
+
+              var thirdImageInput = $('#newsletter-third-image').get(0);
+              if (thirdImageInput.files && thirdImageInput.files[0]) {
+                payload.append('image', thirdImageInput.files[0]);
+                payload.append('thirdImageTitle', $('#newsletter-third-item-title').val());
+                payload.append('thirdImageMessage', $('#newsletter-third-item-message').val());
+              }
+
+              var fourthImageInput = $('#newsletter-fourth-image').get(0);
+              if (fourthImageInput.files && fourthImageInput.files[0]) {
+                payload.append('image', fourthImageInput.files[0]);
+                payload.append('fourthImageTitle', $('#newsletter-fourth-item-title').val());
+                payload.append('fourthImageMessage', $('#newsletter-fourth-item-message').val());
+              }
+            }
+
+            axios.post('/api/news-item', payload, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            })
+            .then(function(data) {
+              alert('Successfully saved news');
+              UIkit.modal('#modal-group-1').hide();
+              UIkit.modal('#modal-group-2').hide();
+              UIkit.modal('#modal-group-3').hide();
+            })
+            .catch(function(err) {
+              alert('There was an issue processing your request. Please try again');
+            });
+          }
         },
         userClearFilters: function() {
           this.userSearchName = '';
@@ -1053,9 +1112,55 @@
           this.userSearchMortalityStatus = '';
           this.userSearchHOFStatus = '';
           this.userSearchGroups = '';
-        } 
+        },
+        setNewsType: function(newsType) {
+          this.newsType = newsType;
+          switch (newsType) {
+            case 'Email':
+              $('#announcement').addClass('uk-hidden');
+              $('#news').addClass('uk-hidden');
+              break;
+            case 'Announcement':
+              $('#announcement').removeClass('uk-hidden');
+              $('#news').addClass('uk-hidden');
+              break;
+            case 'Newsletter':
+              $('#announcement').addClass('uk-hidden');
+              $('#news').removeClass('uk-hidden');
+              break;
+            default:
+              return;
+          }
+        },
+        onImgChange: function(imageSource, target) {
+          if (FileReader) {
+            var el = $(imageSource).get(0);
+            if (el.files && el.files[0]) {
+              var fr = new FileReader();
+              
+              fr.onload = function(e) {
+                $(target).attr('src', e.target.result);
+              };
+              fr.readAsDataURL(el.files[0]);
+
+            }
+          } else {
+            console.log('FileReader not supported in this browser.');
+          }
+        }
       }
     });
   </script>
+  <style type="text/css">
+    .announcement-img-preview {
+      max-width: 600px;
+      max-height: 300px;
+    }
+
+    .newsletter-img-preview {
+      max-width: 75px;
+      max-height: 75px;
+    }
+  </style>
 </body>
 </html>

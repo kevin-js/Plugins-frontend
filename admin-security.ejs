@@ -74,17 +74,10 @@
         </div>
 
         <div class="uk-padding uk-width-1-3">
-          <h4 class="tight norwester">Permissions</h4>
+          <h4 class="tight norwester">Permissions</h4><a v-on:click="updateRolePermissions">Save</a>
+
           <h6>Permissions dictate what a user can view and do in the system:</h6>
-          <label v-for="permission in permissions"><input class="uk-checkbox" type="checkbox" /> &nbsp; {{ permission.friendly_name }}</label><br />
-          <!-- <label><input class="uk-checkbox" type="checkbox"> &nbsp; View Admin Menu</label><br>
-          <label><input class="uk-checkbox" type="checkbox"> &nbsp; View Dashboard</label><br>
-          <label><input class="uk-checkbox" type="checkbox"> &nbsp; View List (Manage)</label><br>
-          <label><input class="uk-checkbox" type="checkbox"> &nbsp; Add Entry</label><br>
-          <label><input class="uk-checkbox" type="checkbox"> &nbsp; Add Entry Moderated</label><br>
-          <label><input class="uk-checkbox" type="checkbox"> &nbsp; Edit Entry</label><br>
-          <label><input class="uk-checkbox" type="checkbox"> &nbsp; Edit Entry Moderated</label><br>
-          <label><input class="uk-checkbox" type="checkbox"> &nbsp; Delete Entry</label><br> -->
+          <label v-for="permission in permissions"><input class="uk-checkbox" type="checkbox" :checked="permissionContainedInRole(permission)" value="permission" v-on:click="toggleRolePermission($event, permission)" /> &nbsp; {{ permission.friendly_name }}</label><br />
         </div>
       </div>
     </div>
@@ -375,6 +368,29 @@
 
           var downloadedFilename = 'users';
           exportCSVFile(headers, formattedUsers, downloadedFilename);
+        },
+        permissionContainedInRole: function(permission) {
+          return this.selectedRole.permissions ? this.selectedRole.permissions.some(function(e) {
+            return e.id == permission.id;
+          }) : false;
+        },
+        toggleRolePermission: function(event, permission) {
+          event.target.checked ?
+            this.selectedRole.permissions.push(permission) :
+            this.selectedRole.permissions = this.selectedRole.permissions.filter(function(e) { return e.id !== permission.id; });
+
+            console.log(this.selectedRole.permissions);
+        },
+        updateRolePermissions: function() {
+          axios.put('/api/update-role', {
+            role: this.selectedRole
+          })
+            .then(function(data) {
+              alert('Updated role successfully.');
+            })
+            .catch(function(err) {
+              alert('There was an issue processing your request. Please try again');
+            });
         }
       }
     });
