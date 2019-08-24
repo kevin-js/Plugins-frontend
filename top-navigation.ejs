@@ -3,12 +3,12 @@
         <ul class="uk-navbar-nav link-dk">
             <li class="uk-active">
                 <a href="/profile">Profile
-                    <% if (user.isAdmin) { %>
+                    <% if (user.hasPermission('admin')) { %>
                         <span uk-icon="triangle-down"></span>
                     <% } %>
                 </a>
             </li>
-            <% if (user.isAdmin) { %>
+            <% if (user.hasPermission('admin')) { %>
                 <div uk-dropdown="offset: -30" class="uk-navbar-dropdown">
                     <ul class="uk-nav uk-navbar-dropdown-nav">
                         <li><a href="/profile">Profile</a></li>

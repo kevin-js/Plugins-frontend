@@ -324,7 +324,7 @@
 
                 <!--Be sure to add a break at 20 characters for uber long emails so they wrap -->
                 <td class="table-border border-none font-small">
-                  <p><span id="email">{{ user.email || '--' }}</span><br><span id="membership">{{ user.membership.membership_type || '--' }}</span></p>
+                  <p><span id="email">{{ user.email || '--' }}</span><br><span id="membership">{{ user.membership.membershipType.name || '--' }}</span></p>
                 </td>
 
                 <td class="table-border border-none font-small">
@@ -592,7 +592,7 @@
             return self.searchPhoneNumber ? (user.home_phone && user.home_phone.indexOf(self.searchPhoneNumber) !== -1 || user.cell_phone && user.cell_phone.indexOf(self.searchPhoneNumber) !== -1) : true;
           })
           .filter(function(user) {
-            return self.searchMembership ? user.membership.membership_type === self.searchMembership : true;
+            return self.searchMembership ? user.membership.membershipType.name.toLowerCase() === self.searchMembership.toLowerCase() : true;
           })
           .filter(function(user) {
             return self.searchCity ? user.city && user.city.toLowerCase().indexOf(self.searchCity.toLowerCase()) !== -1 : true;
@@ -715,7 +715,7 @@
               name: user.name,
               nicknames: user.nicknames,
               graduation_year: user.graduation_year,
-              membership_type: user.membership.membership_type,
+              membership_type: user.membership.membership_type.name,
               email: user.email,
               home_phone: user.home_phone,
               cell_phone: user.cell_phone,

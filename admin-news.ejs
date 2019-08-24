@@ -520,7 +520,7 @@
                     <td><span id="alum_name">{{ user.name }}</span></td>
                     <td><span id="alum_grad_yr">{{ user.graduation_year || '--' }}</span></td>
                     <td>
-                      <span v-if="user.membership.membership_type === 'Free' || 'free'">Free</span>
+                      <span v-if="user.membership.membershipType.name === 'Free' || 'free'">Free</span>
                       <span v-else>Paid</span>
                     </td>
                     <td>

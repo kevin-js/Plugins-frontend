@@ -99,15 +99,15 @@
           <span class="profile-label uk-float-left">Type</span> <a class="uk-float-right" href="/membership-options">View Benefits &nbsp;<i class="fa fa-external-link"></i></a>
           <br>
           <span id="nickname" class="profile-field">
-            <span uk-icon="check"></span> &nbsp;<% if (user.membership && user.membership.membership_type === 'lifetime_50_plus') { %> Lifetime <% } else if (user.membership && user.membership.membership_type) { %><%= user.membership.membership_type.charAt(0).toUpperCase() + user.membership.membership_type.slice(1) %><% } %>
+            <span uk-icon="check"></span> &nbsp;<%= user.membership.membershipType.name %>
           </span>
             <a href="/membership-types">&nbsp;(Edit)</a>
             <br><br>
-          <% if (user.membership && user.membership.membership_type !== 'free') { %>
+          <% if (user.membership && user.membership.membership_type !== 1) { %>
           <span class="profile-label">Payment Method</span><br>
           <span id="pay_method" class="profile-field"><a href="https://www.paypal.com/us/signin" target="_blank">PayPal</a></span>
           <% } %>
-          <% if (user.membership && user.membership.membership_type === 'annual') { %> 
+          <% if (user.membership && user.membership.membershipType.name === 2) { %> 
           <span class="profile-label">Renewal Scheduled On</span><br>
           <span id="renews_on" class="profile-field"><%= user.membership.renewal_date %></span><br><br>
           <span class="profile-label">Auto-Renew?</span><br>
@@ -244,7 +244,7 @@
       <a class="uk-float-right" href="memories.html">Memories &nbsp;<i class="fa fa-external-link"></i></a>
     </div>
 
-    <% if (user.membership && user.membership.membership_type !== 'free') { %>
+    <% if (user.membership && user.membership.membership_type !== 1) { %>
     <div class="uk-grid-match uk-child-width-1-4@m uk-flex-middle" uk-grid="masonry: true">
       <div>
         <div class="uk-padding">
