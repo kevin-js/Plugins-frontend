@@ -92,7 +92,7 @@
 <!--------------------------->
 
 <div class="uk-margin-right uk-margin-left">
-  <div class="uk-grid uk-child-width-1-2@m" uk-grid>
+  <div class="uk-child-width-1-2@m" uk-grid>
     <div id="leader-groups" class="uk-card uk-card-default">
       <div class="uk-card-header container-top">
         <h4 class="norwester font-white">Groups You Lead</h4>
@@ -121,7 +121,7 @@
   <div class="uk-child-width-1-2@m" uk-grid>
     <div id="participant-groups" class="uk-card uk-card-default">
         <div class="uk-card-header container-top">
-            <h4 class="norwester font-white">Groups you Joined</h4>
+          <h4 class="norwester font-white">Groups you Joined</h4>
         </div>
         <table class="uk-table uk-margin-remove group-table">
           <tbody>
@@ -134,8 +134,8 @@
               <td class="uk-clearfix">
               <a href="#modal-group-details" uk-toggle v-on:click="setSelectedGroup(group)"><h4>{{ group.group_name %> }}</h4></a>
               <h5 class="font-charcoal uk-position-relative">
-              <span class="uk-float-left"><span id="member_count">{{ group.users.length }}</span> Member<span v-if="group.users.length != 1">s</span></span>
-              <span class="uk-float-right"><a>Contact Leader</a> | <a v-on:click="leaveGroup(group)">Leave</a></span>
+                <span class="uk-float-left"><span id="member_count">{{ group.users.length }}</span> Member<span v-if="group.users.length != 1">s</span></span>
+                <span class="uk-float-right"><a>Contact Leader</a> | <a v-on:click="leaveGroup(group)">Leave</a></span>
               </h5>
               </td>
             </tr>

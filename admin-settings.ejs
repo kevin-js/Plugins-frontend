@@ -181,14 +181,14 @@
         <div class="uk-card-body white">
           <label class="profile-label">Benefits of Free Membership</label>
           <h6 class="uk-margin-remove">Start each benefit with a '*'</h6>
-          <textarea class="border-charcoal2 uk-margin-bottom uk-width-1-1" rows="26" type="textarea"></textarea>
+          <textarea class="border-charcoal2 uk-margin-bottom uk-width-1-1" rows="26" type="textarea" v-model="membershipOptionsConfig.free_membership_description"></textarea>
           <div class="uk-margin-medium"></div>
           <label class="profile-label">Benefits of Paid Membership</label>
           <h6 class="uk-margin-remove">Start each benefit with a '*'</h6>
-          <textarea class="border-charcoal2 uk-margin-bottom uk-width-1-1" rows="26" type="textarea"></textarea>
+          <textarea class="border-charcoal2 uk-margin-bottom uk-width-1-1" rows="26" type="textarea" v-model="membershipOptionsConfig.paid_membership_description"></textarea>
         </div>
         <div class="uk-margin-large"></div>
-        <button class="uk-button uk-button-primary button-lt uk-margin-medium-left uk-position-medium uk-position-bottom" type="button">Save</button>
+        <button class="uk-button uk-button-primary button-lt uk-margin-medium-left uk-position-medium uk-position-bottom" type="button" v-on:click="saveMembershipOptionsConfig">Save</button>
       </div>
     </div>
 
@@ -201,96 +201,25 @@
         <h4 class="norwester font-white">Membership Types</h4>
       </div>
       <div class="uk-card-body white">
-        <label class="profile-label">Title</label>
-        <input class="uk-input uk-width-1-1 uk-margin-small border-charcoal2" type="text" value="Annual" disabled>
+        <div v-for="membershipType in membershipTypes">
+          <label class="profile-label">Title</label>
+          <input class="uk-input uk-width-1-1 uk-margin-small border-charcoal2" type="text" v-model="membershipType.name" disabled>
 
-        <label class="profile-label">Description</label>
-        <textarea class="border-charcoal2 uk-margin-small uk-width-1-1" rows="5" type="textarea"></textarea>
+          <label class="profile-label">Description</label>
+          <textarea class="border-charcoal2 uk-margin-small uk-width-1-1" rows="5" type="textarea" v-model="membershipType.description"></textarea>
 
-        <label class="profile-label">Price</label><br>
-        <div class="uk-inline uk-width-1-3 uk-margin-small">
-          <span class="uk-form-icon" uk-icon="icon: tag"></span>
-          <input class="uk-input border-charcoal2" type="text" placeholder="$0.00">
-        </div>
-        <hr>
-
-        <label class="profile-label">Title</label>
-        <input class="uk-input uk-width-1-1 uk-margin-small border-charcoal2" type="text" value="Lifetime" disabled>
-
-        <label class="profile-label">Description</label>
-        <textarea class="border-charcoal2 uk-margin-small uk-width-1-1" rows="5" type="textarea"></textarea>
-
-        <label class="profile-label">Price</label><br>
-        <div class="uk-inline uk-width-1-3 uk-margin-small">
-          <span class="uk-form-icon" uk-icon="icon: tag"></span>
-          <input class="uk-input border-charcoal2" type="text" placeholder="$0.00">
-        </div>
-        <hr>
-
-        <label class="profile-label">Title</label>
-        <input class="uk-input uk-width-1-1 uk-margin-small border-charcoal2" type="text" value="Lifetime 50 Plus" disabled>
-
-        <label class="profile-label">Description</label>
-        <textarea class="border-charcoal2 uk-margin-small uk-width-1-1" rows="5" type="textarea"></textarea>
-
-        <label class="profile-label">Price</label><br>
-        <div class="uk-inline uk-width-1-3 uk-margin-small">
-          <span class="uk-form-icon" uk-icon="icon: tag"></span>
-          <input class="uk-input border-charcoal2" type="text" placeholder="$0.00">
+          <label class="profile-label">Price</label><br>
+          <div class="uk-inline uk-width-1-3 uk-margin-small">
+            <span class="uk-form-icon" uk-icon="icon: tag"></span>
+            <input class="uk-input border-charcoal2" type="text" placeholder="$0.00" v-model="membershipType.price">
+          </div>
+          <hr>
         </div>
       </div>
       <div class="uk-margin-large"></div>
-      <button class="uk-button uk-button-primary button-lt uk-margin-medium-left uk-position-medium uk-position-bottom" type="button">Save</button>
+      <button class="uk-button uk-button-primary button-lt uk-margin-medium-left uk-position-medium uk-position-bottom" type="button" v-on:click="saveMembershipTypes">Save</button>
     </div>
   </div>
-  <!-- <div>
-    <div class="uk-card uk-card-default">
-      <div class="uk-card-header container-top">
-        <h4 class="norwester font-white">Membership Types</h4>
-      </div>
-      <div class="uk-card-body white">
-        <label class="profile-label">Title</label>
-        <input class="uk-input uk-width-1-1 uk-margin-small border-charcoal2" type="text">
-
-        <label class="profile-label">Description</label>
-        <textarea class="border-charcoal2 uk-margin-small uk-width-1-1" rows="5" type="textarea"></textarea>
-
-        <label class="profile-label">Price</label><br>
-        <div class="uk-inline uk-width-1-3 uk-margin-small">
-          <span class="uk-form-icon" uk-icon="icon: tag"></span>
-          <input class="uk-input border-charcoal2" type="text" placeholder="$0.00">
-        </div>
-        <hr>
-
-        <label class="profile-label">Title</label>
-        <input class="uk-input uk-width-1-1 uk-margin-small border-charcoal2" type="text">
-
-        <label class="profile-label">Description</label>
-        <textarea class="border-charcoal2 uk-margin-small uk-width-1-1" rows="5" type="textarea"></textarea>
-
-        <label class="profile-label">Price</label><br>
-        <div class="uk-inline uk-width-1-3 uk-margin-small">
-          <span class="uk-form-icon" uk-icon="icon: tag"></span>
-          <input class="uk-input border-charcoal2" type="text" placeholder="$0.00">
-        </div>
-        <hr>
-
-        <label class="profile-label">Title</label>
-        <input class="uk-input uk-width-1-1 uk-margin-small border-charcoal2" type="text">
-
-        <label class="profile-label">Description</label>
-        <textarea class="border-charcoal2 uk-margin-small uk-width-1-1" rows="5" type="textarea"></textarea>
-
-        <label class="profile-label">Price</label><br>
-        <div class="uk-inline uk-width-1-3 uk-margin-small">
-          <span class="uk-form-icon" uk-icon="icon: tag"></span>
-          <input class="uk-input border-charcoal2" type="text" placeholder="$0.00">
-        </div>
-      </div>
-      <div class="uk-margin-large"></div>
-      <button class="uk-button uk-button-primary button-lt uk-margin-medium-left uk-position-medium uk-position-bottom" type="button">Save</button>
-    </div>
-  </div> -->
 </div>
 </div>
 
@@ -339,7 +268,9 @@
       el: '#app',
       data: {
         siteAdminConfig: <%- JSON.stringify(siteAdminConfig) %>,
-        updatedSiteAdminConfig: <%- JSON.stringify(siteAdminConfig) %>
+        updatedSiteAdminConfig: <%- JSON.stringify(siteAdminConfig) %>,
+        membershipOptionsConfig: <%- JSON.stringify(membershipOptionsConfig) %>,
+        membershipTypes: <%- JSON.stringify(membershipTypes) %>
       },
       methods: {
         saveSiteBranding: function() {
@@ -384,6 +315,23 @@
             })
             .catch(function(err) {
               alert('There was an issue processing updates to the admin contact information. Please try again');
+            });
+        },
+        saveMembershipOptionsConfig: function() {
+          axios.put('/api/membership-option-config', this.membershipOptionsConfig)
+            .then(function(data) {
+              alert('Membership options description updated.');
+            }).catch(function(err) {
+              alert('There was an issue updating the membership options description. Please try again');
+            });
+        },
+        saveMembershipTypes: function() {
+          axios.put('/api/membership-types', { membershipTypes: this.membershipTypes })
+            .then(function(data) {
+              alert('Membership types successfully updated.');
+            })
+            .catch(function(err) {
+              alert('There was an issue updating the membership types description. Please try again');
             });
         },
         revertAdminContactInfoChanges: function() {

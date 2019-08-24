@@ -21,15 +21,20 @@
       <h2 class="uk-card-title uk-text-center">Free Membership</h2>
       <h1 class="uk-text-center">$0</h1>
       <hr class="uk-divider-icon">
-      <ul>
-         <li class="font-charcoal">A yearbook archive where you can view alumni’s yearbook photo, name & grad year</li><br>
-         <li class="font-charcoal">Filter yearbook gallery by Grad Year and Name </li><br>
-         <li class="font-charcoal">View of the Hall of Fame, where classmates are showcased for their special acheivements</li><br>
-         <li class="font-charcoal">Access to the Title and # of members in all available groups </li><br>
-         <li class="font-charcoal">Access to the newsletter archives, which are filterable by the year of publication </li><br>
-         <li class="font-charcoal">Calendar view where upcoming events and reunions are displayed </li><br>
-         <li class="font-charcoal">View of the ‘Memories’ gallery</li>
-      </ul>
+      <% if (membershipOptionsConfig.free_membership_description) { %>
+        <%= membershipOptionsConfig.free_membership_description %>
+        <div class="uk-margin-large"></div>
+      <% } else { %>
+        <ul>
+          <li class="font-charcoal">A yearbook archive where you can view alumni’s yearbook photo, name & grad year</li><br>
+          <li class="font-charcoal">Filter yearbook gallery by Grad Year and Name </li><br>
+          <li class="font-charcoal">View of the Hall of Fame, where classmates are showcased for their special acheivements</li><br>
+          <li class="font-charcoal">Access to the Title and # of members in all available groups </li><br>
+          <li class="font-charcoal">Access to the newsletter archives, which are filterable by the year of publication </li><br>
+          <li class="font-charcoal">Calendar view where upcoming events and reunions are displayed </li><br>
+          <li class="font-charcoal">View of the ‘Memories’ gallery</li>
+        </ul>
+      <% } %>
       <a class="uk-button button-dk uk-width-1-1 uk-padding-small" href="profile.html">Continue with Free Membership</a>
   </div>
 </div>
@@ -38,17 +43,23 @@
   <div class="uk-card uk-card-default uk-card-body border-gold uk-box-shadow-large">
     <span class="uk-badge gold font-white uk-padding-small uk-position-small uk-position-top-center">Recommended</span>
       <h2 class="uk-card-title uk-text-center tight">Paid Membership</h2><br>
+      <!-- if we are doing variably priced memberships now, this will need to change -->
       <div class="uk-width-1-3 uk-inline uk-text-center norwester tight"><h2>$25</h2> Annually</div>
       <div class="uk-width-1-4 uk-inline uk-text-center norwester">or</div>
       <div class="uk-width-1-3 uk-inline uk-text-center norwester tight"><h2>$275</h2> Lifetime</div>
       <hr class="uk-divider-icon">
       <h6 class="tight">You'll gain all features included in the free membership</h6>
-      <h5>PLUS:</h5>
-      <ul>
-         <li class="font-charcoal">Access to alumni address, phone #, email, birthday and marital status! </li><br>
-         <li class="font-charcoal">Access a full list of group members and their contact information!</li><br>
-         <li class="font-charcoal">Ability to add your own photos to the ‘Memories’ gallery </li><br><br><br><br>
-      </ul>
+      <% if (membershipOptionsConfig.paid_membership_description) { %>
+        <%= membershipOptionsConfig.paid_membership_description %>
+        <div class="uk-margin-large"></div>
+      <% } else { %>
+        <h5>PLUS:</h5>
+        <ul>
+          <li class="font-charcoal">Access to alumni address, phone #, email, birthday and marital status! </li><br>
+          <li class="font-charcoal">Access a full list of group members and their contact information!</li><br>
+          <li class="font-charcoal">Ability to add your own photos to the ‘Memories’ gallery </li><br><br><br><br>
+        </ul>
+      <% } %>
       <a class="uk-button button-gold uk-width-1-1 uk-padding-small" href="/membership-types">Purchase A Membership</a>
   </div>
 </div>

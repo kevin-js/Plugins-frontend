@@ -1055,29 +1055,29 @@
                 var firstImageInput = $('#newsletter-first-image').get(0);
                 if (firstImageInput.files && firstImageInput.files[0]) {
                   payload.append('image', firstImageInput.files[0]);
-                  payload.append('firstImageTitle', $('#newsletter-first-item-title').val());
-                  payload.append('firstImageMessage', $('#newsletter-first-item-message').val());
+                  payload.append('title', $('#newsletter-first-item-title').val());
+                  payload.append('message', $('#newsletter-first-item-message').val());
                 }
 
                 var secondImageInput = $('#newsletter-second-image').get(0);
                 if (secondImageInput.files && secondImageInput.files[0]) {
                   payload.append('image', secondImageInput.files[0]);
-                  payload.append('secondImageTitle', $('#newsletter-second-item-title').val());
-                  payload.append('secondImageMessage', $('#newsletter-second-item-message').val());
+                  payload.append('title', $('#newsletter-second-item-title').val());
+                  payload.append('message', $('#newsletter-second-item-message').val());
                 }
 
                 var thirdImageInput = $('#newsletter-third-image').get(0);
                 if (thirdImageInput.files && thirdImageInput.files[0]) {
                   payload.append('image', thirdImageInput.files[0]);
-                  payload.append('thirdImageTitle', $('#newsletter-third-item-title').val());
-                  payload.append('thirdImageMessage', $('#newsletter-third-item-message').val());
+                  payload.append('title', $('#newsletter-third-item-title').val());
+                  payload.append('message', $('#newsletter-third-item-message').val());
                 }
 
                 var fourthImageInput = $('#newsletter-fourth-image').get(0);
                 if (fourthImageInput.files && fourthImageInput.files[0]) {
                   payload.append('image', fourthImageInput.files[0]);
-                  payload.append('fourthImageTitle', $('#newsletter-fourth-item-title').val());
-                  payload.append('fourthImageMessage', $('#newsletter-fourth-item-message').val());
+                  payload.append('title', $('#newsletter-fourth-item-title').val());
+                  payload.append('message', $('#newsletter-fourth-item-message').val());
                 }
               }
 
