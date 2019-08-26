@@ -21,40 +21,56 @@
     <h5 class="uk-text-center tight">Select a membership type to purchase one.</h5>
     <div class="uk-padding-large">
       <div class="uk-child-width-1-3@m" uk-grid>
-        <div v-for="membershipType in membershipTypes">
+        <% membershipTypes.forEach((membershipType) => { %>
+        <div>
           <div class="uk-card-small uk-card-default">
-            <div class="uk-card-header"><h2 class="uk-card-title uk-text-center">{{ membershipType.name }}</h2></div>
+            <div class="uk-card-header"><h2 class="uk-card-title uk-text-center"><%= membershipType.name %></h2></div>
             <div class="uk-card-body" style="white-space: pre-line">
-              {{ membershipType.description }}
+              <%= membershipType.description %>
             </div>
-            <button class="uk-button paypal uk-width-1-1" v-on:click="placeOrder"><strong><i>P</i></strong> &nbsp; Paypal</button>
+            <div class="uk-button uk-width-1-1" id="<%- 'paypal-button-' + membershipType.id %>"></div>
           </div>
+          <script type="text/javascript">
+            paypal.Buttons({
+              createOrder: function(data, actions) {
+                return actions.order.create({
+                  purchase_units: [{
+                    amount: {
+                      value: '<%= membershipType.price %>',
+                      currency: 'USD'
+                    }
+                  }]
+                });
+              },
+              onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                  axios.post('/api/process-membership-subscription', {
+                    orderId: data.orderID,
+                    membershipType: <%= membershipType.id %>
+                  })
+                    .then(function(data) {
+                      window.location.href = data.redirect ? data.redirect : '/profile';
+                    })
+                    .catch(function(err) {
+                      alert('We were unable to process your transaction. Please try again or contact an administrator.');
+                    });
+                });
+              },
+              style: {
+                color: 'blue',
+                shape: 'rect',
+                size: 'responsive',
+                fundingincons: false
+              }
+            }).render('<%- "#paypal-button-" + membershipType.id %>');
+          </script>
         </div>
+        <% });%>
         <a class="uk-margin-large uk-button button-lt uk-float-right" href="/profile">Skip for Now</a>
       </div>
     </div>
   </div>
   
   <%- include('footer') %>
-  <script type="text/javascript">
-    var app = new Vue({
-      el: '#app',
-      data: {
-        membershipTypes: <%- JSON.stringify(membershipTypes) %>
-      },
-      methods: {
-        placeOrder: function(membershipType) {
-          axios.post('/api/order-membership', {
-            membershipTypeId: membershipType.id
-          }).then(function(data) {
-
-          }).catch(function(err) {
-            alert('There was an issue placing your order. Please try again');
-          });
-        }
-      }
-    });
-    // todo: this is currently a one-time payment, recurring payment will have to be set up on the backend
-  </script>
 </body>
 </html>
