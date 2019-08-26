@@ -279,7 +279,7 @@
       },
       updateResults: function() {
         var self = this;
-        this.displayUsers = this.users.filter(function(user) {
+        this.filteredUsers = this.users.filter(function(user) {
           if (self.hofOnly) {
             return user.isHallOfFame;
           }
