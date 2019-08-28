@@ -12,7 +12,9 @@
 
   <div class="uk-padding uk-clearfix">
     <h3 id="event_title" class="uk-position-relative uk-margin uk-margin-right uk-float-left norwester"><%= event.title || '--' %></h3>
-    <div class="uk-position-relative uk-float-right"><a href="<%- '/event-report?event_id=' + event.id %>" class="uk-button button-lt uk-margin-right">Report</a><a class="uk-button button-lt">Edit</a></div>
+    <% if (user.hasPermission('administer_event')) { %>
+      <div class="uk-position-relative uk-float-right"><a href="<%- '/event-report?event_id=' + event.id %>" class="uk-button button-lt uk-margin-right">Report</a><a class="uk-button button-lt">Edit</a></div>
+    <% } %>
   </div>
 
   <!-- Description -->

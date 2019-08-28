@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Groups</title>
+  <%- include('header'); %>
+</head>
+<body>
+  <%- include('top-navigation'); %>
+  <div class="uk-hidden@m">
+    <br><br><br><br><br><br>
+  </div>
+
+  <div class="uk-padding uk-clearfix">
+    <h3 id="grp_title" class="uk-position-relative uk-margin uk-margin-right uk-float-left norwester"><%= group.group_name %></h3>
+    <div class="uk-position-relative uk-float-right">
+      <button class="uk-button button-dk" onclick="joinGroup()">Join</button>
+    </div>
+  </div>
+
+  <% if (group.memories.length > 0) { %>
+  <!-- Here is where the gallery begins -->
+  <div class="uk-margin-right uk-margin-left">
+    <div class="uk-position-relative uk-visible-toggle" tabindex="-1" uk-slider>
+      <ul class="uk-slider-items uk-child-width-1-2@s uk-child-width-1-3@m">
+        <% group.memories.forEach(function(memory) { %>
+          <li class="uk-height-large uk-cover-container">
+            <a href="#modal-full1" uk-toggle uk-cover><img src="yearbook/1.jpg"></a>
+
+            <div id="modal-full1" class="uk-modal-full" uk-modal>
+              <div class="uk-modal-dialog">
+                <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+                <div class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle" uk-grid>
+                  <div class="uk-background-cover" style="background-image: url(<%= '/api/photo/' + memory.photo_ref %>);" uk-height-viewport></div>
+                  <div class="uk-padding-large">
+                    <h1 id="grp_photo_title">Photo Title</h1>
+                    <p id="grp_photo_descr"><%= memory.description %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        <% }); %>
+      </ul>
+      <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+      <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+    </div>
+  </div>
+  <div class="uk-margin uk-margin-right uk-margin-left"><h6>Select a photo for details.</h6></div>
+  <% } %>
+
+  <!-- Member Details -->
+  <div class="uk-margin-right uk-margin-left">
+    <h4 class="norwester font-black uk-text-center uk-padding">Member Details</h4>
+    <% group.users.forEach(function(user) { %>
+      <% if (user.isPublic) { %>
+        <div class="uk-container border-charcoal white">
+          <div class="uk-grid-match uk-margin-remove uk-flex-top uk-padding" uk-grid>
+          <div class="uk-width-1-3@m">
+              <h4 class="norwester font-black"><%= user.name %></h4>
+              <img class="uk-border-rounded uk-height-small uk-width-auto" src="<%= user.profilePhotoRef ? '/api/photo/' + user.profilePhotoRef : '/profile_photo_placeholder.svg' %>">
+          </div>
+          <div class="uk-width-1-3@m">
+            <span class="profile-label">Email</span><br>
+            <a id="email" href="mailto:<%= user.email %>"><%= user.email %></a><br><br>
+            <span class="profile-label">Home Phone</span><br>
+            <span id="home_phone" class="profile-field"><%= user.home_phone || '--' %></span><br><br>
+            <span class="profile-label">Cell Phone</span><br>
+            <span id="mobile_phone" class="profile-field"><%= user.cell_phone || '--' %></span><br><br>
+            <span class="profile-label">Birthday</span><br>
+            <span id="birthday" class="profile-field"><%= moment(user.birthday).format('MM-DD-YYYY') %></span>
+          </div>
+          <div class="uk-width-1-3@m">
+            <span class="profile-label">Marital Status</span>
+            <span id="marital_status" class="profile-field"><%= user.marital_status || '--' %></span><br>
+            <span class="profile-label">Address</span><br>
+            <span>
+            <span id="address_line1" class="profile-field"><%= user.address_line_1 %></span><br>
+            <span id="address_line2" class="profile-field"><%= user.address_line_2 %></span><br>
+            <span id="city" class="profile-field"><%= user.city %></span><span id="state" class="profile-field"> <%= user.state %></span><span id="zip" class="profile-field"> <% user.zip_code %></span>
+            </span>
+          </div>
+          </div>
+        </div>
+      <% } else { %>
+        <div class="uk-container uk-padding border-charcoal white uk-margin">
+          <h4 class="norwester font-black uk-text-center"><%= user.name %></h4><br><br>
+          <h5 class="profile-label uk-text-center uk-margin"> <i class="fa fa-user-secret fa-3x"></i><br><br>Profile is Private</h5>
+        </div>
+      <% } %>
+    <% }); %>
+  </div>
+
+
+  <div class="uk-margin-large"></div>
+  <%- include('footer'); %>
+  <script type="text/javascript">
+    function joinGroup() {
+      axios.post('/api/join-group', {
+        group_id: <%= group.id %>
+      })
+        .then(function(data) {
+          alert('Successfully joined.');
+        })
+        .catch(function(err) {
+          alert('There was an issue processing your request. Please try again');
+        });
+    }
+  </script>
+</body>
+</html>
