@@ -3,12 +3,12 @@
         <ul class="uk-navbar-nav link-dk">
             <li class="uk-active">
                 <a href="/profile">Profile
-                    <% if (user.hasPermission('admin')) { %>
+                    <% if (user.hasPermission('admin') || user.hasPermission('view_admin_menu') || user.hasPermission('view_dashboard')) { %>
                         <span uk-icon="triangle-down"></span>
                     <% } %>
                 </a>
             </li>
-            <% if (user.hasPermission('admin')) { %>
+            <% if (user.hasPermission('admin') || user.hasPermission('view_admin_menu') || user.hasPermission('view_dashboard')) { %>
                 <div uk-dropdown="offset: -30" class="uk-navbar-dropdown">
                     <ul class="uk-nav uk-navbar-dropdown-nav">
                         <li><a href="/profile">Profile</a></li>
@@ -58,7 +58,7 @@
             <li><a href="/memories">Memories</a></li>
             <li><a href="/calendar">Calendar</a></li>
             <li><a href="/news">News</a></li>
-            <% if (user.isAdmin) { %>
+            <% if (user.hasPermission('admin') || user.hasPermission('view_admin_menu') || user.hasPermission('view_dashboard')) { %>
                 <li><a href="/admin-settings">Admin</a></li> 
             <% } %>
         </ul>

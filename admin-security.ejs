@@ -10,13 +10,13 @@
 
   <div id="app">
   <!-- Admin Tabs -->
-  <div class="link-tab uk-margin-left uk-margin-right">
+  <div class="link-tab uk-margin-left uk-padding-small uk-margin-right">
     <h4>
       <a href="/admin-database" class="uk-padding-small">Alumni</a>&nbsp;&nbsp;&nbsp;
       <a href="/admin-group" class="uk-padding-small">Groups</a>&nbsp;&nbsp;&nbsp;
       <a href="/admin-event" class="uk-padding-small">Events</a>&nbsp;&nbsp;&nbsp;
       <a href="/admin-news" class="uk-padding-small">News</a>&nbsp;&nbsp;&nbsp;
-      <a class="tab-active uk-padding-small">Security</a>&nbsp;&nbsp;&nbsp;
+      <a href="/admin-security" class="tab-active uk-padding-small">Security</a>&nbsp;&nbsp;&nbsp;
       <a href="/admin-settings" class="uk-padding-small">Settings</a>
     </h4>
     <hr class="border-slate"></hr>
@@ -62,8 +62,8 @@
               <li><a v-on:click="rolePaginateLeft"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
               <li>
                 <div>
-                  <select class="uk-select border-charcoal2">
-                      <option v-for="page in Array(rolePageCount).keys()">{{ page + 1 }}</option>
+                  <select class="uk-select border-charcoal2" v-model="rolePageNumber">
+                    <option v-for="page in Array(rolePageCount).keys()">{{ page + 1 }}</option>
                   </select>
                 </div>
               </li>
@@ -159,9 +159,9 @@
           <h3 class="tight norwester">{{ selectedUser.name }}</h3>
           <h6 class="tight">Member since <span id="member_date">{{ moment(selectedUser.createdAt).format('MM-DD-YYYY') }}</span></h6>
           <hr></hr>
-          <h4 class="norwester">Roles <a>(+ Add)</a></h4>
-          <div uk-alert class="border-slate uk-border-rounded" v-for="userRole in selectedUser.roles">
-            <button class="uk-alert-close uk-close-large" type="button" uk-close></button>
+          <h4 class="norwester">Roles <a href="#add_user_role" uk-toggle>(+ Add)</a></h4>
+          <div v-bind:id="userRole.id" uk-alert class="border-slate uk-border-rounded" v-for="userRole in selectedUser.roles">
+            <button class="uk-close-large" type="button" uk-close v-on:click="deleteUserRole(userRole)"></button>
             <p>{{ userRole.name }}</p>
           </div>
         </div>
@@ -204,9 +204,60 @@
     </div>
   </div>
 
+  <!--Add Role Modal-->
+  <!-- todo: add selected roles to selected user, add api to push updates to backend -->
+  <div id="add_user_role" uk-modal>
+    <div class="uk-modal-dialog">
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <div class="uk-modal-header fog">
+        <h2 class="uk-modal-title">Add Roles</h2>
+      </div>
+
+      <div class="uk-modal-body" uk-overflow-auto>
+        <h6>Select one or more roles from the list below to add them to the user.</h6>
+
+        <div class="uk-card-body white border-charcoal uk-padding-remove uk-margin-remove">
+          <div class="charcoal border-charcoal2 uk-padding-small uk-width-1-1">
+            <div class="uk-form-controls uk-inline uk-margin-right uk-margin-bottom-small">
+              <span class="uk-form-icon" uk-icon="icon: search"></span>
+              <input class="uk-input border-charcoal2" type="text" placeholder="Search Roles" v-model="userRoleSearchQuery">
+            </div>
+          </div>
+          <table class="uk-table uk-table-small uk-margin-remove">
+            <tbody>
+              <tr v-for="role in displayUserRoles">
+                <td><input class="uk-checkbox uk-margin-right" type="checkbox" :checked="selectedUserRoles.some(function(e) { return e.id === role.id; })" v-on:click="addUserRole(event, role)">{{ role.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="uk-padding-small black">
+            <ul class="uk-pagination uk-flex-center uk-margin-remove">
+              <li><a v-on:click="userRolesPaginateLeft"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
+              <li>
+                <div>
+                  <select class="uk-select border-charcoal2" v-model="userRolesPageNumber">
+                    <option v-for="page in Array(userRolesPageCount).keys()">{{ page + 1 }}</option>
+                  </select>
+                </div>
+              </li>
+              <li class="font-white uk-margin-small">of {{ userRolesPageCount }}</li>
+              <li><a v-on:click="userRolesPaginateRight"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="uk-modal-footer fog uk-text-left">
+        <button class="uk-button button-dk" type="button" v-on:click="saveUserRoles">Save</button>
+        <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <div class="uk-margin-large"></div>
   <%- include('footer'); %>
 </div>
+
+  <!-- End Add Role Modal -->
   <script type="text/javascript">
     var app = new Vue({
       el: '#app',
@@ -215,29 +266,46 @@
         userPageSize: 10,
         rolePageNumber: 1,
         rolePageSize: 10,
+        userRolesPageNumber: 1,
+        userRolesPageSize: 10,
         roles: <%- JSON.stringify(roles) %>,
         filteredRoles: <%- JSON.stringify(roles) %>,
         users: <%- JSON.stringify(userList) %>,
         filteredUsers: <%- JSON.stringify(userList) %>,
+        filteredUserRoles: <%- JSON.stringify(roles) %>,
         selectedUser: <%- JSON.stringify(userList[0]) || JSON.stringify({}) %>,
         selectedRole: <%- JSON.stringify(roles[0]) || JSON.stringify({}) %>,
+        selectedUserRoles: <%- JSON.stringify(userList[0].roles) || JSON.stringify([]) %>,
         roleNameSearch: '',
         roleSortAlphabetically: true,
         userNameSearch: '',
         userSortAlphabetically: true,
         newRoleName: '',
-        permissions: <%- JSON.stringify(permissions) %>
+        permissions: <%- JSON.stringify(permissions) %>,
+        userRoleSearchQuery: ''
       },
       computed: {
         displayUsers: function() {
           var startEl = (this.userPageNumber - 1) * this.userPageSize;
           return this.filteredUsers.slice(startEl, startEl + this.userPageSize);
         },
+        displayUserRoles: function() {
+          var self = this;
+          var startEl = (this.userRolesPageNumber - 1) * this.userRolesPageSize;
+          return this.filteredUserRoles
+            .filter(function(e) {
+              return e.name.toLowerCase().indexOf(self.userRoleSearchQuery.toLowerCase()) !== -1;
+            })
+            .slice(startEl, startEl + this.userRolesPageSize);
+        },
         userPageCount: function() {
           return Math.ceil(this.filteredUsers.length / this.userPageSize);
         },
         rolePageCount: function() {
           return Math.ceil(this.filteredRoles.length / this.rolePageSize);
+        },
+        userRolesPageCount: function() {
+          return Math.ceil(this.filteredUserRoles.length / this.userRolesPageSize);
         }
       },
       methods: {
@@ -245,16 +313,23 @@
           if (this.rolePageNumber > 1) this.rolePageNumber--;
         },
         rolePaginateRight: function() {
-          if (this.rolePageNumber < this.roleCount) this.rolePageNumber++;
+          if (this.rolePageNumber < this.rolePageCount) this.rolePageNumber++;
         },
         userPaginateLeft: function() {
           if (this.userPageNumber > 1) this.userPageNumber--;
         },
         userPaginateRight: function() {
-          if (this.userPageNumber < this.pageCount) this.userPageNumber++;
+          if (this.userPageNumber < this.userPageCount) this.userPageNumber++;
+        },
+        userRolesPaginateLeft: function() {
+          if (this.userRolesPageNumber > 1) this.userRolesPageNumber--;
+        },
+        userRolesPaginateRight: function() {
+          if (this.userRolesPageNumber < this.userRolesPageCount) this.userRolesPageNumber++;
         },
         setSelectedUser: function(user) {
           this.selectedUser = user;
+          Object.assign(this.selectedUserRoles, this.selectedUser.roles || []);
         },
         setSelectedRole: function(role) {
           this.selectedRole = role;
@@ -378,8 +453,6 @@
           event.target.checked ?
             this.selectedRole.permissions.push(permission) :
             this.selectedRole.permissions = this.selectedRole.permissions.filter(function(e) { return e.id !== permission.id; });
-
-            console.log(this.selectedRole.permissions);
         },
         updateRolePermissions: function() {
           axios.put('/api/update-role', {
@@ -387,6 +460,45 @@
           })
             .then(function(data) {
               alert('Updated role successfully.');
+            })
+            .catch(function(err) {
+              alert('There was an issue processing your request. Please try again');
+            });
+        },
+        addUserRole: function(event, role) {
+          event.target.checked ?
+            this.selectedUserRoles.push(role) :
+            this.selectedUserRoles = this.selectedUserRoles.filter(function(e) {
+              return e.id !== role.id;
+            });
+        },
+        deleteUserRole: function(role) {
+          var self = this;
+          axios.post('/api/delete-user-role', {
+            role_id: role.id,
+            user_id: this.selectedUser.id
+          })
+            .then(function(data) {
+              alert(role.name + ' removed from ' + self.selectedUser.name);
+              self.selectedUser.roles = self.selectedUser.roles.filter(function(e) {
+                return e.id !== role.id;
+              });
+              Object.assign(self.selectedUserRoles, self.selectedUser.roles);
+            })
+            .catch(function(err) {
+              alert('There was an issue processing your request. Please try again');
+            });
+        },
+        saveUserRoles: function() {
+          var self = this;
+          axios.put('/api/user-roles', {
+            user: this.selectedUser,
+            roles: this.selectedUserRoles
+          })
+            .then(function(data) {
+              alert('User roles updated successfully.');
+              UIkit.modal('#add_user_role').hide();
+              Object.assign(self.selectedUser.roles, self.selectedUserRoles);
             })
             .catch(function(err) {
               alert('There was an issue processing your request. Please try again');
