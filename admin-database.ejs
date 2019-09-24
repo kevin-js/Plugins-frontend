@@ -285,6 +285,7 @@
 
     <div class="uk-margin-large-top uk-margin-left uk-margin-right uk-clearfix">
       <h4 class="uk-position-relative uk-margin-right uk-float-left norwester">Results</h4>
+      <div class="uk-position-relative uk-float-right uk-margin-left"><button class="uk-button button-lt" href="#modal-import" uk-toggle>Import</button></div>
       <div class="uk-position-relative uk-float-right"><button class="uk-button button-lt" href="#modal-new-alum" uk-toggle>Add to Database</button></div>
     </div>
 
@@ -406,6 +407,92 @@
     </div>
     <div class="uk-margin-large"></div>
     <%- include('footer'); %>  
+  </div>
+
+  <!--Import Modal Group-->
+  <div id="modal-user-batch-import">
+    <div id="modal-import" uk-modal>
+      <div class="uk-modal-dialog fog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header fog">
+          <h2 class="uk-modal-title">Import</h2>
+        </div>
+        <div class="uk-modal-body">
+          <h5>Part 1: Select a file to import into the database.</h5>
+          <div class="uk-margin" uk-margin>
+            <div uk-form-custom="target: true">
+              <input id="user_import_file" type="file">
+              <input class="uk-input uk-form-width-large uk-margin-bottom" type="text" placeholder="Click here to select a file" disabled>
+            </div>
+            <a href="#modal-import2" class="uk-button button-dk" uk-toggle v-on:click="generateUserPreview">Next</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-import2" class="uk-modal-full" uk-modal>
+      <div class="uk-modal-dialog fog" uk-height-viewport>
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header fog">
+          <h2 class="uk-modal-title">Import</h2>
+        </div>
+        <div class="uk-modal-body">
+          <h5>Part 2: Preview and confirm the import.</h5>
+          <div class="uk-overflow-auto">
+            <table class="uk-table uk-table-striped uk-text-nowrap">
+              <thead>
+                <tr>
+                  <th v-for="field in previewFields">{{ field }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="user in previewUsers">
+                  <td v-for="userField in user">{{ userField }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="uk-modal-footer fog uk-text-left">
+          <button class="uk-button button-dk" type="button" v-on:click="batchImportUsers">Import Data</button>
+          <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <!--END: Import Modal Group-->
+
+    <!-- Import Started Alert  -->
+    <div class="uk-margin uk-margin-right uk-margin-left uk-hidden">
+      <div class="uk-alert-primary uk-width-1-1 uk-padding" uk-alert>
+        <button class="uk-alert-close" type="button" uk-close></button>
+        <span><strong>Import In Progress <span uk-icon="check"></span></strong><br>
+        Depending on the size of your upload, this can take up to 20 minutes. Please refrain from making any changes while processing. We will notify when it's finished.</span>
+      </div>
+    </div>
+    <!-- End Import Started Alert -->
+
+    <!-- Import Completed Successfully Alert  -->
+    <div class="uk-margin uk-margin-right uk-margin-left uk-hidden">
+      <div class="uk-alert-success uk-width-1-1" uk-alert>
+        <button class="uk-alert-close" type="button" uk-close></button>
+        <h5><strong>Import Completed Successfully! <span uk-icon="happy"></span></strong></h5>
+      </div>
+    </div>
+    <!-- End Import Completed Successfully Alert-->
+
+    <!-- Import Error Alert  -->
+    <div class="uk-margin uk-margin-right uk-margin-left uk-hidden">
+      <div class="uk-alert-danger uk-width-1-1 font-red" uk-alert>
+        <button class="uk-alert-close" type="button" uk-close></button>
+        <h5><strong> Import Error <span uk-icon="warning"></span></strong></h5>
+        <span>We encountered a problem while importing your data. Please make the following corrections and try again:</br>
+        <ul id="import_errors" class="font-small">
+          <li class="font-red">Error Description Goes Here</li>
+          <li class="font-red">Error Description Goes Here</li>
+        </ul>
+      </div>
+    </div>
+    <!-- End Import Error Alert-->
   </div>
 
   <!-- Add alumni to database Modal -->
@@ -776,6 +863,56 @@
               alert('There was an error processing your request. Please try again');
             });
         }
+      }
+    });
+
+    var userBatchImportModal = new Vue({
+      el: '#modal-user-batch-import',
+      data: {
+        previewUsers: [],
+        previewFields: []
+      },
+      methods: {
+        generateUserPreview: function() {
+          // todo: given uploaded file input, parse fields and sample records to populate previewFields/previewUsers
+          var userImportFile = $('#user_import_file')[0].files[0];
+          if (FileReader) {
+            var fileReader = new FileReader();
+            var self = this;
+            fileReader.onload = function(e) {
+
+              var lines = e.target.result.split(/\r\n|\n/);
+              self.previewFields = lines[0].split(',');
+
+              // cutoff at only 5 samples max
+              for (var i = 1; i < Math.floor(lines.length, 5); i++) {
+                var user = {};
+                var vals = lines[i].split(',');
+                for (var j = 0; j < vals.length; j++) {
+                  user[self.previewFields[j]] = vals[j];
+                }
+                self.previewUsers.push(user);
+              }
+            };
+            fileReader.readAsText(userImportFile);
+          } else {
+            alert('Unfortunately this browser does not support generating user previews.');
+          }
+        },
+        batchImportUsers: function() {
+          var formData = new FormData();
+          var userImportFile = $('#user_import_file')[0].files[0];
+          formData.append('user_import_file', userImportFile);
+
+          axios.post('/api/batch-import-users', formData)
+            .then(function(data) {
+              alert('Users batch imported successfully.');
+              UIkit.modal('#modal-import2').hide();
+            })
+            .catch(function(err) {
+              alert('There was an issue importing the users. Please try again');
+            });
+        }        
       }
     });
   </script>
