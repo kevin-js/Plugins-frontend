@@ -421,7 +421,7 @@
           <h5>Part 1: Select a file to import into the database.</h5>
           <div class="uk-margin" uk-margin>
             <div uk-form-custom="target: true">
-              <input id="user_import_file" type="file">
+              <input id="user_import_file" type="file" accept=".csv">
               <input class="uk-input uk-form-width-large uk-margin-bottom" type="text" placeholder="Click here to select a file" disabled>
             </div>
             <a href="#modal-import2" class="uk-button button-dk" uk-toggle v-on:click="generateUserPreview">Next</a>
@@ -880,7 +880,9 @@
       },
       methods: {
         generateUserPreview: function() {
-          // todo: given uploaded file input, parse fields and sample records to populate previewFields/previewUsers
+          this.previewUsers = [];
+          this.previewFields = [];
+          
           var userImportFile = $('#user_import_file')[0].files[0];
           if (FileReader) {
             var fileReader = new FileReader();
