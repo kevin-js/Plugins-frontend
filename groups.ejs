@@ -7,9 +7,9 @@
 <body>
   <%- include('top-navigation'); %>
   
-<div class="uk-hidden@m">
-<br><br><br><br><br><br>
-</div>
+  <div class="uk-hidden@m">
+    <br><br><br><br><br><br>
+  </div>
 
 <div id="app">
   <div class="uk-padding uk-clearfix">
@@ -151,7 +151,7 @@
 <div id="search-dashboard" class="uk-card uk-card-default uk-margin-large-top uk-margin-right uk-margin-left">
   <div id="groups-overview" class="uk-card-header container-top uk-clearfix">
     <div class="uk-float-right uk-visible@m">
-      <select class="uk-select border-charcoal2 uk-inline uk-width-small" v-model="pageSize">
+      <select class="uk-select border-charcoal2 uk-inline uk-width-small" v-model.number="pageSize">
           <option>10</option>
           <option>20</option>
           <option>50</option>
@@ -209,7 +209,7 @@
   <ul class="uk-pagination uk-flex-center uk-margin-remove">
   <li><a v-on:click="paginateLeft"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
   <li><div>
-      <select class="uk-select border-charcoal2" v-model="pageNumber">
+      <select class="uk-select border-charcoal2" v-model.number="pageNumber">
           <option v-for="page in Array(pageCount).keys()">{{ page + 1 }}</option>
       </select>
   </div></li>
@@ -247,6 +247,12 @@
       },
       pageCount: function() {
         return Math.ceil(this.sortedGroups.length / this.pageSize);
+      }
+    },
+    watch: {
+      // if page size changes, display new results from beginning; change if not desired behavior
+      pageSize: function(newValue, oldValue) {
+        this.pageNumber = 1;
       }
     },
     methods: {

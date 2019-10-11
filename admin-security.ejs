@@ -62,7 +62,7 @@
               <li><a v-on:click="rolePaginateLeft"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
               <li>
                 <div>
-                  <select class="uk-select border-charcoal2" v-model="rolePageNumber">
+                  <select class="uk-select border-charcoal2" v-model.number="rolePageNumber">
                     <option v-for="page in Array(rolePageCount).keys()">{{ page + 1 }}</option>
                   </select>
                 </div>
@@ -144,7 +144,7 @@
               <li><a v-on:click="userPaginateLeft"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
               <li>
                 <div>
-                  <select class="uk-select border-charcoal2" v-model="userPageNumber">
+                  <select class="uk-select border-charcoal2" v-model.number="userPageNumber">
                     <option v-for="page in Array(userPageCount).keys()">{{ page + 1}}</option>
                   </select>
                 </div>
@@ -235,7 +235,7 @@
               <li><a v-on:click="userRolesPaginateLeft"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
               <li>
                 <div>
-                  <select class="uk-select border-charcoal2" v-model="userRolesPageNumber">
+                  <select class="uk-select border-charcoal2" v-model.number="userRolesPageNumber">
                     <option v-for="page in Array(userRolesPageCount).keys()">{{ page + 1 }}</option>
                   </select>
                 </div>
@@ -306,6 +306,15 @@
         },
         userRolesPageCount: function() {
           return Math.ceil(this.filteredUserRoles.length / this.userRolesPageSize);
+        }
+      },
+      watch: {
+        // if page size changes, display new results from beginning; change if not desired behavior
+        userPageSize: function(newValue, oldValue) {
+          this.userPageNumber = 1;
+        },
+        rolePageSize: function(newValue, oldValue) {
+          this.rolePageNumber = 1;
         }
       },
       methods: {
