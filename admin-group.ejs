@@ -132,7 +132,7 @@
 
       <div class="uk-modal-body" uk-overflow-auto>
         <label class="uk-form-label" for="form-stacked-text">Current Leader:</label>
-          <div class="uk-form-controls" v-if="selectedGroup">
+          <div class="uk-form-controls" v-if="selectedGroup && selectedGroup.groupOwner">
             <p>{{ selectedGroup.groupOwner.name }}</p>
           </div>
         <hr>
