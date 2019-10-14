@@ -424,7 +424,7 @@
               <input id="user_import_file" type="file" accept=".csv">
               <input class="uk-input uk-form-width-large uk-margin-bottom" type="text" placeholder="Click here to select a file" disabled>
             </div>
-            <a href="#modal-import2" class="uk-button button-dk" uk-toggle v-on:click="generateUserPreview">Next</a>
+            <a class="uk-button button-dk" v-on:click="generateUserPreview">Next</a>
           </div>
         </div>
       </div>
@@ -884,6 +884,10 @@
           this.previewFields = [];
           
           var userImportFile = $('#user_import_file')[0].files[0];
+          if (!userImportFile) {
+            alert('Please select a file to import.');
+            return;
+          }
           if (FileReader) {
             var fileReader = new FileReader();
             var self = this;
@@ -893,7 +897,7 @@
               self.previewFields = lines[0].split(',');
 
               // cutoff at only 5 samples max
-              for (var i = 1; i < Math.floor(lines.length, 5); i++) {
+              for (var i = 1; i < Math.min(lines.length, 5); i++) {
                 var user = {};
                 var vals = lines[i].split(',');
                 for (var j = 0; j < vals.length; j++) {
@@ -903,6 +907,8 @@
               }
             };
             fileReader.readAsText(userImportFile);
+            UIkit.modal('#modal-import').hide();
+            UIkit.modal('#modal-import2').show();
           } else {
             alert('Unfortunately this browser does not support generating user previews.');
           }
