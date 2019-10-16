@@ -31,7 +31,7 @@
 
   <div class="uk-card uk-card-default uk-margin-top uk-margin-right uk-margin-left">
     <div class="uk-card-header container-top uk-clearfix">
-      <p class="font-white float-left uk-inline"> Showing <span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.floor( filteredGroups.length, pageNumber * pageSize) }}</span> of <span id="table_total">{{ groups.length }}</span></p>
+      <p class="font-white float-left uk-inline"> Showing <span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.min( filteredGroups.length, pageNumber * pageSize) }}</span> of <span id="table_total">{{ groups.length }}</span></p>
       <div class="uk-float-right uk-visible@m">
         <select class="uk-select border-charcoal2 uk-inline uk-width-small" v-model.number="pageSize">
           <option>10</option>

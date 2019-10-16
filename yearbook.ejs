@@ -174,7 +174,7 @@
 <!-- YEARBOOK PAGINATION -->
 <div class="uk-grid-small uk-child-width-expand@s uk-margin uk-margin-right uk-margin-small-left uk-padding-small uk-clearfix" uk-grid>
   <div>
-    <p class="uk-flex-left uk-visible@m"><span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.floor( filteredUsers.length, pageNumber * pageSize) }}</span> of <span id="table_total">{{ filteredUsers.length }}</span></p>
+    <p class="uk-flex-left uk-visible@m"><span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.min( filteredUsers.length, pageNumber * pageSize) }}</span> of <span id="table_total">{{ filteredUsers.length }}</span></p>
   </div>
 
   <div>
