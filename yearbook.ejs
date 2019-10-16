@@ -143,7 +143,7 @@
 
 <!-- Start of yearbook card view/listing -->
 <div class="uk-child-width-1-3@m uk-margin uk-margin-medium-right uk-margin-left uk-grid-match uk-grid-small" uk-grid>
-  <div v-for="user in displayUsers" :key="user.id">
+  <div v-for="user in users" :key="user.id">
     <a style="text-decoration: none !important;" uk-toggle="target: #profile-preview" v-on:click="renderProfilePreview(user)">
     <div class="uk-card uk-card-default">
         <div class="uk-card-media-top uk-height-large uk-cover-container">
@@ -174,7 +174,7 @@
 <!-- YEARBOOK PAGINATION -->
 <div class="uk-grid-small uk-child-width-expand@s uk-margin uk-margin-right uk-margin-small-left uk-padding-small uk-clearfix" uk-grid>
   <div>
-    <p class="uk-flex-left uk-visible@m"><span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.min( filteredUsers.length, pageNumber * pageSize) }}</span> of <span id="table_total">{{ filteredUsers.length }}</span></p>
+    <p class="uk-flex-left uk-visible@m"><span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.min( totalUserCount, pageNumber * pageSize) }}</span> of <span id="table_total">{{ totalUserCount }}</span></p>
   </div>
 
   <div>
@@ -195,7 +195,7 @@
   <div>
     <div class="uk-float-right uk-visible@m">
       <select class="uk-select border-charcoal2 uk-inline uk-width-small" v-model.number="pageSize">
-        <option>15</option>
+        <option><%= defaultPageSize %></option>
         <option>60</option>
         <option>90</option>
       </select>
@@ -246,9 +246,8 @@
 
 <%- include('footer'); %>
 </div>
+
 <script type="text/javascript">
-  // todo: perhaps should async load users to improve time to first byte,
-  // should also paginate here instead of loading all users
   var app = new Vue({
     el: '#app',
     data: {
@@ -256,51 +255,60 @@
       gradYear: 'All',
       hofOnly: false,
       users: <%- JSON.stringify(users) %>,
-      filteredUsers: <%- JSON.stringify(users) %>,
+      totalUserCount: <%= userCount %>,
       selectedUser: {},
       pageNumber: 1,
-      pageSize: 15
+      pageSize: <%= defaultPageSize %>
     },
     computed: {
-      displayUsers: function() {
-        var startEl = (this.pageNumber - 1) * this.pageSize;
-        return this.filteredUsers.slice(startEl, startEl + this.pageSize);
-      },
       pageCount: function() {
-        return Math.ceil(this.filteredUsers.length / this.pageSize);
+        return Math.ceil(this.totalUserCount / this.pageSize);
       }
     },
     watch: {
       // if page size changes, display new results from beginning; change if not desired behavior
       pageSize: function(newValue, oldValue) {
-        this.pageNumber = 1;
+        if (this.pageNumber == 1) {
+          this.refreshResults();
+        } else {
+          this.pageNumber = 1;  
+        }
+      },
+      pageNumber: function(newValue, oldValue) {
+        this.refreshResults();
       }
     },
     methods: {
+      refreshResults: function() {
+        var self = this;
+        axios.get('/api/users-paginated?page=' + this.pageNumber 
+          + '&pageSize=' + this.pageSize
+          + '&searchName=' + this.searchName
+          + '&gradYear=' + this.gradYear
+          + '&hofOnly=' + this.hofOnly)
+          .then(function(data) {
+            if (data.data) {
+              self.users = data.data['users'];
+              self.totalUserCount = data.data['count'];
+            }
+          })
+          .catch(function(err) {
+            alert('There was an issue updating your search results. Please try again');
+          });
+      },
       paginateLeft: function() {
         if (this.pageNumber > 1) this.pageNumber--;
       },
       paginateRight: function() {
         if (this.pageNumber < this.pageCount) this.pageNumber++;
+
       },
       updateResults: function() {
-        var self = this;
-        this.filteredUsers = this.users.filter(function(user) {
-          if (self.hofOnly) {
-            return user.isHallOfFame;
-          }
-          return true;
-        }).filter(function(user) {
-          if (self.gradYear !== 'All') {
-            return user.graduation_year == self.gradYear;
-          }
-          return true;
-        }).filter(function(user) {
-          if (self.searchName) {
-            return user.name && user.name.toLowerCase().indexOf(self.searchName.toLowerCase()) !== -1;
-          }
-          return true;
-        });
+        if (this.pageNumber == 1) {
+          this.refreshResults();
+        } else {
+          this.pageNumber = 1;  
+        }
       },
       renderProfilePreview: function(user) {
         this.selectedUser = user;

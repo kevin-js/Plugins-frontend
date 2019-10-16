@@ -13,77 +13,77 @@
 
 <div id="app">
   <div class="uk-padding uk-clearfix">
-  <h3 class="uk-position-relative uk-margin uk-margin-right uk-float-left norwester">Groups</h3>
-  <div class="uk-position-relative uk-float-right"><button class="uk-button button-dk" href="#request-modal" uk-toggle>Request</button></div>
+    <h3 class="uk-position-relative uk-margin uk-margin-right uk-float-left norwester">Groups</h3>
+    <div class="uk-position-relative uk-float-right"><button class="uk-button button-dk" href="#request-modal" uk-toggle>Request</button></div>
 
-  <div id="request-modal" uk-modal>
-  <div class="uk-modal-dialog uk-modal-body fog">
-    <button class="uk-modal-close-default" type="button" uk-close></button>
-      <h2 class="uk-modal-title">Request a Group</h2>
-      <form>
-        <div class="uk-margin">
-          <span class="profile-label">*Group Name</span>
-          <input class="uk-input" type="text" v-model="requestedGroupName">
-        </div>
-        <div class="uk-margin">
-          <span class="profile-label">*Group Description</span>
-          <input class="uk-input" type="text" v-model="requestedGroupDescription">
-        </div>
-        <div class="uk-margin">
-          <span class="profile-label">*Reason for Request</span>
-          <textarea class="uk-textarea" rows="5" placeholder="Please summarize the purpose of this group." v-model="requestReason"></textarea>
-        </div>
-      </form>
+    <div id="request-modal" uk-modal>
+      <div class="uk-modal-dialog uk-modal-body fog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+          <h2 class="uk-modal-title">Request a Group</h2>
+          <form>
+            <div class="uk-margin">
+              <span class="profile-label">*Group Name</span>
+              <input class="uk-input" type="text" v-model="requestedGroupName">
+            </div>
+            <div class="uk-margin">
+              <span class="profile-label">*Group Description</span>
+              <input class="uk-input" type="text" v-model="requestedGroupDescription">
+            </div>
+            <div class="uk-margin">
+              <span class="profile-label">*Reason for Request</span>
+              <textarea class="uk-textarea" rows="5" placeholder="Please summarize the purpose of this group." v-model="requestReason"></textarea>
+            </div>
+          </form>
 
-      <p class="uk-text-left">
-          <button class="uk-button button-dk" type="button" v-on:click="requestGroup">Submit</button>
-          <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
-      </p>
-  </div>
-  </div>
+          <p class="uk-text-left">
+            <button class="uk-button button-dk" type="button" v-on:click="requestGroup">Submit</button>
+            <button class="uk-button button-lt uk-modal-close" type="button">Cancel</button>
+          </p>
+      </div>
+    </div>
   </div>
 
   <!-- Member Detail Modal -->
   <div id="modal-group-details" class="uk-modal-full" uk-modal>
-  <div class="uk-modal-dialog fog uk-padding" uk-overflow-auto uk-height-viewport>
-      <button class="uk-modal-close-full uk-close-large fog" type="button" uk-close></button>
-    <h3 class="norwester font-black uk-text-center uk-padding">Member Details</h3>
-    <div v-if="selectedGroup != null">
-      <div class="uk-container border-charcoal white uk-margin" v-for="user in selectedGroup.users">
-        <div class="uk-grid-match uk-margin-remove uk-flex-top uk-padding" uk-grid v-if="user.isPublic">
-        <div class="uk-width-1-3@m">
-            <h4 class="norwester font-black">{{ user.name }}</h4>
-            <img class="uk-border-rounded uk-height-small uk-width-auto" v-bind:src="'/api/photo/' + user.profilePhotoRef" v-if="user.profilePhotoRef != null">
+    <div class="uk-modal-dialog fog uk-padding" uk-overflow-auto uk-height-viewport>
+        <button class="uk-modal-close-full uk-close-large fog" type="button" uk-close></button>
+      <h3 class="norwester font-black uk-text-center uk-padding">Member Details</h3>
+      <div v-if="selectedGroup != null">
+        <div class="uk-container border-charcoal white uk-margin" v-for="user in selectedGroup.users">
+          <div class="uk-grid-match uk-margin-remove uk-flex-top uk-padding" uk-grid v-if="user.isPublic">
+          <div class="uk-width-1-3@m">
+              <h4 class="norwester font-black">{{ user.name }}</h4>
+              <img class="uk-border-rounded uk-height-small uk-width-auto" v-bind:src="'/api/photo/' + user.profilePhotoRef" v-if="user.profilePhotoRef != null">
+          </div>
+          <div class="uk-width-1-3@m">
+            <span class="profile-label">Email</span><br>
+            <a id="email" href="mailto:leslie_cole@gmail.com">{{ user.email }}</a><br><br>
+            <span class="profile-label">Home Phone</span><br>
+            <span id="home_phone" class="profile-field">{{ user.home_phone || '--' }}</span><br><br>
+            <span class="profile-label">Cell Phone</span><br>
+            <span id="mobile_phone" class="profile-field">{{ user.cell_phone || '--' }}</span><br><br>
+            <span class="profile-label">Birthday</span><br>
+            <span id="birthday" class="profile-field">{{ user.birthday || '--' }}</span>
+          </div>
+          <div class="uk-width-1-3@m">
+            <span class="profile-label">Marital Status</span>
+            <span id="marital_status" class="profile-field">{{ user.marital_status || '--' }}</span><br>
+            <span class="profile-label">Address</span><br>
+            <span>
+            <span id="address_line1" class="profile-field">{{ user.address_line_1 }}</span><br>
+            <span id="address_line2" class="profile-field">{{ user.address_line_2 }}</span><br>
+            <span id="city" class="profile-field">{{ user.city }}</span><span v-if="user.city">, </span><span id="state" class="profile-field">{{ user.state }} </span><span id="zip" class="profile-field">{{ user.zip_code }}</span>
+            </span>
+          </div>
+          </div>
+          <div class="uk-container uk-padding border-charcoal white uk-margin" v-else>
+            <h4 class="norwester font-black uk-text-center">{{ user.name }}</h4><br><br>
+            <h5 class="profile-label uk-text-center uk-margin"> <i class="fa fa-user-secret fa-3x"></i> <br><br>Profile is Private</h5>
+          </div>
         </div>
-        <div class="uk-width-1-3@m">
-          <span class="profile-label">Email</span><br>
-          <a id="email" href="mailto:leslie_cole@gmail.com">{{ user.email }}</a><br><br>
-          <span class="profile-label">Home Phone</span><br>
-          <span id="home_phone" class="profile-field">{{ user.home_phone || '--' }}</span><br><br>
-          <span class="profile-label">Cell Phone</span><br>
-          <span id="mobile_phone" class="profile-field">{{ user.cell_phone || '--' }}</span><br><br>
-          <span class="profile-label">Birthday</span><br>
-          <span id="birthday" class="profile-field">{{ user.birthday || '--' }}</span>
-        </div>
-        <div class="uk-width-1-3@m">
-          <span class="profile-label">Marital Status</span>
-          <span id="marital_status" class="profile-field">{{ user.marital_status || '--' }}</span><br>
-          <span class="profile-label">Address</span><br>
-          <span>
-          <span id="address_line1" class="profile-field">{{ user.address_line_1 }}</span><br>
-          <span id="address_line2" class="profile-field">{{ user.address_line_2 }}</span><br>
-          <span id="city" class="profile-field">{{ user.city }}</span><span v-if="user.city">, </span><span id="state" class="profile-field">{{ user.state }} </span><span id="zip" class="profile-field">{{ user.zip_code }}</span>
-          </span>
-        </div>
-        </div>
-        <div class="uk-container uk-padding border-charcoal white uk-margin" v-else>
-          <h4 class="norwester font-black uk-text-center">{{ user.name }}</h4><br><br>
-          <h5 class="profile-label uk-text-center uk-margin"> <i class="fa fa-user-secret fa-3x"></i> <br><br>Profile is Private</h5>
-        </div>
-      </div>
 
-    </div>
-    <br><br>
+      </div>
+      <br><br>
     </div>
   </div>
 
@@ -162,32 +162,32 @@
     <h4 class="norwester font-white">Groups Available<h5 class="font-white" id="group_count">({{ groups.length }})</h5></h4>
     </div>
   </div>
-<div class="charcoal uk-padding-small">
-      <form class="uk-width-1-1 uk-padding-small">
+  <div class="charcoal uk-padding-small">
+    <form class="uk-width-1-1 uk-padding-small">
       <div class="uk-form-controls uk-inline uk-width-1-3@m uk-margin-right uk-margin-bottom-small">
         <span class="uk-form-icon" uk-icon="icon: search"></span>
-          <input class="uk-input border-charcoal2" type="text" placeholder="Search by Group Name" v-model="searchText">
+        <input class="uk-input border-charcoal2" type="text" placeholder="Search by Group Name" v-model="searchText">
       </div>
       <div class="uk-inline uk-width-1-3@m uk-margin-right uk-margin-bottom-small">
-          <select class="uk-select border-charcoal2" v-model="sortMode">
-              <option value="alphabetical">Sort Alphabetically (A-Z)</option>
-              <option value="reverse">Sort Alphabetically (Z-A)</option>
-          </select>
+        <select class="uk-select border-charcoal2" v-model="sortMode">
+          <option value="alphabetical">Sort Alphabetically (A-Z)</option>
+          <option value="reverse">Sort Alphabetically (Z-A)</option>
+        </select>
       </div>
       <div class="uk-inline uk-float-right uk-margin-bottom-small">
-      <h5 class="font-white"><a class="font-white" v-on:click="filter">Redo Search</a></h5>
-    </div>
+        <h5 class="font-white"><a class="font-white" v-on:click="filter">Redo Search</a></h5>
+      </div>
     </form>
-    </div>
+  </div>
 
 <div class="uk-card-body white uk-padding-remove uk-margin-remove uk-width-1-1">
   <table class="uk-table uk-table-large uk-margin-remove uk-width-1-1 uk-overflow-auto">
     <thead class="uk-card-header white">
       <tr>
-          <th class="uk-table-shrink border-none uk-width-1-2 ">Group Name</th>
-          <th class="uk-table-shrink border-none"># of Members</th>
-          <th class="uk-table-shrink border-none">Actions</th>
-          <th class="uk-table-shrink border-none"></th>
+        <th class="uk-table-shrink border-none uk-width-1-2 ">Group Name</th>
+        <th class="uk-table-shrink border-none"># of Members</th>
+        <th class="uk-table-shrink border-none">Actions</th>
+        <th class="uk-table-shrink border-none"></th>
       </tr>
     </thead>
     <div class="uk-card-body white uk-padding-remove"></div>
@@ -206,16 +206,16 @@
     </tbody>
   </table>
   <div class="uk-padding-small black">
-  <ul class="uk-pagination uk-flex-center uk-margin-remove">
-  <li><a v-on:click="paginateLeft"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
-  <li><div>
-      <select class="uk-select border-charcoal2" v-model.number="pageNumber">
+    <ul class="uk-pagination uk-flex-center uk-margin-remove">
+      <li><a v-on:click="paginateLeft"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
+      <li><div>
+        <select class="uk-select border-charcoal2" v-model.number="pageNumber">
           <option v-for="page in Array(pageCount).keys()">{{ page + 1 }}</option>
-      </select>
-  </div></li>
-  <li class="font-white uk-margin-small">of  {{ pageCount }}</li>
-  <li><a v-on:click="paginateRight"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
-  </ul>
+        </select>
+      </div></li>
+      <li class="font-white uk-margin-small">of  {{ pageCount }}</li>
+      <li><a v-on:click="paginateRight"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
+    </ul>
   </div>
 </div>
 </div>
@@ -223,6 +223,7 @@
 </div>
 <div class="uk-margin-large"></div>
 <%- include('footer'); %>
+
 <script type="text/javascript">
   var app = new Vue({
     el: '#app',
