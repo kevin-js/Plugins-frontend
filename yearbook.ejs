@@ -12,8 +12,8 @@
 
 <div id="app">
 <div class="uk-margin uk-margin-large-right uk-margin-large-left">
-<h4 class="norwester"><i class="fa fa-filter"></i> &nbsp;Filters</h4>
-<hr class="table-border"></hr>
+  <h4 class="norwester"><i class="fa fa-filter"></i> &nbsp;Filters</h4>
+  <hr class="table-border"></hr>
 </div>
 
 <form class="uk-form-stacked uk-margin uk-margin-large-right uk-margin-large-left">
@@ -131,9 +131,9 @@
 
 <div class="uk-inline uk-margin-bottom uk-width-1-1 uk-width-1-4@m">
 <label class="uk-form-label norwester">Hall of Fame</label>
-<select class="uk-select border-charcoal2" v-model="hofOnly">
-  <option selected v-bind:value="false">Show All</option>
-  <option v-bind:value="true">Hall of Fame Only</option>
+<select class="uk-select border-charcoal2" v-model="hofStatus">
+  <option selected value="">Show All</option>
+  <option value="winner">Hall of Fame Only</option>
 </select>
 </div>
 
@@ -253,7 +253,7 @@
     data: {
       searchName: '',
       gradYear: 'All',
-      hofOnly: false,
+      hofStatus: '',
       users: <%- JSON.stringify(users) %>,
       totalUserCount: <%= userCount %>,
       selectedUser: {},
@@ -274,6 +274,7 @@
           this.pageNumber = 1;  
         }
       },
+      // todo: don't update page number if error on new page load
       pageNumber: function(newValue, oldValue) {
         this.refreshResults();
       }
@@ -285,7 +286,7 @@
           + '&pageSize=' + this.pageSize
           + '&searchName=' + this.searchName
           + '&gradYear=' + this.gradYear
-          + '&hofOnly=' + this.hofOnly)
+          + '&hofStatus=' + this.hofStatus)
           .then(function(data) {
             if (data.data) {
               self.users = data.data['users'];

@@ -160,10 +160,7 @@
             <label class="uk-form-label">Membership</label>
             <select class="uk-select border-charcoal2" v-model="searchMembership">
               <option value="" default> All </option>
-              <option value="free">Free</option>
-              <option value="annual">Annual</option>
-              <option value="lifetime">Lifetime</option>
-              <option value="lifetime_50_plus">Lifetime > 50 </option>
+              <option v-for="membershipType in membershipTypes" v-bind:value="membershipType.id">{{ membershipType.name }}</option>
             </select>
           </div>
 
@@ -171,7 +168,7 @@
             <label class="uk-form-label">Roles</label>
             <select class="uk-select border-charcoal2" v-model="searchRoles">
               <option value="" default>All</option>
-              <option v-for="role in roleOptions">{{ role.name }}</option>
+              <option v-for="role in roleOptions" v-bind:value="role.id">{{ role.name }}</option>
             </select>
           </div>
 
@@ -270,7 +267,7 @@
             <label class="uk-form-label">Groups</label>
             <select class="uk-select border-charcoal2" v-model="searchGroups">
               <option value="" default>All</option>
-              <option v-for="group in groupOptions">{{ group.group_name }}</option>
+              <option v-for="group in groupOptions" v-bind:value="group.id">{{ group.group_name }}</option>
             </select>
           </div>
 
@@ -289,11 +286,11 @@
 
     <div class="uk-card uk-card-default uk-margin-right uk-margin-left">
       <div class="uk-card-header container-top uk-clearfix">
-        <p class="font-white float-left uk-inline"> Showing <span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.min( filteredUsers.length, pageNumber * pageSize) }}</span> of <span id="table_total">{{ filteredUsers.length }}</span></p>
+        <p class="font-white float-left uk-inline"> Showing <span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.min( userCount, pageNumber * pageSize) }}</span> of <span id="table_total">{{ userCount }}</span></p>
 
         <div class="uk-float-right uk-visible@m">
           <select class="uk-select border-charcoal2 uk-inline uk-width-small" v-model.number="pageSize">
-            <option>10</option>
+            <option><%= defaultPageSize %></option>
             <option>50</option>
             <option>100</option>
           </select>
@@ -316,7 +313,7 @@
 
           <div class="uk-card-body white uk-padding-remove">
             <tbody>
-              <tr v-for="user in displayUsers" Key="user.id">
+              <tr v-for="user in users" Key="user.id">
                 <td class="table-border border-none font-small">
                   <p><span id="alum_name">{{ user.name || '--' }}</span><br><span id="alt_names">{{ user.nicknames || '--' }}</span><br><span id="grad_yr" v-if="user.graduation_year">Class of {{ user.graduation_year || '--' }}</span></p>
                 </td>
@@ -435,7 +432,7 @@
           <h2 class="uk-modal-title">Import</h2>
         </div>
         <div class="uk-modal-body">
-          <h5>Part 2: Preview and confirm the import.</h5>
+          <h5>Part 2: Preview and confirm the import. Note that this is only a sample of the overall dataset to be imported. {{ recordCount }} records will be imported.</h5>
           <div class="uk-overflow-auto">
             <table class="uk-table uk-table-striped uk-text-nowrap">
               <thead>
@@ -621,31 +618,68 @@
         searchMortalityStatus: '',
         searchHOFStatus: '',
         searchGroups: '',
+        userCount: <%= userCount %>,
         pageNumber: 1,
-        pageSize: 10,
+        pageSize: <%= defaultPageSize %>,
         groupOptions: <%- JSON.stringify(groups) %>,
         roleOptions: <%- JSON.stringify(roles) %>,
+        membershipTypes: <%- JSON.stringify(membershipTypes) %>,
         users: <%- JSON.stringify(userList) %>,
         filteredUsers: <%- JSON.stringify(userList) %>,
         selectedUserGroups: [],
         selectedUser: {}
       },
       computed: {
-        displayUsers: function() {
-          var startEl = (this.pageNumber - 1) * this.pageSize;
-          return this.filteredUsers.slice(startEl, startEl + this.pageSize);
-        },
         pageCount: function() {
-          return Math.ceil(this.filteredUsers.length / this.pageSize);
+          return Math.ceil(this.userCount / this.pageSize);
         }
       },
       watch: {
         // if page size changes, display new results from beginning; change if not desired behavior
         pageSize: function(newValue, oldValue) {
-          this.pageNumber = 1;
+          if (this.pageNumber == 1) {
+            this.refreshResults();
+          } else {
+            this.pageNumber = 1;
+          }
+        },
+        // todo: don't update page number if error on new page load
+        pageNumber: function(newValue, oldValue) {
+          this.refreshResults();
         }
       },
       methods: {
+        refreshResults: function() {
+          var self = this;
+          var queryString = '';
+          queryString += ('page=' + this.pageNumber);
+          queryString += ('&pageSize=' + this.pageSize);
+          queryString += ('&includeRelations=' + true);
+          if (this.searchName) queryString += ('&searchName=' + this.searchName);
+          if (this.searchGradYear) queryString += ('&gradYear=' + this.searchGradYear);
+          if (this.searchEmailAddress) queryString += ('&emailAddress=' + this.searchEmailAddress);
+          if (this.searchPhoneNumber) queryString += ('&phoneNumber=' + this.searchPhoneNumber);
+          if (this.searchMembership) queryString += ('&membershipType=' + this.searchMembership);
+          if (this.searchRoles) queryString += ('&roleId=' + this.searchRoles);
+          if (this.searchAddress) queryString += ('&address=' + this.searchAddress);
+          if (this.searchCity) queryString += ('&city=' + this.searchCity);
+          if (this.searchState) queryString += ('&state=' + this.searchState);
+          if (this.searchZipCode) queryString += ('&zip=' + this.searchZipCode);
+          if (this.searchMortalityStatus) queryString += ('&mortality=' + this.searchMortalityStatus);
+          if (this.searchHOFStatus) queryString += ('&hofStatus=' + this.searchHOFStatus);
+          if (this.searchGroups) queryString += ('&groupId=' + this.searchGroups);
+          
+          axios.get('/api/users-paginated?' + queryString)
+            .then(function(data) {
+              if (data.data) {
+                self.users = data.data['users'];
+                self.userCount = data.data['count'];
+              }
+            })
+            .catch(function(err) {
+              alert('There was an issue updating your search results. Please try again');
+            });
+        },
         paginateLeft: function() {
           if (this.pageNumber > 1) this.pageNumber--;
         },
@@ -668,69 +702,20 @@
           this.searchGroups = '';
         },
         redoSearch: function() {
-          var self = this;
-          this.filteredUsers = this.users
-          .filter(function(user) {
-            return self.searchName ? user.name && user.name.toLowerCase().indexOf(self.searchName.toLowerCase()) !== -1 : true;
-          })
-          .filter(function(user) {
-            return self.searchGradYear ? user.graduation_year == parseInt(self.searchGradYear) : true;
-          })
-          .filter(function(user) {
-            return self.searchEmailAddress ? (user.email && user.email.toLowerCase().indexOf(self.searchEmailAddress.toLowerCase()) !== -1) : true;
-          })
-          .filter(function(user) {
-            return self.searchPhoneNumber ? (user.home_phone && user.home_phone.indexOf(self.searchPhoneNumber) !== -1 || user.cell_phone && user.cell_phone.indexOf(self.searchPhoneNumber) !== -1) : true;
-          })
-          .filter(function(user) {
-            return self.searchMembership ? user.membership.membershipType.name.toLowerCase() === self.searchMembership.toLowerCase() : true;
-          })
-          .filter(function(user) {
-            return self.searchCity ? user.city && user.city.toLowerCase().indexOf(self.searchCity.toLowerCase()) !== -1 : true;
-          })
-          .filter(function(user) {
-            return self.searchState ? user.state && user.state.toLowerCase().indexOf(self.searchState.toLowerCase()) !== -1 : true;
-          })
-          .filter(function(user) {
-            return self.searchZipCode ? user.zip_code && user.zip_code == self.searchZipCode : true;
-          })
-          .filter(function(user) {
-            switch (self.searchMortalityStatus) {
-              case '':
-                return true;
-              case 'alive':
-                return !user.isDeceased;
-              case 'deceased':
-                return user.isDeceased;
-            }
-          })
-          .filter(function(user) {
-            switch (self.searchHOFStatus) {
-              case '':
-                return true;
-              case 'winner':
-                return user.isHallOfFame;
-              case 'non-winner':
-                return !user.isHallOfFame;  
-            }
-          })
-          .filter(function(user) {
-            return self.searchRoles ? user.roles.some(function(role) { return role.name == self.searchRoles; }) : true;
-          })
-          .filter(function(user) {
-            return self.searchGroups ? user.groups.some(function(group) { return group.group_name == self.searchGroups; }) : true;
-          })
-          .filter(function(user) {
-            return self.searchAddress ? (user.address_line_1 + ' ' + user.address_line_2).toLowerCase().indexOf(self.searchAddress.toLowerCase()) !== -1 : true;
-          });
+          this.pageNumber == 1 ?
+            this.refreshResults() :
+            this.pageNumber = 1;
         },
         setSelectedUser: function(user) {
           this.selectedUser = user;
         },
         deleteUser: function(user) {
+          var self = this;
           axios.delete('/api/user/' + user.id)
             .then(function(data) {
               UIkit.modal('#confirm-delete').hide();
+              self.users = self.users.filter(function(e) { return e.id !== user.id; });
+              self.userCount--;
             })
             .catch(function(err) {
               alert(err);
@@ -874,7 +859,8 @@
       el: '#modal-user-batch-import',
       data: {
         previewUsers: [],
-        previewFields: []
+        previewFields: [],
+        recordCount: 0
       },
       methods: {
         generateUserPreview: function() {
@@ -893,6 +879,7 @@
 
               var lines = e.target.result.split(/\r\n|\n/);
               self.previewFields = lines[0].split(',');
+              self.recordCount = lines.length - 1;
 
               // cutoff at only 5 samples max
               for (var i = 1; i < Math.min(lines.length, 5); i++) {
