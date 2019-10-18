@@ -53,7 +53,7 @@
           <div class="uk-grid-match uk-margin-remove uk-flex-top uk-padding" uk-grid v-if="user.isPublic">
           <div class="uk-width-1-3@m">
               <h4 class="norwester font-black">{{ user.name }}</h4>
-              <img class="uk-border-rounded uk-height-small uk-width-auto" v-bind:src="'/api/photo/' + user.profilePhotoRef" v-if="user.profilePhotoRef != null">
+              <img class="uk-border-rounded uk-height-small uk-width-auto" v-bind:src="user.profilePhotoRef ? '/api/photo/' + user.profilePhotoRef : '/profile_photo_placeholder.svg'">
           </div>
           <div class="uk-width-1-3@m">
             <span class="profile-label">Email</span><br>
@@ -116,30 +116,27 @@
         </tbody>
       </table>
     </div>
-  </div>
-
-  <div class="uk-child-width-1-2@m" uk-grid>
     <div id="participant-groups" class="uk-card uk-card-default">
-        <div class="uk-card-header container-top">
-          <h4 class="norwester font-white">Groups you Joined</h4>
-        </div>
-        <table class="uk-table uk-margin-remove group-table">
-          <tbody>
-            <td class="uk-clearfix" v-if="myParticipantGroups.length == 0">
-              <p>
-                <i>You are not currently a participant in any group.</i>
-              </p>
+      <div class="uk-card-header container-top">
+        <h4 class="norwester font-white">Groups you Joined</h4>
+      </div>
+      <table class="uk-table uk-margin-remove group-table">
+        <tbody>
+          <td class="uk-clearfix" v-if="myParticipantGroups.length == 0">
+            <p>
+              <i>You are not currently a participant in any group.</i>
+            </p>
+          </td>
+          <tr v-for="group in myParticipantGroups">
+            <td class="uk-clearfix">
+            <a href="#modal-group-details" uk-toggle v-on:click="setSelectedGroup(group)"><h4>{{ group.group_name %> }}</h4></a>
+            <h5 class="font-charcoal uk-position-relative">
+              <span class="uk-float-left"><span id="member_count">{{ group.users.length }}</span> Member<span v-if="group.users.length != 1">s</span></span>
+              <span class="uk-float-right"><a>Contact Leader</a> | <a v-on:click="leaveGroup(group)">Leave</a></span>
+            </h5>
             </td>
-            <tr v-for="group in myParticipantGroups">
-              <td class="uk-clearfix">
-              <a href="#modal-group-details" uk-toggle v-on:click="setSelectedGroup(group)"><h4>{{ group.group_name %> }}</h4></a>
-              <h5 class="font-charcoal uk-position-relative">
-                <span class="uk-float-left"><span id="member_count">{{ group.users.length }}</span> Member<span v-if="group.users.length != 1">s</span></span>
-                <span class="uk-float-right"><a>Contact Leader</a> | <a v-on:click="leaveGroup(group)">Leave</a></span>
-              </h5>
-              </td>
-            </tr>
-          </tbody>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>
