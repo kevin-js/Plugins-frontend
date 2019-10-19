@@ -85,7 +85,7 @@
               <option>Announcement</option>
               <option>Newsletter</option>
               <option>Event</option>
-              <option>Simple</option>
+              <option>Email</option>
             </select>
           </div>
 
@@ -114,11 +114,11 @@
 
     <div class="uk-card uk-card-default uk-margin-right uk-margin-left">
       <div class="uk-card-header container-top uk-clearfix">
-        <p class="font-white float-left uk-inline"> Showing <span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.min( filteredNews.length, pageNumber * pageSize) }}</span> of <span id="table_total">{{ filteredNews.length }}</span></p>
+        <p class="font-white float-left uk-inline"> Showing <span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.min( totalNewsCount, pageNumber * pageSize) }}</span> of <span id="table_total">{{ totalNewsCount }}</span></p>
 
         <div class="uk-float-right uk-visible@m">
           <select class="uk-select border-charcoal2 uk-inline uk-width-small" v-model.number="pageSize">
-            <option>10</option>
+            <option><%= defaultPageSize %></option>
             <option>50</option>
             <option>100</option>
           </select>
@@ -143,7 +143,7 @@
 
           <div class="uk-card-body white uk-padding-remove">
             <tbody>
-              <tr v-for="item in displayNews">
+              <tr v-for="item in news">
                 <td class="table-border border-none font-small">
                   {{ moment(item.createdAt).format('MM-DD-YYYY') }}
                 </td>
@@ -377,7 +377,7 @@
             <label class="uk-form-label">Roles</label>
             <select class="uk-select border-charcoal2" v-model="userSearchRoles">
               <option value="" default>All</option>
-              <option v-for="role in userRoleOptions">{{ role.name }}</option>
+              <option v-for="role in userRoleOptions" v-bind:value="role.id">{{ role.name }}</option>
             </select>
           </div>
 
@@ -476,7 +476,7 @@
             <label class="uk-form-label">Groups</label>
             <select class="uk-select border-charcoal2" v-model="userSearchGroups">
               <option value="" default>All</option>
-              <option v-for="group in userGroupOptions">{{ group.group_name }}</option>
+              <option v-for="group in userGroupOptions" v-bind:value="group.id">{{ group.group_name }}</option>
             </select>
           </div>
 
@@ -489,11 +489,11 @@
 
           <div class="uk-card uk-card-default uk-margin-large uk-margin-right uk-margin-left">
             <div class="uk-card-header container-top uk-clearfix">
-              <p class="font-white float-left uk-inline"> Showing <span id="table_start">{{ (pageNumber * pageSize) - (pageSize - 1) }}</span> - <span id="table_end">{{ Math.min( filteredUsers.length, pageNumber * pageSize) }}</span> of <span id="table_total">{{ filteredUsers.length }}</span></p>
+              <p class="font-white float-left uk-inline"> Showing <span id="table_start">{{ (userPageNumber * userPageSize) - (userPageSize - 1) }}</span> - <span id="table_end">{{ Math.min( totalUserCount, userPageNumber * userPageSize) }}</span> of <span id="table_total">{{ totalUserCount }}</span></p>
 
               <div class="uk-float-right uk-visible@m">
-                <select class="uk-select border-charcoal2 uk-inline uk-width-small" v-model.number="pageSize">
-                  <option>10</option>
+                <select class="uk-select border-charcoal2 uk-inline uk-width-small" v-model.number="userPageSize">
+                  <option><%= defaultPageSize %></option>
                   <option>50</option>
                   <option>100</option>
                 </select>
@@ -515,7 +515,7 @@
                 <div class="uk-card-body white uk-padding-remove"></div>
 
                 <tbody>
-                  <tr v-for="user in displayUsers">
+                  <tr v-for="user in users">
                     <td><input v-bind:id="'user-' + user.id" class="uk-checkbox" type="checkbox" v-on:click="updateRecipientList(user)"></td>
                     <td><span id="alum_name">{{ user.name }}</span></td>
                     <td><span id="alum_grad_yr">{{ user.graduation_year || '--' }}</span></td>
@@ -525,7 +525,7 @@
                     </td>
                     <td>
                       <span>
-                        <input v-for="role in user.roles" class="uk-input uk-form-small font-small uk-form-width-small" type="text" value="role.name" disabled>
+                        <input v-for="role in user.roles" class="uk-input uk-form-small font-small uk-form-width-small" type="text" v-bind:value="role.name" disabled>
                       </span>
                     </td>
                   </tr>
@@ -535,11 +535,11 @@
                 <ul class="uk-pagination uk-flex-center uk-margin-remove">
                 <li><a v-on:click="paginateLeft"><span uk-icon="icon: chevron-left; ratio: 2" class="font-white"></span></a></li>
                 <li><div>
-                  <select class="uk-select border-charcoal2" v-model.number="pageNumber">
-                    <option v-for="key in Array(pageCount).keys()">{{ key + 1 }}</option>
+                  <select class="uk-select border-charcoal2" v-model.number="userPageNumber">
+                    <option v-for="key in Array(userPageCount).keys()">{{ key + 1 }}</option>
                   </select>
                 </div></li>
-                <li class="font-white uk-margin-small">of {{ pageCount }}</li>
+                <li class="font-white uk-margin-small">of {{ userPageCount }}</li>
                 <li><a v-on:click="paginateRight"><span uk-icon="icon: chevron-right; ratio: 2" class="font-white"></span></a></li>
                 </ul>
               </div>
@@ -784,26 +784,51 @@
         searchType: '',
         searchStatus: '',
         news: <%- JSON.stringify(newsItems) %>,
-        filteredNews: <%- JSON.stringify(newsItems) %>,
+        totalNewsCount: <%= newsItemCount %>,
         pageNumber: 1,
-        pageSize: 10
+        pageSize: <%= defaultPageSize %>
       },
       computed: {
-        displayNews: function() {
-          var startEl = (this.pageNumber - 1) * this.pageSize;
-          return this.filteredNews.slice(startEl, startEl + this.pageSize);
-        },
         pageCount: function() {
-          return Math.ceil(this.filteredNews.length / this.pageSize);
+          return Math.ceil(this.totalNewsCount / this.pageSize);
         }
       },
       watch: {
         // if page size changes, display new results from beginning; change if not desired behavior
         pageSize: function(newValue, oldValue) {
-          this.pageNumber = 1;
+          this.pageNumber === 1 ?
+            this.refreshResults() :
+            this.pageNumber = 1;
+        },
+        pageNumber: function() {
+          this.refreshResults();
         }
       },
       methods: {
+        refreshResults: function() {
+          var self = this;
+          var queryString = '';
+          queryString += ('page=' + this.pageNumber);
+          queryString += ('&pageSize=' + this.pageSize);
+          if (this.searchDateCreatedStart) queryString += ('&createdDateStart=' + this.searchDateCreatedStart);
+          if (this.searchDateCreatedEnd) queryString += ('&createdDateEnd=' + this.searchDateCreatedEnd);
+          if (this.searchDateSentStart) queryString += ('&sentDateStart=' + this.searchDateSentStart);
+          if (this.searchDateSentEnd) queryString += ('&sentDateEnd=' + this.searchDateSentEnd);
+          if (this.searchSubject) queryString += ('&subject=' + this.searchSubject);
+          if (this.searchType) queryString += ('&type=' + this.searchType);
+          if (this.searchStatus) queryString += ('&status=' + this.searchStatus);
+          
+          axios.get('/api/news-paginated?' + queryString)
+            .then(function(data) {
+              if (data.data) {
+                self.news = data.data['news'];
+                self.totalNewsCount = data.data['count'];
+              }
+            })
+            .catch(function(err) {
+              alert('There was an issue updating your search results. Please try again');
+            });
+        },
         paginateLeft: function() {
           if (this.pageNumber > 1) this.pageNumber--;
         },
@@ -820,112 +845,12 @@
           this.searchStatus = '';
         },
         applyFilters: function() {
-          var self = this;
-          this.filteredNews = this.news
-            .filter(function(newsItem) {
-              try {
-                return self.searchDateCreatedStart && self.searchDateCreatedEnd ? (newsItem.createdAt >= self.searchDateCreatedStart && newsItem.createdAt <= self.searchDateCreatedEnd) : true;
-              } catch {
-                return false;
-              }
-            })
-            .filter(function(newsItem) {
-              try {
-                return self.searchDateSentStart && self.searchDateSentEnd ? (newsItem.publish_date >= self.searchDateSentStart && newsItem.publish_date <= self.searchDateSentEnd) : true;
-              } catch {
-                return false;
-              }
-            })
-            .filter(function(newsItem) {
-              try {
-                return self.searchSubject ? newsItem.headline.toLowerCase().indexOf(self.searchSubject.toLowerCase()) !== -1 : true;
-              } catch {
-                return false;
-              }
-            })
-            .filter(function(newsItem) {
-              return self.searchType ? newsItem.item_type.toLowerCase().indexOf(self.searchType.toLowerCase()) !== -1 : true;
-            })
-            .filter(function(newsItem) {
-              return self.searchStatus ? newsItem.status.toLowerCase().indexOf(self.searchStatus.toLowerCase()) !== -1 : true;
-            });
-          console.log(this.filteredNews);
+          this.pageNumber === 1 ?
+            this.refreshResults() :
+            this.pageNumber = 1;
         },
         exportData: function() {
-          function convertToCSV(objArray) {
-            var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-            var str = '';
-
-            for (var i = 0; i < array.length; i++) {
-              var line = '';
-              for (var index in array[i]) {
-                if (line != '') line += ','
-
-                line += array[i][index];
-              }
-
-              str += line + '\r\n';
-            }
-
-            return str;
-          }
-
-          function exportCSVFile(headers, items, fileTitle) {
-            if (headers) {
-              items.unshift(headers);
-            }
-
-            // Convert Object to JSON
-            var jsonObject = JSON.stringify(items);
-            var csv = convertToCSV(jsonObject);
-            var exportedFilename = fileTitle + '.csv' || 'export.csv';
-            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            
-            if (navigator.msSaveBlob) { // IE 10+
-              navigator.msSaveBlob(blob, exportedFilename);
-            } else {
-              var link = document.createElement("a");
-              if (link.download !== undefined) { // feature detection
-                // Browsers that support HTML5 download attribute
-                var url = URL.createObjectURL(blob);
-                link.setAttribute("href", url);
-                link.setAttribute("download", exportedFilename);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-              }
-            }
-          }
-
-          var headers = {
-            headline: 'headline',
-            content: 'content',
-            item_type: 'item_type',
-            view_count: 'view_count',
-            click_count: 'click_count',
-            bounce_count: 'bounce_count',
-            publish_date: 'publish_date',
-            status: 'status'
-          };
-
-          var formattedNews = [];
-
-          this.filteredNews.forEach(function(newsItem) {
-            formattedNews.push({
-              headline: newsItem.headline,
-              content: newsItem.content,
-              item_type: newsItem.item_type,
-              view_count: newsItem.view_count,
-              click_count: newsItem.click_count,
-              bounce_count: newsItem.bounce_count,
-              publish_date: newsItem.publish_date,
-              status: newsItem.status
-            });
-          });
-
-          var downloadedFilename = 'news-items';
-          exportCSVFile(headers, formattedNews, downloadedFilename);
+          alert('migrate to backend');
         }
       }
     });
@@ -946,12 +871,12 @@
         userSearchMortalityStatus: '',
         userSearchHOFStatus: '',
         userSearchGroups: '',
-        pageNumber: 1,
-        pageSize: 10,
+        userPageNumber: 1,
+        userPageSize: <%= defaultPageSize %>,
         userGroupOptions: <%- JSON.stringify(groups) %>,
         userRoleOptions: <%- JSON.stringify(roles) %>,
         users: <%- JSON.stringify(userList) %>,
-        filteredUsers: <%- JSON.stringify(userList) %>,
+        totalUserCount: <%= userCount %>,
         newsType: 'Email',
         newsHeader: '',
         newsBody: '',
@@ -961,77 +886,62 @@
         emailSendTime: null
       },
       computed: {
-        displayUsers: function() {
-          var startEl = (this.pageNumber - 1) * this.pageSize;
-          return this.filteredUsers.slice(startEl, startEl + this.pageSize);
+        userPageCount: function() {
+          return Math.ceil(this.totalUserCount / this.userPageSize);
+        }
+      },
+      watch: {
+        userPageSize: function(newValue, oldValue) {
+          this.userPageNumber === 1 ?
+            this.refreshResults() :
+            this.userPageNumber = 1;
         },
-        pageCount: function() {
-          return Math.ceil(this.filteredUsers.length / this.pageSize);
+        userPageNumber: function() {
+          this.refreshResults();
         }
       },
       methods: {
+        refreshResults: function() {
+          var self = this;
+          var queryString = '';
+          queryString += ('page=' + this.userPageNumber);
+          queryString += ('&pageSize=' + this.userPageSize);
+          queryString += ('&includeRelations=' + true);
+          if (this.userSearchName) queryString += ('&searchName=' + this.userSearchName);
+          if (this.userSearchGradYear) queryString += ('&gradYear=' + this.userSearchGradYear);
+          if (this.userSearchEmailAddress) queryString += ('&emailAddress=' + this.userSearchEmailAddress);
+          if (this.userSearchPhoneNumber) queryString += ('&phoneNumber=' + this.userSearchPhoneNumber);
+          if (this.userSearchMembership) queryString += ('&membershipType=' + this.userSearchMembership);
+          if (this.userSearchRoles) queryString += ('&roleId=' + this.userSearchRoles);
+          if (this.userSearchAddress) queryString += ('&address=' + this.userSearchAddress);
+          if (this.userSearchCity) queryString += ('&city=' + this.userSearchCity);
+          if (this.userSearchState) queryString += ('&state=' + this.userSearchState);
+          if (this.userSearchZipCode) queryString += ('&zip=' + this.userSearchZipCode);
+          if (this.userSearchMortalityStatus) queryString += ('&mortality=' + this.userSearchMortalityStatus);
+          if (this.userSearchHOFStatus) queryString += ('&hofStatus=' + this.userSearchHOFStatus);
+          if (this.userSearchGroups) queryString += ('&groupId=' + this.userSearchGroups);
+          
+          axios.get('/api/users-paginated?' + queryString)
+            .then(function(data) {
+              if (data.data) {
+                self.users = data.data['users'];
+                self.totalUserCount = data.data['count'];
+              }
+            })
+            .catch(function(err) {
+              alert('There was an issue updating your search results. Please try again');
+            });
+        },
         paginateLeft: function() {
-          if (this.pageNumber > 1) this.pageNumber--;
+          if (this.userPageNumber > 1) this.userPageNumber--;
         },
         paginateRight: function() {
-          if (this.pageNumber < this.pageCount) this.pageNumber++;
+          if (this.userPageNumber < this.userPageCount) this.userPageNumber++;
         },
         redoSearch: function() {
-          var self = this;
-          this.filteredUsers = this.users
-          .filter(function(user) {
-            return self.userSearchName ? user.name && user.name.toLowerCase().indexOf(self.userSearchName.toLowerCase()) !== -1 : true;
-          })
-          .filter(function(user) {
-            return self.userSearchGradYear ? user.graduation_year == parseInt(self.userSearchGradYear) : true;
-          })
-          .filter(function(user) {
-            return self.userSearchEmailAddress ? (user.email && user.email.toLowerCase().indexOf(self.userSearchEmailAddress.toLowerCase()) !== -1) : true;
-          })
-          .filter(function(user) {
-            return self.userSearchPhoneNumber ? (user.home_phone && user.home_phone.indexOf(self.userSearchPhoneNumber) !== -1 || user.cell_phone && user.cell_phone.indexOf(self.userSearchPhoneNumber) !== -1) : true;
-          })
-          .filter(function(user) {
-            return self.userSearchMembership ? user.membership.membership_type === self.userSearchMembership : true;
-          })
-          .filter(function(user) {
-            return self.userSearchCity ? user.city && user.city.toLowerCase().indexOf(self.userSearchCity.toLowerCase()) !== -1 : true;
-          })
-          .filter(function(user) {
-            return self.userSearchState ? user.state && user.state.toLowerCase().indexOf(self.userSearchState.toLowerCase()) !== -1 : true;
-          })
-          .filter(function(user) {
-            return self.userSearchZipCode ? user.zip_code && user.zip_code == self.userSearchZipCode : true;
-          })
-          .filter(function(user) {
-            switch (self.userSearchMortalityStatus) {
-              case '':
-                return true;
-              case 'alive':
-                return !user.isDeceased;
-              case 'deceased':
-                return user.isDeceased;
-            }
-          })
-          .filter(function(user) {
-            switch (self.userSearchHOFStatus) {
-              case '':
-                return true;
-              case 'winner':
-                return user.isHallOfFame;
-              case 'non-winner':
-                return !user.isHallOfFame;  
-            }
-          })
-          .filter(function(user) {
-            return self.userSearchRoles ? user.roles.some(function(role) { return role.name == self.userSearchRoles; }) : true;
-          })
-          .filter(function(user) {
-            return self.userSearchGroups ? user.groups.some(function(group) { return group.group_name == self.userSearchGroups; }) : true;
-          })
-          .filter(function(user) {
-            return self.userSearchAddress ? (user.address_line_1 + ' ' + user.address_line_2).toLowerCase().indexOf(self.userSearchAddress.toLowerCase()) !== -1 : true;
-          });
+          this.userPageNumber === 1 ?
+            this.refreshResults() :
+            this.userPageNumber = 1;
         },
         createNewsItem: function() {
           var self = this;
@@ -1167,7 +1077,7 @@
           this.newsRecipients.includes(user) ? this.newsRecipients.splice(this.newsRecipients.indexOf(user)) : this.newsRecipients.push(user);
         },
         selectAll: function() {
-          this.displayUsers.forEach(function(user) {
+          this.users.forEach(function(user) {
             $('#user-' + user.id).click();
           })
         },
