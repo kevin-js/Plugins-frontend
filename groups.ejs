@@ -149,14 +149,14 @@
   <div id="groups-overview" class="uk-card-header container-top uk-clearfix">
     <div class="uk-float-right uk-visible@m">
       <select class="uk-select border-charcoal2 uk-inline uk-width-small" v-model.number="pageSize">
-          <option>10</option>
+          <option><%= defaultPageSize %></option>
           <option>20</option>
           <option>50</option>
       </select>
       <span class="font-white">&nbsp;per page</span>
     </div>
     <div class="uk-grid-small uk-flex-middle" uk-grid>
-    <h4 class="norwester font-white">Groups Available<h5 class="font-white" id="group_count">({{ groups.length }})</h5></h4>
+    <h4 class="norwester font-white">Groups Available<h5 class="font-white" id="group_count">({{ totalGroupCount }})</h5></h4>
     </div>
   </div>
   <div class="charcoal uk-padding-small">
@@ -172,7 +172,7 @@
         </select>
       </div>
       <div class="uk-inline uk-float-right uk-margin-bottom-small">
-        <h5 class="font-white"><a class="font-white" v-on:click="filter">Redo Search</a></h5>
+        <h5 class="font-white"><a class="font-white" v-on:click="redoSearch">Redo Search</a></h5>
       </div>
     </form>
   </div>
@@ -189,7 +189,7 @@
     </thead>
     <div class="uk-card-body white uk-padding-remove"></div>
     <tbody>
-      <tr v-for="group in displayGroups" :key="group.id">
+      <tr v-for="group in groups" :key="group.id">
         <td class="table-border border-none">
           <span id="group_name">{{ group.group_name }}</span>
         </td>
@@ -225,12 +225,12 @@
   var app = new Vue({
     el: '#app',
     data: {
-      groups: <%- JSON.stringify(groups) %>,
-      sortedGroups: <%- JSON.stringify(groups) %>,
-      myLeaderGroups: <%- JSON.stringify(leaderGroups) %>,
-      myParticipantGroups: <%- JSON.stringify(participantGroups) %>,
+      groups: <%- JSON.stringify(groups) || [] %>,
+      totalGroupCount: <%= groupCount %>,
+      myLeaderGroups: <%- JSON.stringify(leaderGroups) || [] %>,
+      myParticipantGroups: <%- JSON.stringify(participantGroups) || [] %>,
       pageNumber: 1,
-      pageSize: 10,
+      pageSize: <%= defaultPageSize %>,
       sortMode: 'alphabetical',
       searchText: '',
       requestedGroupName: '',
@@ -239,21 +239,41 @@
       selectedGroup: null
     },
     computed: {
-      displayGroups: function() {
-        var startEl = (this.pageNumber - 1) * this.pageSize;
-        return this.sortedGroups.slice(startEl, startEl + this.pageSize);
-      },
       pageCount: function() {
-        return Math.ceil(this.sortedGroups.length / this.pageSize);
+        return Math.ceil(this.totalGroupCount / this.pageSize);
       }
     },
     watch: {
       // if page size changes, display new results from beginning; change if not desired behavior
       pageSize: function(newValue, oldValue) {
-        this.pageNumber = 1;
+        this.pageNumber === 1 ?
+          this.refreshResults() :
+          this.pageNumber = 1;
+      },
+      pageNumber: function() {
+        this.refreshResults();
       }
     },
     methods: {
+      refreshResults: function() {
+        var self = this;
+        var queryString = '';
+        queryString += ('page=' + this.pageNumber);
+        queryString += ('&pageSize=' + this.pageSize);
+        queryString += ('&sortAlphabetical=' + (this.sortMode === 'alphabetical'));
+        if (this.searchText) queryString += ('&groupName=' + this.searchText);
+
+        axios.get('/api/groups-paginated?' + queryString)
+          .then(function(data) {
+            if (data.data) {
+              self.groups = data.data['groups'];
+              self.totalGroupCount = data.data['count'];
+            }
+          })
+          .catch(function(err) {
+            alert('There was an issue updating your search results. Please try again');
+          });
+      },
       requestGroup: function() {
         var validationMessage = '';
         if (!this.requestedGroupName) {
@@ -293,7 +313,6 @@
         this.selectedGroup = group;
       },
       joinGroup: function(group) {
-
         axios.post('/api/join-group', {
           group_id: group.id
         })
@@ -320,36 +339,8 @@
       paginateRight: function() {
         if (this.pageNumber < this.pageCount) this.pageNumber++;
       },
-      filter: function() {
-        var self = this;
-        var filteredGroups = this.groups.filter(function(group) {
-          return group.group_name.toLowerCase().indexOf(self.searchText.toLowerCase()) !== -1;
-        });
-
-        switch (this.sortMode) {
-          case 'alphabetical':
-            filteredGroups.sort(function(group1, group2) {
-              if (group1.group_name < group2.group_name) {
-                return -1;
-              } else if (group1.group_name > group2.group_name) {
-                return 1;
-              }
-              return 0;
-            });
-            break;
-          case 'reverse':
-            filteredGroups.sort(function(group1, group2) {
-              if (group1.group_name > group2.group_name) {
-                return -1;
-              } else if (group1.group_name < group2.group_name) {
-                return 1;
-              }
-              return 0;
-            });
-            break;
-        }
-
-        this.sortedGroups = filteredGroups;
+      redoSearch: function() {
+        this.refreshResults();
       }
     }
   });
