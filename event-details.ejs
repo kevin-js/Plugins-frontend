@@ -20,11 +20,11 @@
 
     <!-- Description -->
     <div class="uk-margin-medium-right uk-margin-medium-left">
-    <h5><%= event.description || '--' %></h5>
+      <h5><%= event.description || '--' %></h5>
 
-    <h5><span uk-icon="icon: calendar; ratio: 2"></span> From: &nbsp;<span id="start_date"><%= moment(<event class="start"></event>).format('MMMM DD, YYYY') || '--' %></span>&nbsp;at  <span id="start_time"><%= moment(event.start).format('HH:MM A') || '--' %></span><br><br>
+      <h5><span uk-icon="icon: calendar; ratio: 2"></span> From: &nbsp;<span id="start_date"><%= moment(event.start).format('MMMM DD, YYYY') || '--' %></span>&nbsp;at  <span id="start_time"><%= moment(event.start).format('HH:MM A') || '--' %></span><br><br>
         <span uk-icon="icon: calendar; ratio: 2"></span> To:&nbsp; <span id="end_date"><%= moment(event.end).format('MMMM DD, YYYY') || '--' %></span>&nbsp;at  <span id="end_time"><%= moment(event.end).format('HH:MM A') || '--' %></span><br><br>
-    <span uk-icon="icon: location; ratio: 2"></span> Location:&nbsp; <span id="location"><%= event.location || '--' %></span></h5><br>
+      <span uk-icon="icon: location; ratio: 2"></span> Location:&nbsp; <span id="location"><%= event.location || '--' %></span></h5><br>
 
     <hr>
 
