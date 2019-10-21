@@ -81,8 +81,7 @@
     </div>
     <div class="uk-card-body white">
       <% user.groups.forEach(function(group) { %>
-        <!-- todo: link to group detail page -->
-        <a href="<%- '/group-details/' + group.id %>"><%= group.group_name %></a>
+        <div class="uk-margin-small-top"><a href="<%- '/group-details/' + group.id %>"><%= group.group_name %></a></div>
       <% }); %>
       <% if (user.groups.length == 0) { %>
         <i>You are not currently a member of any group.</i>
@@ -167,7 +166,7 @@
                 
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                   plugins: [ 'dayGrid', 'moment', 'list', 'interaction', 'rrule' ],
-                  timeZone: 'UTC',
+                  timeZone: 'local',
                   defaultView: 'listMonth',
                   defaultDate: new Date(),
                   header: {
