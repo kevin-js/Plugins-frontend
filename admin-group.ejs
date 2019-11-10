@@ -54,7 +54,7 @@
           </select>
         </div>
         <div class="uk-inline uk-float-right uk-margin-bottom-small">
-          <h5 class="font-white"><a class="font-white" v-on:click="clearFilters">Clear Filters</a> | <a class="font-white" v-on:click="redoSearch">Redo Search</a></h5>
+          <h5 class="font-white"><a class="font-white" v-on:click="clearFilters">Clear Filters</a> | <a class="font-white" v-on:click="redoSearch">Search</a></h5>
         </div>
       </form>
     </div>
@@ -73,7 +73,7 @@
           <tbody>
             <tr v-for="group in groups">
               <td class="table-border border-none">
-                <span id="group_name">{{ group.group_name }}</span>
+                <a v-bind:href="'/group-details/' + group.id"><span id="group_name">{{ group.group_name }}</span></a>
               </td>
               <td class="table-border border-none">
                 <span id="member-count">{{ group.users.length }}</span>

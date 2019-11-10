@@ -272,7 +272,7 @@
           </div>
 
           <div class="uk-inline uk-float-right">
-            <button class="uk-button button-lt" v-on:click="redoSearch" type="button">Apply Filters</button>
+            <button class="uk-button button-lt" v-on:click="redoSearch" type="button">Search</button>
           </div>
         </form>
       </div>
@@ -315,7 +315,7 @@
             <tbody>
               <tr v-for="user in users" Key="user.id">
                 <td class="table-border border-none font-small">
-                  <p><span id="alum_name">{{ user.name || '--' }}</span><br><span id="alt_names">{{ user.nicknames || '--' }}</span><br><span id="grad_yr" v-if="user.graduation_year">Class of {{ user.graduation_year || '--' }}</span></p>
+                  <p><a v-bind:href="'/profile/' + user.id"><span id="alum_name">{{ user.name || '--' }}</span></a><br><span id="alt_names">{{ user.nicknames || '--' }}</span><br><span id="grad_yr" v-if="user.graduation_year">Class of {{ user.graduation_year || '--' }}</span></p>
                 </td>
 
                 <!--Be sure to add a break at 20 characters for uber long emails so they wrap -->
@@ -900,19 +900,63 @@
           }
         },
         batchImportUsers: function() {
-          var formData = new FormData();
           var userImportFile = $('#user_import_file')[0].files[0];
-          formData.append('user_import_file', userImportFile);
 
-          axios.post('/api/batch-import-users', formData)
-            .then(function(data) {
-              alert('Users batch imported successfully.');
-              UIkit.modal('#modal-import2').hide();
-            })
-            .catch(function(err) {
-              alert('There was an issue importing the users. Please try again');
-            });
-        }        
+          if (FileReader) {
+            var users = [];
+            var fileReader = new FileReader();
+            
+            fileReader.onload = function(e) {
+              var PAGE_SIZE = 200;
+              var reqs = [];
+              var lines = e.target.result.split(/\r\n|\n/);
+              var headers = lines[0].split(',');
+              var recordCount = lines.length - 1;
+              if (recordCount > 0) {
+                lines = lines.slice(1);
+              }
+
+              // process input file in chunks
+              for (var i = 0; i < Math.ceil(recordCount / PAGE_SIZE); i++) {
+                var records = lines.slice(i*PAGE_SIZE, (i*PAGE_SIZE)+PAGE_SIZE);
+                users = records.map(function(record) {
+                  record = record.split(',');
+                  var user = {};
+                  for (var j = 0; j < headers.length; j++) {
+                    user[headers[j]] = record[j];
+                  }
+                  return user;
+                });
+
+                reqs.push(axios.post('/api/batch-import-users', {
+                  users: users
+                }));
+              }
+
+              Promise.all(reqs)
+                .then(function(data) {
+                  alert('Users batch imported successfully.');
+                  UIkit.modal('#modal-import2').hide();
+                })
+                .catch(function(err) {
+                  alert('There was an issue importing users. Please try again');
+                });
+            };
+            fileReader.readAsText(userImportFile);
+            // var formData = new FormData();
+            // formData.append('user_import_file', userImportFile);
+            // axios.post('/api/batch-import-users-csv', formData)
+            //   .then(function(data) {
+            //     alert('Users batch imported successfully.');
+            //     UIkit.modal('#modal-import2').hide();
+            //   })
+            //   .catch(function(err) {
+            //     alert('There was an issue importing the users. Please try again');
+            //   });
+          } else {
+            alert('Your browser needs to support FileReader to upload csv files. Please consider upgrading your browser to one in the list here: https://caniuse.com/#feat=filereader');
+          }
+        }
       }
     });
   </script>

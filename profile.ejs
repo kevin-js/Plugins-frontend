@@ -26,39 +26,42 @@
       <div>
         <div class="uk-width-auto">
           <img id="profile-photo" class="uk-border-rounded uk-height-small uk-width-auto" 
-            src="<%= user.profilePhotoRef ? '/api/photo/' + user.profilePhotoRef : '/profile_photo_placeholder.svg' %>" alt="Profile Photo">
+            src="<%= profileUser.profilePhotoRef ? '/api/photo/' + profileUser.profilePhotoRef : '/profile_photo_placeholder.svg' %>" alt="Profile Photo">
         </div>
-        <a href="#pw-modal" uk-toggle><span uk-icon="icon: lock"></span>&nbsp;Change Password</a><br><br>
+        <% if (user.id === profileUser.id) { %>
+        <a href="#pw-modal" uk-toggle><span uk-icon="icon: lock"></span>&nbsp;Change Password</a>
+        <% } %>
+        <br><br>
         <span class="profile-label">Name</span>
-        <span id="name" class="profile-field"><%= user.name || '--' %></span>
+        <span id="name" class="profile-field"><%= profileUser.name || '--' %></span>
         <span class="profile-label">Graduated</span>
-        <span id="grad_year" class="profile-field"><%= user.graduation_year || '--' %></span>
+        <span id="grad_year" class="profile-field"><%= profileUser.graduation_year || '--' %></span>
       </div>
 
       <div>
         <span class="profile-label">Nicknames</span>
-        <span id="nickname" class="profile-field"><%= user.nicknames || '--' %></span>
+        <span id="nickname" class="profile-field"><%= profileUser.nicknames || '--' %></span>
         <span class="profile-label">Email</span>
-        <span id="email" class="profile-field"><%= user.email || '--' %></span>
+        <span id="email" class="profile-field"><%= profileUser.email || '--' %></span>
         <span class="profile-label">Home Phone</span>
-        <span id="home_phone" class="profile-field"><%= user.home_phone || '--' %></span>
+        <span id="home_phone" class="profile-field"><%= profileUser.home_phone || '--' %></span>
         <span class="profile-label">Cell Phone</span>
-        <span id="mobile_phone" class="profile-field"><%= user.cell_phone || '--' %></span>
+        <span id="mobile_phone" class="profile-field"><%= profileUser.cell_phone || '--' %></span>
         <span class="profile-label">Birthday</span>
-        <span id="birthday" class="profile-field"><%= user.birthday || '--' %></span>
+        <span id="birthday" class="profile-field"><%= profileUser.birthday || '--' %></span>
       </div>
 
       <div>
         <span class="profile-label">Marital Status</span>
-        <span id="marital_status" class="profile-field"><%= user.marital_status || '--' %></span>
+        <span id="marital_status" class="profile-field"><%= profileUser.marital_status || '--' %></span>
         <span class="profile-label">Address</span>
         <span>
-          <span id="address_line1" class="profile-field"><%= user.address_line_1 || '--' %></span><br>
-          <span id="address_line2" class="profile-field"><%= user.address_line_2 || '--' %></span><br>
-          <span id="city" class="profile-field"><%= [user.city, user.state, user.zip_code].filter(e => e).join(', ') || '--' %></span>
+          <span id="address_line1" class="profile-field"><%= profileUser.address_line_1 || '--' %></span><br>
+          <span id="address_line2" class="profile-field"><%= profileUser.address_line_2 || '--' %></span><br>
+          <span id="city" class="profile-field"><%= [profileUser.city, profileUser.state, profileUser.zip_code].filter(e => e).join(', ') || '--' %></span>
         </span>
         <span class="profile-label uk-margin">Privacy &nbsp;<span uk-icon="info" uk-tooltip="All alumni can view your yearbook photo, name and graduation year.  If you set your profile as public,  paid members can also view your phone number, address, email, birthday, and marital status.  To hide this information set your profile as private."></span></span>
-        <% if (user.isPublic) { %> 
+        <% if (profileUser.isPublic) { %> 
           <span><i class="fa fa-toggle-on font-slate"></i><p>&nbsp;Profile is Public</p></span>
         <% } else { %> 
           <span><i class="fa fa-toggle-off font-slate"></i><p>&nbsp;Profile is Private</p></span>
@@ -80,10 +83,10 @@
       <h4 class="norwester font-white">Groups</h4>
     </div>
     <div class="uk-card-body white">
-      <% user.groups.forEach(function(group) { %>
+      <% profileUser.groups.forEach(function(group) { %>
         <div class="uk-margin-small-top"><a href="<%- '/group-details/' + group.id %>"><%= group.group_name %></a></div>
       <% }); %>
-      <% if (user.groups.length == 0) { %>
+      <% if (profileUser.groups.length == 0) { %>
         <i>You are not currently a member of any group.</i>
       <% } %>
     </div>
@@ -99,19 +102,19 @@
       <span class="profile-label uk-float-left">Type</span> <a class="uk-float-right" href="/membership-options">View Benefits &nbsp;<i class="fa fa-external-link"></i></a>
       <br>
       <span id="nickname" class="profile-field">
-        <span uk-icon="check"></span> &nbsp;<%= user.membership.membershipType.name %>
+        <span uk-icon="check"></span> &nbsp;<%= profileUser.membership.membershipType.name %>
       </span>
         <a href="/membership-types">&nbsp;(Edit)</a>
         <br><br>
-      <% if (user.membership && user.membership.membership_type !== 1) { %>
+      <% if (profileUser.membership && profileUser.membership.membership_type !== 1) { %>
       <span class="profile-label">Payment Method</span><br>
       <span id="pay_method" class="profile-field"><a href="https://www.paypal.com/us/signin" target="_blank">PayPal</a></span>
       <% } %>
-      <% if (user.membership && user.membership.membershipType.name === 2) { %> 
+      <% if (profileUser.membership && profileUser.membership.membershipType.name === 2) { %> 
       <span class="profile-label">Renewal Scheduled On</span><br>
-      <span id="renews_on" class="profile-field"><%= user.membership.renewal_date %></span><br><br>
+      <span id="renews_on" class="profile-field"><%= profileUser.membership.renewal_date %></span><br><br>
       <span class="profile-label">Auto-Renew?</span><br>
-      <span id="auto-renew" class="profile-field"><%= user.membership.auto_renew_membership ? 'Yes' : 'No' %></span> <a href="/membership-options">&nbsp;(Edit)</a>
+      <span id="auto-renew" class="profile-field"><%= profileUser.membership.auto_renew_membership ? 'Yes' : 'No' %></span> <a href="/membership-options">&nbsp;(Edit)</a>
       <% } %>
     </div>
   </div>
@@ -243,7 +246,7 @@
       <a class="uk-float-right" href="memories.html">Memories &nbsp;<i class="fa fa-external-link"></i></a>
     </div>
 
-    <% if (user.membership && user.membership.membership_type !== 1) { %>
+    <% if (profileUser.membership && profileUser.membership.membership_type !== 1) { %>
     <div class="uk-grid-match uk-child-width-1-4@m uk-flex-middle" uk-grid="masonry: true">
       <div>
         <div class="uk-padding">
