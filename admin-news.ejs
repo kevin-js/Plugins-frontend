@@ -101,7 +101,7 @@
 
           <div class="uk-inline uk-margin-bottom uk-margin-right uk-width-1-6@m">
             <label class="uk-form-label"> &nbsp; </label>
-            <button class="uk-button button-lt" type="button" v-on:click="applyFilters">Apply Filters</button>
+            <button class="uk-button button-lt" type="button" v-on:click="applyFilters">Search</button>
           </div>
         </form>
       </div>
@@ -850,7 +850,42 @@
             this.pageNumber = 1;
         },
         exportData: function() {
-          alert('migrate to backend');
+          var self = this;
+          var queryString = '';
+          if (this.searchDateCreatedStart) queryString += ('&createdDateStart=' + this.searchDateCreatedStart);
+          if (this.searchDateCreatedEnd) queryString += ('&createdDateEnd=' + this.searchDateCreatedEnd);
+          if (this.searchDateSentStart) queryString += ('&sentDateStart=' + this.searchDateSentStart);
+          if (this.searchDateSentEnd) queryString += ('&sentDateEnd=' + this.searchDateSentEnd);
+          if (this.searchSubject) queryString += ('&subject=' + this.searchSubject);
+          if (this.searchType) queryString += ('&type=' + this.searchType);
+          if (this.searchStatus) queryString += ('&status=' + this.searchStatus);
+
+          axios.get('/api/export-news-csv?' + queryString)
+            .then(function(data) {
+              if (data.data) {
+                var csv = data.data;
+                var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            
+                if (navigator.msSaveBlob) { // IE 10+
+                  navigator.msSaveBlob(blob, exportedFilename);
+                } else {
+                  var link = document.createElement("a");
+                  if (link.download !== undefined) { // feature detection
+                    // Browsers that support HTML5 download attribute
+                    var url = URL.createObjectURL(blob);
+                    link.setAttribute("href", url);
+                    link.setAttribute("download", 'news.csv');
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                  }
+                }
+              }
+            })
+            .catch(function(err) {
+              alert('There was an issue exporting the current query as a csv file. Please try again');
+            });
         }
       }
     });

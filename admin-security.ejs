@@ -464,89 +464,39 @@
           if (this.userRolesPageNumber < this.userRolesPageCount) this.userRolesPageNumber++;
         },
         exportCsv: function() {
-          alert('migrate to backend');
-          function convertToCSV(objArray) {
-            var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-            var str = '';
+          var queryString = '';
+          var self = this;
+          queryString += ('&sortAlphabetical=' + this.userSortAlphabetically);
+          queryString += ('&includeRelations=' + 'true');
+          if (this.userNameSearch) queryString += ('&searchName=' + this.userNameSearch);
 
-            for (var i = 0; i < array.length; i++) {
-              var line = '';
-              for (var index in array[i]) {
-                if (line != '') line += ','
-
-                line += array[i][index];
-              }
-
-              str += line + '\r\n';
-            }
-
-            return str;
-          }
-
-          function exportCSVFile(headers, items, fileTitle) {
-            if (headers) {
-              items.unshift(headers);
-            }
-
-            // Convert Object to JSON
-            var jsonObject = JSON.stringify(items);
-            var csv = convertToCSV(jsonObject);
-            var exportedFilename = fileTitle + '.csv' || 'export.csv';
-            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+          axios.get('/api/export-user-csv?' + queryString)
+            .then(function(data) {
+              if (data.data) {
+                var csv = data.data;
+                var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             
-            if (navigator.msSaveBlob) { // IE 10+
-              navigator.msSaveBlob(blob, exportedFilename);
-            } else {
-              var link = document.createElement("a");
-              if (link.download !== undefined) { // feature detection
-                // Browsers that support HTML5 download attribute
-                var url = URL.createObjectURL(blob);
-                link.setAttribute("href", url);
-                link.setAttribute("download", exportedFilename);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+
+                if (navigator.msSaveBlob) { // IE 10+
+                  navigator.msSaveBlob(blob, exportedFilename);
+                } else {
+                  var link = document.createElement("a");
+                  if (link.download !== undefined) { // feature detection
+                    // Browsers that support HTML5 download attribute
+                    var url = URL.createObjectURL(blob);
+                    link.setAttribute("href", url);
+                    link.setAttribute("download", 'users.csv');
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                  }
+                }
               }
-            }
-          }
-
-          var headers = {
-            name: 'name',
-            nicknames: 'nicknames',
-            graduation_year: 'graduation_year',
-            membership_type: 'membership_type',
-            email: 'email',
-            home_phone: 'home_phone',
-            cell_phone: 'cell_phone',
-            address_line_1: 'address_line_1',
-            address_line_2: 'address_line_2',
-            city: 'city',
-            state: 'state',
-            zip_code: 'zip_code'
-          };
-
-          var formattedUsers = [];
-
-          this.filteredUsers.forEach(function(user) {
-            formattedUsers.push({
-              name: user.name,
-              nicknames: user.nicknames,
-              graduation_year: user.graduation_year,
-              membership_type: user.membership.membership_type,
-              email: user.email,
-              home_phone: user.home_phone,
-              cell_phone: user.cell_phone,
-              address_line_1: user.address_line_1,
-              address_line_2: user.address_line_2,
-              city: user.city,
-              state: user.state,
-              zip_code: user.zip_code
+            })
+            .catch(function(err) {
+              alert('There was an issue exporting the current query as a csv file. Please try again');
             });
-          });
-
-          var downloadedFilename = 'users';
-          exportCSVFile(headers, formattedUsers, downloadedFilename);
         },
         addUserRole: function(event, role) {
           event.target.checked ?
