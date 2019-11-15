@@ -58,7 +58,7 @@
 
             <tbody>
               <tr v-for="attendee in displayAttendees">
-                <td class="table-border border-none font-small">{{ attendee.user.name || '--' }}</td>
+                <td class="table-border border-none font-small">{{ [attendee.user.first_name, attendee.user.middle_name, attendee.user.last_name].filter(function(e) { return !!e; }).join(' ') || '--' }}</td>
 
                 <td class="table-border border-none font-small">{{ attendee.user.email || '--' }}</td>
 
@@ -125,7 +125,7 @@
         </div>
         <table class="uk-table uk-table-small alumni-table uk-margin-remove">
           <tbody>
-            <tr v-for="user in filteredUsers"><td v-bind:class="{ 'selected': user.id == selectedUser.id }" v-on:click="setSelectedUser(user)">{{ user.name }}<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></span></td></tr>
+            <tr v-for="user in filteredUsers"><td v-bind:class="{ 'selected': user.id == selectedUser.id }" v-on:click="setSelectedUser(user)">{{ [user.first_name, user.middle_name, user.last_name].filter(function(e) { return !!e; }).join(' ') }}<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></span></td></tr>
           </tbody>
         </table>
       </div>
@@ -232,7 +232,7 @@
 
           this.attendees.forEach(function(attendee) {
             formattedAttendees.push({
-              name: attendee.user.name,
+              name: [attendee.user.first_name, attendee.user.middle_name, attendee.user.last_name].filter(function(e) { return !!e; }).join(' '),
               email: attendee.user.email,
               home_phone: attendee.user.home_phone,
               cell_phone: attendee.user.cell_phone,
@@ -263,7 +263,8 @@
         filteredUsers: function() {
           var self = this;
           return this.users.filter(function(user) {
-            return user.name ? user.name.toLowerCase().indexOf(self.searchQuery.toLowerCase()) !== -1 : false;
+            var username = [user.first_name, user.middle_name, user.last_name].filter(function(e) { return !!e; }).join(' ');
+            return username ? username.toLowerCase().indexOf(self.searchQuery.toLowerCase()) !== -1 : false;
           });
         }
       },

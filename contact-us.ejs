@@ -79,8 +79,8 @@
       <div>
         <div class="uk-inline uk-width-1-1">
           <span class="uk-form-icon" uk-icon="icon: user"></span>
-          <% if (user.name) { %>
-            <input id="name" class="uk-input border-charcoal2" placeholder="Full Name" type="text" value="<%= user.name %>">
+          <% if (user.first_name || user.middle_name || user.last_name) { %>
+            <input id="name" class="uk-input border-charcoal2" placeholder="Full Name" type="text" value="<%= [user.first_name, user.middle_name, user.last_name].filter(function(e) { return !!e; }).join(' ') %>">
           <% } else { %>
             <input id="name" class="uk-input border-charcoal2" placeholder="Full Name" type="text">
           <% } %>

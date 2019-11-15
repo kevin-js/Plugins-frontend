@@ -39,7 +39,7 @@
         <% } %>
         <br><br>
         <span class="profile-label">Name</span>
-        <span id="name" class="profile-field"><%= profileUser.name || '--' %></span>
+        <span id="name" class="profile-field"><%= [profileUser.first_name, profileUser.middle_name, profileUser.last_name].filter(function(e) { return !!e; }).join(' ') || '--' %></span>
         <span class="profile-label">Graduated</span>
         <span id="grad_year" class="profile-field"><%= profileUser.graduation_year || '--' %></span>
       </div>
@@ -145,16 +145,16 @@
       <div  class="uk-width-1-2@m">
         <div id='calendar' class="uk-padding-small link-dk uk-height-small"></div>
         <!-- FullCalendar API and Scripts -->
-        <link href='fullcalendar/packages/core/main.css' rel='stylesheet' />
-        <script src='fullcalendar/packages/core/main.js'></script>
-        <script src='fullcalendar/packages/interaction/main.min.js'></script>
-        <script src='fullcalendar/packages/moment/main.min.js'></script>
-        <link href='fullcalendar/packages/list/main.css' rel='stylesheet' />
-        <script src='fullcalendar/packages/list/main.js'></script>
-        <script src='fullcalendar/packages/rrule/main.min.js'></script>
-        <script src='fullcalendar/vendor/rrule.js'></script>
-        <link href='fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
-        <script src='fullcalendar/packages/daygrid/main.js'></script>
+        <link href='/fullcalendar/packages/core/main.css' rel='stylesheet' />
+        <script src='/fullcalendar/packages/core/main.js'></script>
+        <script src='/fullcalendar/packages/interaction/main.min.js'></script>
+        <script src='/fullcalendar/packages/moment/main.min.js'></script>
+        <link href='/fullcalendar/packages/list/main.css' rel='stylesheet' />
+        <script src='/fullcalendar/packages/list/main.js'></script>
+        <script src='/fullcalendar/packages/rrule/main.min.js'></script>
+        <script src='/fullcalendar/vendor/rrule.js'></script>
+        <link href='/fullcalendar/packages/daygrid/main.css' rel='stylesheet' />
+        <script src='/fullcalendar/packages/daygrid/main.js'></script>
         <script>
           document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
@@ -209,9 +209,9 @@
                       window.location.href = '/event-details?event_id=' + info.event.id;
                     }
                   }
-                  });
+                });
 
-                  calendar.render();
+                calendar.render();
               },
               error: function() {
                 alert('there was an issue loading the events calendar. Please refresh the page and try again.');

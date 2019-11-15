@@ -517,7 +517,7 @@
                 <tbody>
                   <tr v-for="user in users">
                     <td><input v-bind:id="'user-' + user.id" class="uk-checkbox" type="checkbox" v-on:click="updateRecipientList(user)"></td>
-                    <td><span id="alum_name">{{ user.name }}</span></td>
+                    <td><span id="alum_name">{{ [user.first_name, user.middle_name, user.last_name].filter(function(e) { return !!e; }).join(' ') }}</span></td>
                     <td><span id="alum_grad_yr">{{ user.graduation_year || '--' }}</span></td>
                     <td>
                       <span v-if="user.membership.membershipType.name === 'Free' || 'free'">Free</span>

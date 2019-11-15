@@ -156,7 +156,7 @@
               <div class="uk-height-large uk-cover-container">
               <img v-bind:src="'/api/photo/' + user.profilePhotoRef" uk-cover>
               </div>
-              <div class="black uk-text-center"><h5 id="hof_name" class="norwester uk-padding-small">{{ user.name }}</h5></div>
+              <div class="black uk-text-center"><h5 id="hof_name" class="norwester uk-padding-small">{{ [user.first_name, user.middle_name, user.last_name].filter(function(e) { return !!e; }).join(' ') }}</h5></div>
           </li>
         </ul>
       <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>

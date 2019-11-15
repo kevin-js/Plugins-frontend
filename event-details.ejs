@@ -36,7 +36,7 @@
       <div></div>
       <div>
         <label class="profile-label">Name</label>
-        <input id="name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.name %>">
+        <input id="name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= [user.first_name, user.middle_name, user.last_name].filter(function(e) { return !!e; }).join(' ') %>">
         <label class="profile-label">Nickname</label>
         <input id="nickname" class="uk-input border-charcoal2 uk-margin-bottom" type="text" value="<%= user.nicknames %>">
         <span class="profile-label">Email</span>

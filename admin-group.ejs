@@ -78,7 +78,7 @@
               <td class="table-border border-none">
                 <span id="member-count">{{ group.users.length }}</span>
               </td>
-              <td class="table-border border-none"><p v-if="group.groupOwner">{{ group.groupOwner.name }}</p><a href="#edit-leader" class="uk-icon-link" uk-icon="pencil" uk-toggle v-on:click="setSelectedGroup(group)"></a></td>
+              <td class="table-border border-none"><p v-if="group.groupOwner">{{ [group.groupOwner.first_name, group.groupOwner.middle_name, group.groupOwner.last_name].filter(function(e) { return !!e; }).join(' ') }}</p><a href="#edit-leader" class="uk-icon-link" uk-icon="pencil" uk-toggle v-on:click="setSelectedGroup(group)"></a></td>
               <td class="table-border border-none"><a href="#confirm-delete" class="uk-icon-link" uk-icon="trash" uk-toggle v-on:click="setSelectedGroup(group)"></a></td>
             </tr>
           </tbody>
@@ -133,7 +133,7 @@
       <div class="uk-modal-body" uk-overflow-auto>
         <label class="uk-form-label" for="form-stacked-text">Current Leader:</label>
           <div class="uk-form-controls" v-if="selectedGroup && selectedGroup.groupOwner">
-            <p>{{ selectedGroup.groupOwner.name }}</p>
+            <p>{{ [selectedGroup.groupOwner.first_name, selectedGroup.groupOwner.middle_name, selectedGroup.groupOwner.last_name].filter(function(e){ return !!e; }).join(' ') }}</p>
           </div>
         <hr>
         <h6>Select a user from the list below to replace the leader of this group.</h6>
@@ -147,7 +147,7 @@
           </div>
           <table class="uk-table uk-table-small alumni-table uk-margin-remove">
             <tbody>
-              <tr v-bind:class="{ 'selected': member.id == newSelectedGroupLeader.id }" v-for="member in displaySelectedGroupUsers" v-on:click="setNewSelectedGroupLeader(member)"><td>{{ member.name }}<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></span></td></tr>
+              <tr v-bind:class="{ 'selected': member.id == newSelectedGroupLeader.id }" v-for="member in displaySelectedGroupUsers" v-on:click="setNewSelectedGroupLeader(member)"><td>{{ [member.first_name, member.middle_name, member.last_name].filter(function(e) { return !!e; }).join(' ') }}<span uk-icon="icon: plus; ratio: 1.5" class="font-white uk-float-right"></span></td></tr>
             </tbody>
           </table>
         </div>
@@ -208,7 +208,9 @@
         },
         displaySelectedGroupUsers: function() {
           var self = this;
-          return this.selectedGroup ? this.selectedGroup.users.filter(function(user) { return user.name ? user.name.toLowerCase().indexOf(self.selectedGroupMembersNameSearch.toLowerCase()) !== -1 : false }) : [];
+          return this.selectedGroup ? this.selectedGroup.users.filter(function(user) { 
+            var username = [user.first_name, user.middle_name, user.last_name].filter(function(e) { return !!e; }).join(' ');
+            return username ? username.toLowerCase().indexOf(self.selectedGroupMembersNameSearch.toLowerCase()) !== -1 : false }) : [];
         }
       },
       watch: {
@@ -298,7 +300,8 @@
             userId: this.newSelectedGroupLeader.id
           })
             .then(function(data) {
-              alert('Successfully made ' + self.newSelectedGroupLeader.name + ' the group leader for ' + self.selectedGroup.group_name);
+              var groupLeaderName = [self.newSelectedGroupLeader.first_name, self.newSelectedGroupLeader.middle_name, self.newSelectedGroupLeader.last_name].filter(function(e) { return !!e; }).join(' ');
+              alert('Successfully made ' + groupLeaderName + ' the group leader for ' + self.selectedGroup.group_name);
               UIkit.modal('#edit-leader').hide();
             })
             .catch(function(err) {

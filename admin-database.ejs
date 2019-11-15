@@ -315,7 +315,7 @@
             <tbody>
               <tr v-for="user in users" Key="user.id">
                 <td class="table-border border-none font-small">
-                  <p><a v-bind:href="'/profile/' + user.id"><span id="alum_name">{{ user.name || '--' }}</span></a><br><span id="alt_names">{{ user.nicknames || '--' }}</span><br><span id="grad_yr" v-if="user.graduation_year">Class of {{ user.graduation_year || '--' }}</span></p>
+                  <p><a v-bind:href="'/profile/' + user.id"><span id="alum_name">{{ [user.first_name, user.middle_name, user.last_name].filter(function(e) { return !!e; }).join(' ') || '--' }}</span></a><br><span id="alt_names">{{ user.nicknames || '--' }}</span><br><span id="grad_yr" v-if="user.graduation_year">Class of {{ user.graduation_year || '--' }}</span></p>
                 </td>
 
                 <!--Be sure to add a break at 20 characters for uber long emails so they wrap -->
@@ -500,8 +500,12 @@
         <div class="uk-grid-match uk-child-width-1-3@m uk-flex-top uk-padding" uk-grid>
           <div>
           <!-- Far Left Section -->
-            <label class="profile-label">Name</label>
-            <input id="name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="name">
+            <label class="profile-label">First Name</label>
+            <input id="name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="first_name">
+            <label class="profile-label">Middle Name</label>
+            <input id="name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="middle_name">
+            <label class="profile-label">Last Name</label>
+            <input id="name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="last_name">
             <label class="profile-label">Grad Year &nbsp;<span uk-icon="info" uk-tooltip="Only an administrator can edit your graduation year. If yours is incorrect, please contact an Alumni Association official to have it corrected."></label><br>
             <input id="grad_year" class="uk-input uk-form-width-small border-charcoal2" type="text" v-model="graduation_year">
           </div>
@@ -774,7 +778,9 @@
     var createUserModal = new Vue({
       el: '#modal-new-alum',
       data: {
-        name: '',
+        first_name: '',
+        middle_name: '',
+        last_name: '',
         graduation_year: null,
         nicknames: '',
         email: '',
@@ -792,7 +798,9 @@
         createUser: function() {
           axios.post('/api/admin-create-user', {
             user: {
-              name: this.name,
+              first_name: this.first_name,
+              middle_name: this.middle_name,
+              last_name: this.last_name,
               graduation_year: this.graduation_year,
               nicknames: this.nicknames,
               email: this.email,

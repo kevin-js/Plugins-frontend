@@ -40,7 +40,8 @@
           </div>
         <!-- Far Left Section -->
               <label class="profile-label">Name</label>
-              <input id="name" name="name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="user.name">
+              <input id="first-name" name="first_name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="user.first_name">
+              <input id="last-name" name="last_name" class="uk-input border-charcoal2 uk-margin-bottom" type="text" v-model="user.last_name">
               <label class="profile-label">Grad Year &nbsp;<span uk-icon="info" uk-tooltip="Only an administrator can edit your graduation year. If yours is incorrect, please contact an Alumni Association official to have it corrected."></span></label><br>
               <input id="grad_year" name="graduation_year" class="uk-input uk-form-width-small border-charcoal2" type="text" v-model="user.graduation_year" disabled>
         </div>
