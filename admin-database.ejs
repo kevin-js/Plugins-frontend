@@ -629,7 +629,6 @@
         roleOptions: <%- JSON.stringify(roles) %>,
         membershipTypes: <%- JSON.stringify(membershipTypes) %>,
         users: <%- JSON.stringify(userList) %>,
-        filteredUsers: <%- JSON.stringify(userList) %>,
         selectedUserGroups: [],
         selectedUser: {}
       },
@@ -876,7 +875,7 @@
             var fileReader = new FileReader();
             
             fileReader.onload = function(e) {
-              var PAGE_SIZE = 200;
+              var PAGE_SIZE = 100;
               var reqs = [];
               var lines = e.target.result.split(/\r\n|\n/);
               var headers = lines[0].split(',');

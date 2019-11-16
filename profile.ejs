@@ -82,7 +82,11 @@
 <!-- Group Listing Section -->
 <!--------------------------->
 <div class="uk-margin-medium-top uk-margin-right uk-margin-left">
+<% if (user.id === profileUser.id) { %>
 <div class="uk-grid-match uk-child-width-1-2@m" uk-grid>
+<% } else { %>
+<div class="uk-grid-match uk-child-width-1-1@m" uk-grid>
+<% } %>
 <div>
   <div class="uk-card uk-card-default">
     <div class="uk-card-header container-top">
@@ -92,13 +96,19 @@
       <% profileUser.groups.forEach(function(group) { %>
         <div class="uk-margin-small-top"><a href="<%- '/group-details/' + group.id %>"><%= group.group_name %></a></div>
       <% }); %>
-      <% if (profileUser.groups.length == 0) { %>
+      <% if (user.id === profileUser.id && profileUser.groups.length == 0) { %>
         <i>You are not currently a member of any group.</i>
+      <% } else if (profileUser.groups.length == 0) { %>
+        <i><%= [profileUser.first_name, profileUser.middle_name, profileUser.last_name].filter(function(e) { return !!e; }).join(' ') %> is not currently a member of any group.</i>
       <% } %>
     </div>
   </div>
 </div>
 
+<!--------------------------->
+<!-- Membership Section -->
+<!--------------------------->
+<% if (user.id === profileUser.id) { %>
 <div>
   <div class="uk-card uk-card-default">
     <div class="uk-card-header container-top">
@@ -125,6 +135,7 @@
     </div>
   </div>
 </div>
+<% } %>
 
 </div>
 </div>
@@ -221,6 +232,7 @@
         </script>
       </div>
 
+      <% if (user.id === profileUser.id) { %>
       <div class="uk-width-1-2@m">
         <span class="profile-label">Announcements</span>
         <div v-if="announcements.length == 0">
@@ -232,6 +244,7 @@
           <a class="line" href="">Learn More</a></h6>
         </div>
       </div>
+      <% } %>
     </div>
   </div>
 </div>
@@ -243,13 +256,15 @@
 <div class="uk-card uk-card-default uk-margin uk-margin-right uk-margin-left">
   <div class="uk-card-header container-top">
       <div class="uk-grid-small uk-flex-middle" uk-grid>
-        <h4 class="norwester font-white">Your Shared Memories</h4>
+        <h4 class="norwester font-white">Shared Memories</h4>
       </div>
   </div>
   <div class="uk-card-body white">
     <div class="uk-clearfix">
+      <% if (user.id === profileUser.id) { %>
       <h5 class="uk-float-left">Share your special moments with fellow alumni. </br>All photos will appear on the communal 'Memories' page.</h5>
-      <a class="uk-float-right" href="memories.html">Memories &nbsp;<i class="fa fa-external-link"></i></a>
+      <% } %>
+      <a class="uk-float-right" href="/memories">Memories &nbsp;<i class="fa fa-external-link"></i></a>
     </div>
 
     <% if (profileUser.membership && profileUser.membership.membership_type !== 1) { %>
@@ -298,8 +313,10 @@
         </div>
       </div>
     </div>
-    <% } else { %>
+    <% } else if (user.id === profileUser.id) { %>
       <p>To contribute to the Memories page, please upgrade your <a href="/membership-options">membership plan</a>.</p>
+    <% } else { %>
+      <i><%= [profileUser.first_name, profileUser.middle_name, profileUser.last_name].filter(function(e) { return !!e; }).join(' ') %> has not yet shared any memories.</i>
     <% } %>
 </div>
 </div>
