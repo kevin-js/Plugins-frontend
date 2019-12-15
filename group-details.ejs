@@ -69,7 +69,7 @@
               <span class="profile-label">Cell Phone</span><br>
               <span id="mobile_phone" class="profile-field"><%= user.cell_phone || '--' %></span><br><br>
               <span class="profile-label">Birthday</span><br>
-              <span id="birthday" class="profile-field"><%= moment(user.birthday).format('MM-DD-YYYY') %></span>
+              <span id="birthday" class="profile-field"><%= moment(user.birthday).format('MM-DD-YYYY') || '--' %></span>
             </div>
             <div class="uk-width-1-3@m">
               <span class="profile-label">Marital Status</span>
